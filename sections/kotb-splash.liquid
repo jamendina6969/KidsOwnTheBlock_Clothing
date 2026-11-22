@@ -1,6 +1,17 @@
 <main class="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-center">
-  {%- assign splash_video = section.settings.video_url | default: settings.splash_video_url -%}
-  {%- if splash_video != blank -%}
+  {%- assign splash_video_url = section.settings.video_url | default: settings.splash_video_url -%}
+  {%- if section.settings.splash_video != blank -%}
+    {{
+      section.settings.splash_video
+      | video_tag:
+        autoplay: true,
+        loop: true,
+        muted: true,
+        playsinline: true,
+        controls: false,
+        class: 'anim-pure-video absolute inset-0 w-full h-full object-cover grayscale contrast-115 pointer-events-none'
+    }}
+  {%- elsif splash_video_url != blank -%}
     <video
       autoplay
       loop
@@ -8,7 +19,7 @@
       playsinline
       class="anim-pure-video absolute inset-0 w-full h-full object-cover grayscale contrast-115 pointer-events-none"
     >
-      <source src="{{ splash_video }}" type="video/mp4" />
+      <source src="{{ splash_video_url }}" type="video/mp4" />
     </video>
   {%- else -%}
     <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="anim-ambient absolute inset-0 w-full h-full">
@@ -54,9 +65,14 @@
   "name": "KOTB Splash Landing",
   "settings": [
     {
+      "type": "video",
+      "id": "splash_video",
+      "label": "Splash background video (upload MP4)"
+    },
+    {
       "type": "url",
       "id": "video_url",
-      "label": "Splash background video URL (MP4)"
+      "label": "Or paste MP4 video URL (optional)"
     }
   ],
   "presets": [
