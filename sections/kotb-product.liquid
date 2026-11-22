@@ -77,7 +77,7 @@
                     data-variant-price="{{ variant.price | money }}"
                     data-variant-available="{{ variant.available }}"
                     {% unless variant.available %}disabled{% endunless %}
-                    class="font-mono-meta text-xs min-w-[48px] px-3.5 h-10 border transition-colors {% if variant.id == current_variant.id %}bg-black text-white border-black{% elsif variant.available %}bg-white text-black border-black/30 hover:border-black cursor-pointer{% else %}bg-[#f5f5f5] text-[#999] border-black/10 line-through cursor-not-allowed{% endif %}"
+                    class="size-pill font-mono-meta text-xs min-w-[48px] px-3.5 h-10 border transition-colors {% if variant.id == current_variant.id %}bg-black text-white border-black{% elsif variant.available %}bg-white text-black border-black/30 hover:border-black cursor-pointer{% else %}bg-[#f5f5f5] text-[#999] border-black/10 line-through cursor-not-allowed{% endif %}"
                   >
                     {{ variant.title }}
                   </button>

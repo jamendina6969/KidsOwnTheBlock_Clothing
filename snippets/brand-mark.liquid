@@ -14,7 +14,7 @@
 
 <div class="inline-flex flex-col items-center select-none" style="gap: {% if bm_show_wordmark %}6px{% else %}0px{% endif %};">
   {%- if settings.custom_logo != blank -%}
-    <img src="{{ settings.custom_logo | image_url: width: 320 }}" alt="{{ shop.name }}" style="width: {{ bm_size }}px; height: auto;" class="object-contain" />
+    <img src="{{ settings.custom_logo | image_url: width: 320 }}" alt="{{ shop.name }}" style="width: {{ bm_size }}px; height: auto;{% if bm_color != 'white' %} filter: invert(1) contrast(1.15);{% endif %}" class="object-contain" />
   {%- else -%}
     <svg width="{{ bm_size }}" height="{{ bm_height }}" viewBox="0 0 140 116" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Kids Own The Block Emblem">
       <path d="M44 10 C24 12 12 28 8 46 L19 48 C19 42 20 36 22 34 C30 35 37 32 42 32 C39 36 37 39 40 42 C46 44 52 42 58 45 C64 49 70 50 70 50 C70 50 76 49 82 45 C88 42 94 44 100 42 C103 39 101 36 98 32 C103 32 110 35 118 34 C120 36 121 42 121 48 L132 46 C128 28 116 12 96 10 C92 10 89 12 87 16 C92 26 84 40 70 40 C56 40 48 26 53 16 C51 12 48 10 44 10 Z" fill="{{ bm_fill }}" />

@@ -30,17 +30,19 @@
       {%- endif -%}
     </div>
 
-    <div class="view-back w-full h-full {{ bg_class }}">
-      {%- if product.images.size > 1 -%}
+    {%- if product.images.size > 1 -%}
+      <div class="view-back w-full h-full {{ bg_class }}">
         <img
           src="{{ product.images[1] | image_url: width: 900 }}"
           alt="{{ product.title | escape }} back view"
           class="w-full h-full object-contain block"
           loading="lazy"
         />
-      {%- else -%}
+      </div>
+    {%- elsif product.featured_image == blank -%}
+      <div class="view-back w-full h-full {{ bg_class }}">
         {% render 'garment-svg', product: product, view: 'back' %}
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
   </div>
 </a>
