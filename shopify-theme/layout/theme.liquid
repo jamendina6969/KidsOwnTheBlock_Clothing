@@ -44,7 +44,7 @@
 
   {{ content_for_header }}
 </head>
-<body class="min-h-screen flex flex-col bg-white text-black" data-template="{{ template.name }}">
+<body class="min-h-screen flex flex-col {% if template.name == 'index' %}bg-black text-white overflow-hidden{% else %}bg-white text-black{% endif %}" data-template="{{ template.name }}">
   {%- assign hide_chrome = false -%}
   {%- if template.name == 'index' -%}
     {%- assign hide_chrome = true -%}

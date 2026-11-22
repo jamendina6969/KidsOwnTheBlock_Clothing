@@ -2,7 +2,7 @@
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
     <div class="flex flex-wrap items-end justify-between gap-7 pb-10">
       <div class="w-full max-w-[380px]">
-        <h3 class="font-display text-base mb-3.5">Subscribe</h3>
+        <h3 class="font-display text-base mb-3.5">{{ section.settings.subscribe_heading | default: 'Subscribe' }}</h3>
         {% form 'customer', id: 'kotb-newsletter-form', class: 'relative' %}
           <input type="hidden" name="contact[tags]" value="newsletter" />
           <input type="email" name="contact[email]" required placeholder="Email" aria-label="Email address" class="w-full h-11 rounded-[8px] border border-black/55 bg-transparent pl-3.5 pr-11 text-[13px] outline-none focus:border-black" />
@@ -37,6 +37,8 @@
 {% schema %}
 {
   "name": "KOTB Footer",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "subscribe_heading", "label": "Newsletter Heading", "default": "Subscribe" }
+  ]
 }
 {% endschema %}
