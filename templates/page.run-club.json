@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "kotb-run-club" }
+  },
+  "order": ["main"]
+}

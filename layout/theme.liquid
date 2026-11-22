@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    {%- if page_title == blank -%}
+      {{ shop.name }} | Philippine Streetwear &amp; Block Community
+    {%- else -%}
+      {{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
+    {%- endif -%}
+  </title>
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}" />
+  {%- else -%}
+    <meta name="description" content="KIDS OWN THE BLOCK — Stark minimalist streetwear, heavyweight 240 GSM tees, hoodies, lookbooks, and run club." />
+  {%- endif -%}
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" type="image/svg+xml" href="{{ 'favicon.svg' | asset_url }}" />
+  <link rel="canonical" href="{{ canonical_url }}" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  {{ 'kotb.css' | asset_url | stylesheet_tag }}
+
+  <script>
+    window.KOTB = {
+      moneyFormat: {{ shop.money_format | json }},
+      currency: {{ cart.currency.iso_code | json }},
+      freeShippingThreshold: {{ settings.free_shipping_threshold | default: 3500 | json }},
+      routes: {
+        root: {{ routes.root_url | json }},
+        allProducts: {{ routes.all_products_collection_url | json }},
+        cart: {{ routes.cart_url | json }},
+        cartAdd: {{ routes.cart_add_url | json }},
+        cartChange: {{ routes.cart_change_url | json }},
+        predictiveSearch: {{ routes.predictive_search_url | json }},
+        search: {{ routes.search_url | json }}
+      }
+    };
+  </script>
+
+  {{ content_for_header }}
+</head>
+<body class="min-h-screen flex flex-col bg-white text-black" data-template="{{ template.name }}">
+  {%- assign hide_chrome = false -%}
+  {%- if template.name == 'index' -%}
+    {%- assign hide_chrome = true -%}
+  {%- endif -%}
+
+  {%- unless hide_chrome -%}
+    {% section 'kotb-header' %}
+  {%- endunless -%}
+
+  <div class="flex-1">
+    {{ content_for_layout }}
+  </div>
+
+  {%- unless hide_chrome -%}
+    {% section 'kotb-footer' %}
+  {%- endunless -%}
+
+  {% render 'overlays' %}
+
+  {%- unless hide_chrome -%}
+    <button id="kotb-scroll-top" type="button" aria-label="Scroll to top" class="hidden fixed left-5 bottom-5 z-40 bg-white text-black border border-black rounded-[30px] px-3.5 py-2 font-mono-meta text-[11px] cursor-pointer hover:bg-black hover:text-white transition-colors">
+      ↑ TOP
+    </button>
+  {%- endunless -%}
+
+  <script src="{{ 'kotb.js' | asset_url }}" defer></script>
+</body>
+</html>

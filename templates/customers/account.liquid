@@ -1,0 +1,30 @@
+<main class="bg-white pt-10 pb-20">
+  <div class="max-w-[1080px] mx-auto px-3 md:px-6">
+    <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-8 border-b border-black">
+      <div>
+        <div class="font-mono-meta text-xs text-[#666] mb-1">BLOCK MEMBER</div>
+        <h1 class="font-display text-2xl">{{ customer.name | default: customer.email | upcase }}</h1>
+      </div>
+      <a href="{{ routes.account_logout_url }}" class="font-mono-meta text-xs border border-black px-4 py-2 hover:bg-black hover:text-white transition-colors">LOG OUT</a>
+    </div>
+
+    <h2 class="font-display text-base mb-4">ORDER HISTORY</h2>
+    {%- if customer.orders.size > 0 -%}
+      <div class="flex flex-col gap-3">
+        {%- for order in customer.orders -%}
+          <a href="{{ order.customer_url }}" data-nav class="border border-black/15 hover:border-black p-4 flex flex-wrap items-center justify-between gap-3 transition-colors">
+            <div>
+              <div class="font-display text-sm">{{ order.name }}</div>
+              <div class="font-mono-meta text-xs text-[#666]">{{ order.created_at | date: '%b %d, %Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</div>
+            </div>
+            <div class="font-mono-meta text-sm font-semibold">{{ order.total_price | money }} →</div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="border border-black/15 p-8 text-center font-mono-meta text-xs text-[#666]">
+        No orders yet. <a href="{{ routes.all_products_collection_url }}" data-nav class="underline text-black">Explore the shop →</a>
+      </div>
+    {%- endif -%}
+  </div>
+</main>

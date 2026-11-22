@@ -1,0 +1,31 @@
+<main class="bg-white pt-10 pb-20">
+  <div class="max-w-[820px] mx-auto px-3 md:px-6">
+    <a href="{{ routes.account_url }}" data-nav class="font-mono-meta text-xs underline mb-5 inline-block">← BACK TO ACCOUNT</a>
+    <div class="border border-black p-6">
+      <div class="flex flex-wrap justify-between items-center gap-2 pb-4 border-b border-black/10 mb-5">
+        <div>
+          <h1 class="font-display text-xl">ORDER {{ order.name }}</h1>
+          <div class="font-mono-meta text-xs text-[#666]">Placed {{ order.created_at | date: '%b %d, %Y' }}</div>
+        </div>
+        <span class="font-mono-meta text-xs px-3 py-1 bg-black text-white">{{ order.fulfillment_status_label | upcase }}</span>
+      </div>
+
+      <div class="flex flex-col gap-3 mb-6">
+        {%- for line_item in order.line_items -%}
+          <div class="flex justify-between text-xs border-b border-black/10 pb-3">
+            <div>
+              <div class="font-display">{{ line_item.title }}</div>
+              <div class="font-mono-meta text-[#666]">QTY: {{ line_item.quantity }}</div>
+            </div>
+            <div class="font-mono-meta">{{ line_item.final_line_price | money }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="flex justify-between font-mono-meta text-sm font-semibold pt-2">
+        <span>TOTAL</span>
+        <span>{{ order.total_price | money }}</span>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "kotb-collections",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

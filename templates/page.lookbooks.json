@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "kotb-lookbooks" }
+  },
+  "order": ["main"]
+}
