@@ -98,9 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuBackBtn && menuHeaderLabel) {
       if (view === 'root') {
         menuBackBtn.classList.add('hidden');
+        menuBackBtn.classList.remove('inline-flex');
         menuHeaderLabel.classList.remove('hidden');
       } else {
         menuBackBtn.classList.remove('hidden');
+        menuBackBtn.classList.add('inline-flex');
         menuBackBtn.querySelector('span').textContent = view === 'story' ? 'BLOCK STORY' : 'SHOP';
         menuHeaderLabel.classList.add('hidden');
       }
