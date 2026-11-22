@@ -1,99 +1,84 @@
 <main class="bg-white pt-10 pb-16">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
     <div class="flex justify-between items-baseline flex-wrap gap-3 mb-7">
-      <h1 class="font-display text-[28px]">BLOCK STORY</h1>
+      <h1 class="font-display text-[28px]">{{ section.settings.heading | default: 'BLOCK STORY' }}</h1>
       <div class="flex gap-4">
-        <a href="/pages/lookbooks" data-nav class="font-mono-meta text-[11px] underline">LOOKBOOKS ↗</a>
-        <a href="/pages/run-club" data-nav class="font-mono-meta text-[11px] underline">RUN CLUB ↗</a>
+        <a href="{{ routes.all_products_collection_url }}" data-nav class="font-mono-meta text-[11px] underline">SHOP ALL ↗</a>
+        <a href="/collections/no-evil" data-nav class="font-mono-meta text-[11px] underline">NO EVIL CAPSULE ↗</a>
       </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-9 items-start">
       <div>
-        <div class="border border-black mb-5 reveal-on-scroll">
-          <div class="aspect-video bg-[#0a0a0a] relative flex items-center justify-center text-white overflow-hidden">
-            <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(110,14,14,0.55) 0%, rgba(0,0,0,0.92) 75%);"></div>
-            <button type="button" onclick="this.nextElementSibling.classList.remove('hidden'); this.classList.add('hidden')" class="relative z-10 w-16 h-16 rounded-full border border-white bg-black/65 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer" aria-label="Play featured video">▶</button>
-            <div class="hidden relative z-10 text-center p-6">
-              <div class="font-display text-lg mb-2">NOW PLAYING: BLOCK PARTY 2026 — CAMPAIGN FILM</div>
-              <p class="font-mono-meta text-xs text-[#aaa]">Shot on 16mm &amp; digital across downtown rooftops and late-night basketball courts.</p>
-            </div>
-            <span class="font-mono-meta absolute bottom-3.5 right-4 text-[11px] text-[#ccc]">02:48</span>
+        {%- comment -%} Featured Campaign Hero Photo {%- endcomment -%}
+        <a href="{{ section.settings.hero_link | default: '/collections/no-evil' }}" data-nav class="block border border-black mb-5 reveal-on-scroll group overflow-hidden">
+          <div class="aspect-[4/5] sm:aspect-[16/11] bg-[#0a0a0a] relative overflow-hidden">
+            {%- if section.settings.hero_image != blank -%}
+              <img src="{{ section.settings.hero_image | image_url: width: 1600 }}" alt="{{ section.settings.hero_title | escape }}" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-500" />
+            {%- else -%}
+              <img src="{{ 'campaign-duo-tees.jpg' | asset_url }}" alt="HOODLUMS NO EVIL Campaign" class="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-500" />
+            {%- endif -%}
           </div>
-          <div class="p-4">
-            <div class="font-mono-meta text-[11px] text-[#666] mb-1.5">CAMPAIGN · NOV 2026</div>
-            <h2 class="font-display text-lg mb-2">BLOCK PARTY 2026 — CAMPAIGN FILM</h2>
-            <p class="text-[13px] text-[#333] leading-relaxed mb-3">Shot on 16mm &amp; digital across downtown rooftops and late-night basketball courts.</p>
-            <span class="font-mono-meta text-[11px] font-semibold">WATCH ON YOUTUBE ↗</span>
+          <div class="p-4 bg-white">
+            <div class="font-mono-meta text-[11px] text-[#666] mb-1.5">{{ section.settings.hero_tag | default: 'CAMPAIGN · NO EVIL DROP' }}</div>
+            <h2 class="font-display text-lg mb-2">{{ section.settings.hero_title | default: 'HOODLUMS — NO EVIL 400 GSM CAMPAIGN' }}</h2>
+            <p class="text-[13px] text-[#333] leading-relaxed mb-3">{{ section.settings.hero_desc | default: 'See nothing. Hear nothing. Say nothing. Shot on 35mm direct flash featuring our heavyweight boxy & snow-washed tees.' }}</p>
+            <span class="font-mono-meta text-[11px] font-semibold underline">SHOP THE DROP ↗</span>
           </div>
-        </div>
+        </a>
 
+        {%- comment -%} Editorial Grid Photos {%- endcomment -%}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="border border-black/15 reveal-on-scroll" data-delay="0">
-            <div class="aspect-video bg-[#141414] flex items-center justify-center text-white relative">
-              <button type="button" onclick="this.textContent='PLAYING · 04:12'; this.classList.remove('rounded-full','w-11','h-11','border')" class="w-11 h-11 rounded-full border border-white flex items-center justify-center text-xs hover:scale-105 transition-transform cursor-pointer">▶</button>
+          <a href="{{ section.settings.card1_link | default: '/collections/no-evil' }}" data-nav class="block border border-black/15 hover:border-black transition-colors reveal-on-scroll group overflow-hidden" data-delay="0">
+            <div class="aspect-[3/4] bg-[#141414] overflow-hidden">
+              {%- if section.settings.card1_image != blank -%}
+                <img src="{{ section.settings.card1_image | image_url: width: 1000 }}" alt="{{ section.settings.card1_title | escape }}" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500" />
+              {%- else -%}
+                <img src="{{ 'campaign-female.jpg' | asset_url }}" alt="NO EVIL Boxy Oversized Tee" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500" />
+              {%- endif -%}
             </div>
-            <div class="p-3.5">
-              <div class="font-mono-meta text-[10px] text-[#666] mb-1">STUDIO BTS · OCT 2026</div>
-              <h3 class="font-display text-[13px] mb-1.5 leading-snug">BEHIND THE PRINT: 240 GSM SILKSCREEN</h3>
-              <p class="text-xs text-[#444] leading-relaxed mb-2.5">Inside our studio print room testing high-density plastisol inks for Drop 04.</p>
-              <span class="font-mono-meta text-[10px] font-semibold">WATCH ON YOUTUBE ↗</span>
+            <div class="p-3.5 bg-white">
+              <div class="font-mono-meta text-[10px] text-[#666] mb-1">{{ section.settings.card1_tag | default: 'EDITORIAL · 400 GSM' }}</div>
+              <h3 class="font-display text-[13px] mb-1.5 leading-snug">{{ section.settings.card1_title | default: 'BOXY OVERSIZED TEE — CONCRETE FLASH' }}</h3>
+              <p class="text-xs text-[#444] leading-relaxed">{{ section.settings.card1_desc | default: 'Structured H-line drop shoulder fit with distressed sand-grain front print.' }}</p>
             </div>
-          </div>
+          </a>
 
-          <div class="border border-black/15 reveal-on-scroll" data-delay="80">
-            <div class="aspect-video bg-[#141414] flex items-center justify-center text-white relative">
-              <button type="button" onclick="this.textContent='PLAYING · 01:55'; this.classList.remove('rounded-full','w-11','h-11','border')" class="w-11 h-11 rounded-full border border-white flex items-center justify-center text-xs hover:scale-105 transition-transform cursor-pointer">▶</button>
+          <a href="{{ section.settings.card2_link | default: '/collections/no-evil' }}" data-nav class="block border border-black/15 hover:border-black transition-colors reveal-on-scroll group overflow-hidden" data-delay="80">
+            <div class="aspect-[3/4] bg-[#141414] overflow-hidden">
+              {%- if section.settings.card2_image != blank -%}
+                <img src="{{ section.settings.card2_image | image_url: width: 1000 }}" alt="{{ section.settings.card2_title | escape }}" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500" />
+              {%- else -%}
+                <img src="{{ 'campaign-male.jpg' | asset_url }}" alt="NO EVIL Industrial Lookbook" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500" />
+              {%- endif -%}
             </div>
-            <div class="p-3.5">
-              <div class="font-mono-meta text-[10px] text-[#666] mb-1">COMMUNITY · OCT 2026</div>
-              <h3 class="font-display text-[13px] mb-1.5 leading-snug">KOTB RUN CLUB: NIGHT 5K SESSION</h3>
-              <p class="text-xs text-[#444] leading-relaxed mb-2.5">140 runners, one loop through the city core. Post-run espresso &amp; tees.</p>
-              <span class="font-mono-meta text-[10px] font-semibold">WATCH ON YOUTUBE ↗</span>
+            <div class="p-3.5 bg-white">
+              <div class="font-mono-meta text-[10px] text-[#666] mb-1">{{ section.settings.card2_tag | default: 'LOOKBOOK · DROP 01' }}</div>
+              <h3 class="font-display text-[13px] mb-1.5 leading-snug">{{ section.settings.card2_title | default: 'INDUSTRIAL STAIRWELL // HEAVYWEIGHT' }}</h3>
+              <p class="text-xs text-[#444] leading-relaxed">{{ section.settings.card2_desc | default: 'Built to hold its shape from the block to late nights out.' }}</p>
             </div>
-          </div>
-
-          <div class="border border-black/15 reveal-on-scroll" data-delay="160">
-            <div class="aspect-video bg-[#141414] flex items-center justify-center text-white relative">
-              <button type="button" onclick="this.textContent='PLAYING · 03:20'; this.classList.remove('rounded-full','w-11','h-11','border')" class="w-11 h-11 rounded-full border border-white flex items-center justify-center text-xs hover:scale-105 transition-transform cursor-pointer">▶</button>
-            </div>
-            <div class="p-3.5">
-              <div class="font-mono-meta text-[10px] text-[#666] mb-1">ARCHIVE · SEP 2026</div>
-              <h3 class="font-display text-[13px] mb-1.5 leading-snug">DESIGNING THE NIGHT SHIFT JACKET</h3>
-              <p class="text-xs text-[#444] leading-relaxed mb-2.5">Pattern drafting, enzyme washes, and chain-stitch embroidery breakdown.</p>
-              <span class="font-mono-meta text-[10px] font-semibold">WATCH ON YOUTUBE ↗</span>
-            </div>
-          </div>
+          </a>
         </div>
       </div>
 
+      {%- comment -%} Right Sidebar: Featured Capsule Look {%- endcomment -%}
       <aside class="lg:border-l lg:border-black/10 lg:pl-6">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="font-display text-sm">LATEST POSTS</h2>
-          <a href="/pages/lookbooks" data-nav class="font-mono-meta text-[10px]">VIEW ALL POSTS ↗</a>
+          <h2 class="font-display text-sm">FEATURED CAPSULE</h2>
+          <a href="/collections/no-evil" data-nav class="font-mono-meta text-[10px] underline">VIEW COLLECTION ↗</a>
         </div>
         <div class="flex flex-col gap-4">
-          <div class="border border-black/15 p-3 reveal-on-scroll" data-delay="0">
-            <div class="aspect-square text-white flex flex-col justify-between p-3.5 mb-2.5" style="background:#161616">
-              <span class="font-mono-meta text-[10px] opacity-75">@kidsowntheblock</span>
-              <span class="font-display text-lg">DROP 04</span>
+          <a href="{{ section.settings.side_link | default: '/collections/no-evil' }}" data-nav class="block border border-black/15 hover:border-black transition-colors p-3 reveal-on-scroll group" data-delay="0">
+            <div class="aspect-[3/4] bg-[#161616] overflow-hidden mb-3">
+              {%- if section.settings.side_image != blank -%}
+                <img src="{{ section.settings.side_image | image_url: width: 1000 }}" alt="{{ section.settings.side_title | escape }}" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500" />
+              {%- else -%}
+                <img src="{{ 'campaign-duo-tank.jpg' | asset_url }}" alt="NO EVIL Tank & Washed Tee" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500" />
+              {%- endif -%}
             </div>
-            <p class="text-xs leading-relaxed">Drop 04 Heavyweight 240 GSM Tees live now online &amp; flagship.</p>
-          </div>
-          <div class="border border-black/15 p-3 reveal-on-scroll" data-delay="90">
-            <div class="aspect-square text-white flex flex-col justify-between p-3.5 mb-2.5" style="background:#5a0c0c">
-              <span class="font-mono-meta text-[10px] opacity-75">@kotb.runclub</span>
-              <span class="font-display text-lg">RUN CLUB</span>
-            </div>
-            <p class="text-xs leading-relaxed">Thursday 7:30 PM Downtown 5.2K loop. All paces welcome.</p>
-          </div>
-          <div class="border border-black/15 p-3 reveal-on-scroll" data-delay="180">
-            <div class="aspect-square text-white flex flex-col justify-between p-3.5 mb-2.5" style="background:#162742">
-              <span class="font-mono-meta text-[10px] opacity-75">@kidsowntheblock</span>
-              <span class="font-display text-lg">LOOKBOOK</span>
-            </div>
-            <p class="text-xs leading-relaxed">Midnight Block Lookbook shot in studio. 5 new silhouettes.</p>
-          </div>
+            <div class="font-display text-sm mb-1">{{ section.settings.side_title | default: 'NO EVIL // TANK & WASHED TEE' }}</div>
+            <p class="text-xs text-[#444] leading-relaxed">{{ section.settings.side_desc | default: 'Now live worldwide in S–2XL. Direct DTF print on 100% heavyweight cotton.' }}</p>
+          </a>
         </div>
       </aside>
     </div>
@@ -103,6 +88,31 @@
 {% schema %}
 {
   "name": "KOTB Block Story",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Page Heading", "default": "BLOCK STORY" },
+    { "type": "header", "content": "Featured Hero Photo" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero Image (optional override)" },
+    { "type": "text", "id": "hero_tag", "label": "Hero Eyebrow", "default": "CAMPAIGN · NO EVIL DROP" },
+    { "type": "text", "id": "hero_title", "label": "Hero Title", "default": "HOODLUMS — NO EVIL 400 GSM CAMPAIGN" },
+    { "type": "textarea", "id": "hero_desc", "label": "Hero Description", "default": "See nothing. Hear nothing. Say nothing. Shot on 35mm direct flash featuring our heavyweight boxy & snow-washed tees." },
+    { "type": "url", "id": "hero_link", "label": "Hero Link" },
+    { "type": "header", "content": "Editorial Card 1" },
+    { "type": "image_picker", "id": "card1_image", "label": "Card 1 Image (optional override)" },
+    { "type": "text", "id": "card1_tag", "label": "Card 1 Eyebrow", "default": "EDITORIAL · 400 GSM" },
+    { "type": "text", "id": "card1_title", "label": "Card 1 Title", "default": "BOXY OVERSIZED TEE — CONCRETE FLASH" },
+    { "type": "textarea", "id": "card1_desc", "label": "Card 1 Description", "default": "Structured H-line drop shoulder fit with distressed sand-grain front print." },
+    { "type": "url", "id": "card1_link", "label": "Card 1 Link" },
+    { "type": "header", "content": "Editorial Card 2" },
+    { "type": "image_picker", "id": "card2_image", "label": "Card 2 Image (optional override)" },
+    { "type": "text", "id": "card2_tag", "label": "Card 2 Eyebrow", "default": "LOOKBOOK · DROP 01" },
+    { "type": "text", "id": "card2_title", "label": "Card 2 Title", "default": "INDUSTRIAL STAIRWELL // HEAVYWEIGHT" },
+    { "type": "textarea", "id": "card2_desc", "label": "Card 2 Description", "default": "Built to hold its shape from the block to late nights out." },
+    { "type": "url", "id": "card2_link", "label": "Card 2 Link" },
+    { "type": "header", "content": "Sidebar Capsule Card" },
+    { "type": "image_picker", "id": "side_image", "label": "Sidebar Image (optional override)" },
+    { "type": "text", "id": "side_title", "label": "Sidebar Title", "default": "NO EVIL // TANK & WASHED TEE" },
+    { "type": "textarea", "id": "side_desc", "label": "Sidebar Description", "default": "Now live worldwide in S–2XL. Direct DTF print on 100% heavyweight cotton." },
+    { "type": "url", "id": "side_link", "label": "Sidebar Link" }
+  ]
 }
 {% endschema %}
