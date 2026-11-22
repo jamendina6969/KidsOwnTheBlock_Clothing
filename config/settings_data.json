@@ -1,4 +1,4 @@
-/*
+﻿/*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
  *
@@ -9,11 +9,10 @@
  */
 {
   "current": {
-    "marquee_text": "DROP 04 LIVE · 240 GSM HEAVYWEIGHT · KIDS OWN THE BLOCK · WORLDWIDE DISPATCH ·",
+    "marquee_text": "DROP 04 LIVE Â· 240 GSM HEAVYWEIGHT Â· KIDS OWN THE BLOCK Â· WORLDWIDE DISPATCH Â·",
     "countdown_label": "DROP 05 ARCHIVE CAPSULE UNLOCKS IN:",
     "countdown_target": "2026-12-31T23:59:59Z",
     "free_shipping_threshold": 3500,
-    "custom_logo": "shopify://shop_images/kotb_bandaged_solid_white_sand.png",
     "content_for_index": []
   }
 }
