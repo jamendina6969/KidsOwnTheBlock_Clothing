@@ -337,33 +337,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const variantInput = document.getElementById('pdp-variant-id');
     const priceEl = document.getElementById('pdp-price');
-    document.querySelectorAll('.size-pill:not([disabled])').forEach((pill) => {
+    const variantBtns = document.querySelectorAll('[data-variant-btn]:not([disabled]), .size-pill:not([disabled])');
+    variantBtns.forEach((pill) => {
       pill.addEventListener('click', () => {
         if (variantInput) variantInput.value = pill.getAttribute('data-variant-id');
         if (priceEl && pill.getAttribute('data-variant-price')) {
           priceEl.textContent = pill.getAttribute('data-variant-price');
         }
-        document.querySelectorAll('.size-pill:not([disabled])').forEach((p) => {
-          p.classList.remove('bg-black', 'text-white');
-          p.classList.add('bg-white', 'text-black');
+        variantBtns.forEach((p) => {
+          p.classList.remove('bg-black', 'text-white', 'border-black');
+          p.classList.add('bg-white', 'text-black', 'border-black/30');
         });
-        pill.classList.remove('bg-white', 'text-black');
-        pill.classList.add('bg-black', 'text-white');
+        pill.classList.remove('bg-white', 'text-black', 'border-black/30');
+        pill.classList.add('bg-black', 'text-white', 'border-black');
       });
     });
 
     let qty = 1;
     const qtyInput = document.getElementById('pdp-qty-input');
     const qtyDisplay = document.getElementById('pdp-qty-display');
-    document.getElementById('pdp-qty-minus')?.addEventListener('click', () => {
-      qty = Math.max(1, qty - 1);
+    const syncQty = (next) => {
+      qty = Math.max(1, next);
       if (qtyInput) qtyInput.value = qty;
       if (qtyDisplay) qtyDisplay.textContent = qty;
-    });
-    document.getElementById('pdp-qty-plus')?.addEventListener('click', () => {
-      qty += 1;
-      if (qtyInput) qtyInput.value = qty;
-      if (qtyDisplay) qtyDisplay.textContent = qty;
+    };
+    document.getElementById('pdp-qty-minus')?.addEventListener('click', () => syncQty(qty - 1));
+    document.getElementById('pdp-qty-plus')?.addEventListener('click', () => syncQty(qty + 1));
+    document.querySelectorAll('[data-pdp-qty]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const delta = parseInt(btn.getAttribute('data-pdp-qty') || '0', 10);
+        const cur = parseInt(qtyInput?.value || String(qty), 10) || 1;
+        syncQty(cur + delta);
+      });
     });
 
     const addCurrentVariant = async () => {
