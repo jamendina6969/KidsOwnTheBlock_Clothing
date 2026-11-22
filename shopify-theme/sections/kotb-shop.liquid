@@ -1,0 +1,138 @@
+{%- comment -%} Brutalist Animated Marquee Ticker {%- endcomment -%}
+<div class="marquee-wrapper bg-black text-white border-b border-white/15 overflow-hidden py-2">
+  <div class="marquee-track font-mono-meta text-[11px] tracking-[0.18em] uppercase">
+    {%- for i in (1..6) -%}
+      <span class="mx-6">{{ settings.marquee_text | default: 'DROP 04 LIVE · 240 GSM HEAVYWEIGHT · KIDS OWN THE BLOCK · WORLDWIDE DISPATCH ·' }}</span>
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- comment -%} Drop 05 Live Countdown Bar {%- endcomment -%}
+<div class="bg-[#111] text-white border-b border-black py-2 px-4 text-center font-mono-meta text-[11px] tracking-[0.12em]">
+  {{ settings.countdown_label | default: 'DROP 05 ARCHIVE CAPSULE UNLOCKS IN:' }}
+  <span id="kotb-drop-countdown" data-target="{{ settings.countdown_target | default: '2026-12-31T23:59:59Z' }}" class="text-[#d9ff00] font-bold ml-1">02D : 14H : 38M : 12S</span>
+</div>
+
+{%- comment -%} 3 Horizontal Slider Bands on #EDEDED (only on All Products collection) {%- endcomment -%}
+{%- if collection.handle == 'all' -%}
+  {%- assign band_titles = 'NEW COLLECTION,RESTOCKED PRODUCTS,HERITAGE PIECES' | split: ',' -%}
+  {%- assign band_tags = 'new,restocked,heritage' | split: ',' -%}
+  {%- assign band_ids = 'slider-new,slider-restocked,slider-heritage' | split: ',' -%}
+
+  {%- for b_idx in (0..2) -%}
+    {%- assign b_tag = band_tags[b_idx] -%}
+    {%- assign b_title = band_titles[b_idx] -%}
+    {%- assign b_id = band_ids[b_idx] -%}
+    {%- assign band_has_items = false -%}
+    {%- for p in collections.all.products -%}
+      {%- if p.tags contains b_tag -%}
+        {%- assign band_has_items = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if band_has_items -%}
+      <section class="bg-[#ededed] pt-8 pb-9 border-b border-black/10">
+        <div class="max-w-[1600px] mx-auto px-3 md:px-6">
+          <div class="flex items-center justify-between mb-4 reveal-on-scroll">
+            <h2 class="font-display text-lg">{{ b_title }}</h2>
+            <div class="flex gap-2">
+              <button type="button" data-slider-btn="-1" data-slider-target="{{ b_id }}" aria-label="Scroll left" class="w-8 h-8 rounded-full border border-black/25 bg-white flex items-center justify-center hover:bg-black hover:text-white transition-colors cursor-pointer">‹</button>
+              <button type="button" data-slider-btn="1" data-slider-target="{{ b_id }}" aria-label="Scroll right" class="w-8 h-8 rounded-full border border-black/25 bg-white flex items-center justify-center hover:bg-black hover:text-white transition-colors cursor-pointer">›</button>
+            </div>
+          </div>
+          <div id="{{ b_id }}" class="no-scrollbar grid grid-flow-col auto-cols-[70%] sm:auto-cols-[44%] md:auto-cols-[31%] lg:auto-cols-[24%] gap-1 sm:gap-2 overflow-x-auto">
+            {%- assign card_i = 0 -%}
+            {%- for p in collections.all.products -%}
+              {%- if p.tags contains b_tag -%}
+                {%- assign d = card_i | times: 55 -%}
+                {% render 'product-card', product: p, surface: 'grey', delay: d %}
+                {%- assign card_i = card_i | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </section>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- comment -%} Main Collection Grid on Pure White {%- endcomment -%}
+{%- paginate collection.products by 12 -%}
+<section class="bg-white pt-11 pb-16">
+  <div class="max-w-[1600px] mx-auto px-3 md:px-6">
+    <div class="flex items-baseline justify-between flex-wrap gap-3 mb-6">
+      <h1 class="font-display text-2xl">{{ collection.title | upcase }}</h1>
+      {%- unless collection.handle == 'all' -%}
+        <a href="{{ routes.all_products_collection_url }}" data-nav class="font-mono-meta text-[11px] underline">VIEW ALL PRODUCTS</a>
+      {%- endunless -%}
+    </div>
+
+    {%- comment -%} Sort & Count Bar {%- endcomment -%}
+    <div class="flex flex-wrap items-center justify-between gap-4 pb-5 mb-5 border-b border-black/10">
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="font-mono-meta text-xs text-[#666]">Collections:</span>
+        <a href="{{ routes.all_products_collection_url }}" data-nav class="font-mono-meta text-[11px] {% if collection.handle == 'all' %}underline font-semibold{% else %}text-[#666] hover:text-black{% endif %}">ALL</a>
+        {%- for col in collections -%}
+          {%- unless col.handle == 'frontpage' -%}
+            <a href="{{ col.url }}" data-nav class="font-mono-meta text-[11px] {% if collection.handle == col.handle %}underline font-semibold{% else %}text-[#666] hover:text-black{% endif %}">{{ col.title | upcase }}</a>
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="flex items-center gap-4">
+        <label class="inline-flex items-center gap-2 text-[13px]">
+          <span class="text-[#666]">Sort by:</span>
+          <select id="kotb-sort-select" class="bg-transparent font-medium cursor-pointer outline-none">
+            {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+        </label>
+        <span class="font-mono-meta text-xs text-[#666]">{{ collection.products_count }} {% if collection.products_count == 1 %}product{% else %}products{% endif %}</span>
+      </div>
+    </div>
+
+    {%- if collection.products.size == 0 -%}
+      <div class="py-16 text-center">
+        <p class="font-display text-base mb-3">NO MATCHING GARMENTS</p>
+        <a href="{{ routes.all_products_collection_url }}" data-nav class="font-display inline-block border border-black rounded-[30px] px-6 py-2.5 text-xs">VIEW ALL PRODUCTS</a>
+      </div>
+    {%- else -%}
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-2">
+        {%- for product in collection.products -%}
+          {%- assign mod_idx = forloop.index0 | modulo: 4 -%}
+          {%- assign card_delay = mod_idx | times: 65 -%}
+          {% render 'product-card', product: product, surface: 'white', delay: card_delay %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <div class="font-mono-meta flex justify-center items-center gap-5 mt-12 text-[13px]">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" data-nav aria-label="Previous page">&lt;</a>
+        {%- endif -%}
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" data-nav class="pb-0.5 border-b border-transparent hover:border-black">{{ part.title }}</a>
+          {%- else -%}
+            <span class="pb-0.5 border-b border-black font-semibold">{{ part.title }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" data-nav aria-label="Next page">&gt;</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "KOTB Shop & Sliders",
+  "settings": []
+}
+{% endschema %}

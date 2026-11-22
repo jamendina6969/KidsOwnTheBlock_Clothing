@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "kotb-splash",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

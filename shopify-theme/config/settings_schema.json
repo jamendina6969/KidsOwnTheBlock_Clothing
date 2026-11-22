@@ -1,0 +1,64 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "KIDS OWN THE BLOCK",
+    "theme_version": "1.0.0",
+    "theme_author": "KOTB Studio",
+    "theme_documentation_url": "https://shopify.dev/themes",
+    "theme_support_url": "https://shopify.dev/themes"
+  },
+  {
+    "name": "Storefront & Drop Banner",
+    "settings": [
+      {
+        "type": "text",
+        "id": "marquee_text",
+        "label": "Marquee ticker text",
+        "default": "DROP 04 LIVE · 240 GSM HEAVYWEIGHT · KIDS OWN THE BLOCK · WORLDWIDE DISPATCH ·"
+      },
+      {
+        "type": "text",
+        "id": "countdown_label",
+        "label": "Countdown bar label",
+        "default": "DROP 05 ARCHIVE CAPSULE UNLOCKS IN:"
+      },
+      {
+        "type": "text",
+        "id": "countdown_target",
+        "label": "Countdown target ISO date (e.g. 2026-12-31T23:59:59Z)",
+        "default": "2026-12-31T23:59:59Z"
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold (in store currency)",
+        "default": 3500
+      }
+    ]
+  },
+  {
+    "name": "Splash Landing",
+    "settings": [
+      {
+        "type": "url",
+        "id": "splash_video_url",
+        "label": "Splash background video URL (MP4 from Shopify Files)"
+      },
+      {
+        "type": "image_picker",
+        "id": "custom_logo",
+        "label": "Optional custom emblem image (replaces default SVG emblem)"
+      }
+    ]
+  },
+  {
+    "name": "Social Links",
+    "settings": [
+      { "type": "url", "id": "social_fb", "label": "Facebook URL" },
+      { "type": "url", "id": "social_ig", "label": "Instagram URL" },
+      { "type": "url", "id": "social_yt", "label": "YouTube URL" },
+      { "type": "url", "id": "social_tt", "label": "TikTok URL" },
+      { "type": "url", "id": "social_pin", "label": "Pinterest URL" }
+    ]
+  }
+]

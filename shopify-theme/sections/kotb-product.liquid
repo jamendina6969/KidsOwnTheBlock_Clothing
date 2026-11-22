@@ -1,0 +1,130 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<main class="bg-white pt-8 pb-20">
+  <div class="max-w-[1600px] mx-auto px-3 md:px-6">
+    <nav aria-label="Breadcrumb" class="font-mono-meta text-[11px] text-[#666] mb-6 flex items-center gap-2">
+      <a href="{{ routes.all_products_collection_url }}" data-nav class="hover:text-black">SHOP</a>
+      <span>/</span>
+      <span class="text-black">{{ product.title | upcase }}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      {%- comment -%} Left: Product Media Gallery {%- endcomment -%}
+      <div class="lg:col-span-7 flex flex-col gap-3">
+        <div id="pdp-main-stage" class="pdp-zoom-container bg-[#ededed] aspect-[4/5] w-full flex items-center justify-center overflow-hidden">
+          {%- if product.featured_image != blank -%}
+            <img
+              id="pdp-main-img"
+              src="{{ product.featured_image | image_url: width: 1200 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              class="w-full h-full object-contain block"
+            />
+          {%- else -%}
+            {% render 'garment-svg', product: product, view: 'front' %}
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="grid grid-cols-4 sm:grid-cols-6 gap-2">
+            {%- for image in product.images -%}
+              <button
+                type="button"
+                data-pdp-thumb="{{ image | image_url: width: 1200 }}"
+                class="aspect-[4/5] bg-[#ededed] border {% if forloop.first %}border-black{% else %}border-transparent hover:border-black/40{% endif %} overflow-hidden cursor-pointer transition-colors"
+              >
+                <img
+                  src="{{ image | image_url: width: 300 }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  class="w-full h-full object-contain block"
+                  loading="lazy"
+                />
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right: Product Info & Add to Cart {%- endcomment -%}
+      <div class="lg:col-span-5 lg:sticky lg:top-24 flex flex-col gap-5">
+        <div class="border-b border-black/10 pb-5">
+          {%- if product.type != blank -%}
+            <div class="font-mono-meta text-[11px] text-[#666] uppercase mb-1.5">{{ product.type }}</div>
+          {%- endif -%}
+          <h1 class="font-display text-2xl md:text-3xl leading-tight">{{ product.title }}</h1>
+          <div class="mt-2.5 flex items-center gap-3">
+            <span id="pdp-price" class="font-mono-meta text-lg font-semibold">{{ current_variant.price | money }}</span>
+            {%- if current_variant.compare_at_price > current_variant.price -%}
+              <span class="font-mono-meta text-sm text-[#666] line-through">{{ current_variant.compare_at_price | money }}</span>
+            {%- endif -%}
+            {%- unless product.available -%}
+              <span class="font-mono-meta text-[11px] border border-black px-2.5 py-0.5 rounded-full">SOLD OUT</span>
+            {%- endunless -%}
+          </div>
+        </div>
+
+        {% form 'product', product, id: 'pdp-add-to-cart-form', class: 'flex flex-col gap-5' %}
+          <input type="hidden" name="id" id="pdp-variant-id" value="{{ current_variant.id }}" />
+
+          {%- unless product.has_only_default_variant -%}
+            <div>
+              <div class="font-mono-meta text-[11px] text-[#666] mb-2">SELECT VARIANT</div>
+              <div class="flex flex-wrap gap-2">
+                {%- for variant in product.variants -%}
+                  <button
+                    type="button"
+                    data-variant-btn
+                    data-variant-id="{{ variant.id }}"
+                    data-variant-price="{{ variant.price | money }}"
+                    data-variant-available="{{ variant.available }}"
+                    {% unless variant.available %}disabled{% endunless %}
+                    class="font-mono-meta text-xs min-w-[48px] px-3.5 h-10 border transition-colors {% if variant.id == current_variant.id %}bg-black text-white border-black{% elsif variant.available %}bg-white text-black border-black/30 hover:border-black cursor-pointer{% else %}bg-[#f5f5f5] text-[#999] border-black/10 line-through cursor-not-allowed{% endif %}"
+                  >
+                    {{ variant.title }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endunless -%}
+
+          <div class="flex items-center gap-3">
+            <div class="inline-flex items-center border border-black rounded-[8px] h-12">
+              <button type="button" data-pdp-qty="-1" aria-label="Decrease quantity" class="w-10 h-full flex items-center justify-center text-sm cursor-pointer">-</button>
+              <input id="pdp-qty-input" type="number" name="quantity" value="1" min="1" class="font-mono-meta w-10 text-center text-xs bg-transparent outline-none" />
+              <button type="button" data-pdp-qty="1" aria-label="Increase quantity" class="w-10 h-full flex items-center justify-center text-sm cursor-pointer">+</button>
+            </div>
+
+            <button
+              id="pdp-submit-btn"
+              type="submit"
+              {% unless current_variant.available %}disabled{% endunless %}
+              class="btn-sheen font-display flex-1 h-12 rounded-[30px] text-xs tracking-[0.08em] transition-opacity {% if current_variant.available %}bg-black text-white cursor-pointer hover:opacity-85{% else %}bg-[#ccc] text-[#666] cursor-not-allowed{% endif %}"
+            >
+              {%- if current_variant.available -%}ADD TO CART{%- else -%}SOLD OUT{%- endif -%}
+            </button>
+          </div>
+
+          <div id="pdp-stock-error" class="hidden font-mono-meta text-xs text-red-600 border border-red-600 px-3 py-2"></div>
+        {% endform %}
+
+        {%- if product.description != blank -%}
+          <div class="border-t border-black/10 pt-5 text-sm leading-relaxed text-[#222] space-y-3">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+        <div class="border-t border-black/10 pt-5 font-mono-meta text-[11px] text-[#666] space-y-1.5">
+          <div>· 240 GSM HEAVYWEIGHT CONSTRUCTION</div>
+          <div>· FREE EXPRESS SHIPPING ON ORDERS OVER {{ settings.free_shipping_threshold | default: 3500 | times: 100 | money }}</div>
+          <div>· WORLDWIDE DISPATCH · 7-DAY SIZE EXCHANGE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "KOTB Product Detail",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,42 @@
+<footer class="bg-[#ebebeb] border-t border-black/10 pt-12 pb-7">
+  <div class="max-w-[1600px] mx-auto px-3 md:px-6">
+    <div class="flex flex-wrap items-end justify-between gap-7 pb-10">
+      <div class="w-full max-w-[380px]">
+        <h3 class="font-display text-base mb-3.5">Subscribe</h3>
+        {% form 'customer', id: 'kotb-newsletter-form', class: 'relative' %}
+          <input type="hidden" name="contact[tags]" value="newsletter" />
+          <input type="email" name="contact[email]" required placeholder="Email" aria-label="Email address" class="w-full h-11 rounded-[8px] border border-black/55 bg-transparent pl-3.5 pr-11 text-[13px] outline-none focus:border-black" />
+          <button type="submit" aria-label="Subscribe" class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+          {%- if form.posted_successfully? -%}
+            <div class="font-mono-meta text-[11px] mt-2 text-black">
+              ✓ Subscribed to drop alerts &amp; early access.
+            </div>
+          {%- endif -%}
+        {% endform %}
+      </div>
+
+      <div class="flex items-center gap-4">
+        {%- assign socials = 'FB,IG,YT,TT,PIN' | split: ',' -%}
+        {%- for s in socials -%}
+          {%- assign s_key = s | downcase | prepend: 'social_' -%}
+          <a href="{{ settings[s_key] | default: '#' }}" {% if settings[s_key] != blank %}target="_blank" rel="noopener"{% endif %} class="font-mono-meta text-[11px] font-semibold text-black border border-black px-2 py-1 hover:bg-black hover:text-white transition-colors">{{ s }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="border-t border-black/10 pt-5 flex flex-wrap justify-center items-center gap-2.5 text-center">
+      <span class="font-mono-meta text-[11px] text-[#666]">© {{ 'now' | date: '%Y' }}, {{ shop.name | upcase }}</span>
+      <span class="font-mono-meta text-[11px] text-[#666]">·</span>
+      <a href="/pages/help" data-nav class="font-mono-meta text-[11px] text-[#666] hover:text-black">Help &amp; Privacy</a>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "KOTB Footer",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+<main class="bg-white py-14 px-4">
+  <div class="w-full max-w-[400px] mx-auto border border-black p-7 anim-fade-up">
+    <div class="flex justify-center mb-5">
+      {% render 'brand-mark', color: 'black', size: 38, show_wordmark: true %}
+    </div>
+    <h1 class="font-display text-lg text-center mb-5">CREATE ACCOUNT</h1>
+
+    {% form 'create_customer', class: 'flex flex-col gap-3.5' %}
+      {%- if form.errors -%}
+        <div class="font-mono-meta text-[11px] text-red-700 border border-red-700 bg-red-50 px-3 py-2">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+      <input type="text" name="customer[first_name]" required placeholder="First name" class="h-11 rounded-[8px] border border-black px-3.5 text-[13px] outline-none" />
+      <input type="text" name="customer[last_name]" required placeholder="Last name" class="h-11 rounded-[8px] border border-black px-3.5 text-[13px] outline-none" />
+      <input type="email" name="customer[email]" required placeholder="Email" class="h-11 rounded-[8px] border border-black px-3.5 text-[13px] outline-none" />
+      <input type="password" name="customer[password]" required minlength="6" placeholder="Password" class="h-11 rounded-[8px] border border-black px-3.5 text-[13px] outline-none" />
+      <button type="submit" class="btn-sheen font-display mt-1 bg-black text-white rounded-[30px] py-3 text-xs cursor-pointer">CREATE ACCOUNT</button>
+    {% endform %}
+
+    <div class="mt-5 pt-4 border-t border-black/10 text-center font-mono-meta text-xs">
+      <a href="{{ routes.account_login_url }}" data-nav class="underline">BACK TO SIGN IN</a>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,61 @@
+Handle,Title,Body (HTML),Vendor,Type,Tags,Published,Option1 Name,Option1 Value,Variant SKU,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Requires Shipping,Variant Taxable,Status
+"kotb-block-heavyweight-tee","KOTB BLOCK HEAVYWEIGHT TEE","<p>Cut in our signature boxy street silhouette from 240 GSM combed cotton with cracked archival plastisol print on front and back.</p><ul><li>240 GSM Combed Cotton</li><li>Boxy Drop-Shoulder Fit</li><li>Washed Onyx Black</li><li>High-Density Silkscreen</li></ul>","KIDS OWN THE BLOCK","TEES","new, TEES",TRUE,Size,"S","KOTB-KOTB-B-S",shopify,0,deny,manual,950.00,TRUE,TRUE,active
+"kotb-block-heavyweight-tee",,,,,,,,"M","KOTB-KOTB-B-M",shopify,18,deny,manual,950.00,TRUE,TRUE,
+"kotb-block-heavyweight-tee",,,,,,,,"L","KOTB-KOTB-B-L",shopify,24,deny,manual,950.00,TRUE,TRUE,
+"kotb-block-heavyweight-tee",,,,,,,,"XL","KOTB-KOTB-B-XL",shopify,15,deny,manual,950.00,TRUE,TRUE,
+"kotb-block-heavyweight-tee",,,,,,,,"XXL","KOTB-KOTB-B-XXL",shopify,0,deny,manual,950.00,TRUE,TRUE,
+"concrete-youth-zip-hoodie","CONCRETE YOUTH ZIP HOODIE","<p>Heavyweight 460 GSM washed charcoal fleece with cropped waist ribbing and tonal back graphic.</p><ul><li>460 GSM French Terry</li><li>Double-Layer Hood</li><li>Two-Way Antique Metal Zip</li><li>Puff Print Chest Crest</li></ul>","KIDS OWN THE BLOCK","HOODIES","new, restocked, HOODIES",TRUE,Size,"S","KOTB-CONCRE-S",shopify,12,deny,manual,2450.00,TRUE,TRUE,active
+"concrete-youth-zip-hoodie",,,,,,,,"M","KOTB-CONCRE-M",shopify,20,deny,manual,2450.00,TRUE,TRUE,
+"concrete-youth-zip-hoodie",,,,,,,,"L","KOTB-CONCRE-L",shopify,18,deny,manual,2450.00,TRUE,TRUE,
+"concrete-youth-zip-hoodie",,,,,,,,"XL","KOTB-CONCRE-XL",shopify,0,deny,manual,2450.00,TRUE,TRUE,
+"concrete-youth-zip-hoodie",,,,,,,,"XXL","KOTB-CONCRE-XXL",shopify,10,deny,manual,2450.00,TRUE,TRUE,
+"midnight-block-utility-shorts","MIDNIGHT BLOCK UTILITY SHORTS","<p>Deep midnight navy ripstop utility shorts built for daily skate and city wear.</p><ul><li>310 GSM Ripstop Twill</li><li>Above-Knee Wide Cut</li><li>6-Pocket Cargo Layout</li><li>Custom Woven Drawcord</li></ul>","KIDS OWN THE BLOCK","BOTTOMS","new, BOTTOMS",TRUE,Size,"S","KOTB-MIDNIG-S",shopify,14,deny,manual,1450.00,TRUE,TRUE,active
+"midnight-block-utility-shorts",,,,,,,,"M","KOTB-MIDNIG-M",shopify,22,deny,manual,1450.00,TRUE,TRUE,
+"midnight-block-utility-shorts",,,,,,,,"L","KOTB-MIDNIG-L",shopify,20,deny,manual,1450.00,TRUE,TRUE,
+"midnight-block-utility-shorts",,,,,,,,"XL","KOTB-MIDNIG-XL",shopify,12,deny,manual,1450.00,TRUE,TRUE,
+"midnight-block-utility-shorts",,,,,,,,"XXL","KOTB-MIDNIG-XXL",shopify,0,deny,manual,1450.00,TRUE,TRUE,
+"two-block-cropped-baby-tee","TWO-BLOCK CROPPED BABY TEE","<p>Fitted bone-white rib baby tee featuring bold crimson block typography.</p><ul><li>210 GSM Stretch Rib</li><li>Contoured Cropped Fit</li><li>Bound Collar Trim</li><li>Soft-Hand Waterbased Ink</li></ul>","KIDS OWN THE BLOCK","WOMENS","new, WOMENS",TRUE,Size,"S","KOTB-TWO-BL-S",shopify,16,deny,manual,850.00,TRUE,TRUE,active
+"two-block-cropped-baby-tee",,,,,,,,"M","KOTB-TWO-BL-M",shopify,18,deny,manual,850.00,TRUE,TRUE,
+"two-block-cropped-baby-tee",,,,,,,,"L","KOTB-TWO-BL-L",shopify,0,deny,manual,850.00,TRUE,TRUE,
+"two-block-cropped-baby-tee",,,,,,,,"XL","KOTB-TWO-BL-XL",shopify,10,deny,manual,850.00,TRUE,TRUE,
+"two-block-cropped-baby-tee",,,,,,,,"XXL","KOTB-TWO-BL-XXL",shopify,0,deny,manual,850.00,TRUE,TRUE,
+"night-shift-work-jacket","NIGHT SHIFT WORK JACKET","<p>Archival Detroit-inspired work jacket in enzyme-washed black canvas. First drop sold out.</p><ul><li>14oz Bull Denim Canvas</li><li>Quilted Satin Lining</li><li>Corduroy Contrast Collar</li><li>Chain-Stitched Back</li></ul>","KIDS OWN THE BLOCK","OUTERWEAR","new, heritage, OUTERWEAR",TRUE,Size,"S","KOTB-NIGHT--S",shopify,0,deny,manual,3450.00,TRUE,TRUE,active
+"night-shift-work-jacket",,,,,,,,"M","KOTB-NIGHT--M",shopify,0,deny,manual,3450.00,TRUE,TRUE,
+"night-shift-work-jacket",,,,,,,,"L","KOTB-NIGHT--L",shopify,0,deny,manual,3450.00,TRUE,TRUE,
+"night-shift-work-jacket",,,,,,,,"XL","KOTB-NIGHT--XL",shopify,0,deny,manual,3450.00,TRUE,TRUE,
+"night-shift-work-jacket",,,,,,,,"XXL","KOTB-NIGHT--XXL",shopify,0,deny,manual,3450.00,TRUE,TRUE,
+"block-run-club-mesh-jersey","BLOCK RUN CLUB MESH JERSEY","<p>Breathable technical run club singlet/jersey built for Thursday night 5K street sessions.</p><ul><li>165 GSM Micro-Mesh</li><li>Moisture-Wicking Knit</li><li>Reflective 3M Piping</li><li>Athletic Relaxed Cut</li></ul>","KIDS OWN THE BLOCK","RUNNING","new, restocked, RUNNING",TRUE,Size,"S","KOTB-BLOCK--S",shopify,15,deny,manual,1250.00,TRUE,TRUE,active
+"block-run-club-mesh-jersey",,,,,,,,"M","KOTB-BLOCK--M",shopify,20,deny,manual,1250.00,TRUE,TRUE,
+"block-run-club-mesh-jersey",,,,,,,,"L","KOTB-BLOCK--L",shopify,20,deny,manual,1250.00,TRUE,TRUE,
+"block-run-club-mesh-jersey",,,,,,,,"XL","KOTB-BLOCK--XL",shopify,15,deny,manual,1250.00,TRUE,TRUE,
+"block-run-club-mesh-jersey",,,,,,,,"XXL","KOTB-BLOCK--XXL",shopify,10,deny,manual,1250.00,TRUE,TRUE,
+"stone-wash-baggy-denim","STONE WASH BAGGY DENIM","<p>Vintage enzyme-washed wide-leg denim with subtle knee whiskering and deep utility pockets.</p><ul><li>14oz Raw Cotton Denim</li><li>Wide Skate Leg Opening</li><li>Custom Rivet Hardware</li><li>Embossed Leather Patch</li></ul>","KIDS OWN THE BLOCK","BOTTOMS","restocked, BOTTOMS",TRUE,Size,"S","KOTB-STONE--S",shopify,0,deny,manual,2800.00,TRUE,TRUE,active
+"stone-wash-baggy-denim",,,,,,,,"M","KOTB-STONE--M",shopify,16,deny,manual,2800.00,TRUE,TRUE,
+"stone-wash-baggy-denim",,,,,,,,"L","KOTB-STONE--L",shopify,18,deny,manual,2800.00,TRUE,TRUE,
+"stone-wash-baggy-denim",,,,,,,,"XL","KOTB-STONE--XL",shopify,14,deny,manual,2800.00,TRUE,TRUE,
+"stone-wash-baggy-denim",,,,,,,,"XXL","KOTB-STONE--XXL",shopify,0,deny,manual,2800.00,TRUE,TRUE,
+"archive-6-panel-block-cap","ARCHIVE 6-PANEL BLOCK CAP","<p>Everyday unstructured cap with crisp tonal stitching and signature block monogram.</p><ul><li>Brushed Cotton Twill</li><li>Unstructured 6-Panel</li><li>3D Raised Embroidery</li><li>Matte Metal Buckle</li></ul>","KIDS OWN THE BLOCK","HEADWEAR","restocked, heritage, HEADWEAR",TRUE,Size,"S","KOTB-ARCHIV-S",shopify,20,deny,manual,750.00,TRUE,TRUE,active
+"archive-6-panel-block-cap",,,,,,,,"M","KOTB-ARCHIV-M",shopify,25,deny,manual,750.00,TRUE,TRUE,
+"archive-6-panel-block-cap",,,,,,,,"L","KOTB-ARCHIV-L",shopify,25,deny,manual,750.00,TRUE,TRUE,
+"archive-6-panel-block-cap",,,,,,,,"XL","KOTB-ARCHIV-XL",shopify,20,deny,manual,750.00,TRUE,TRUE,
+"archive-6-panel-block-cap",,,,,,,,"XXL","KOTB-ARCHIV-XXL",shopify,15,deny,manual,750.00,TRUE,TRUE,
+"crimson-curtain-graphic-tee","CRIMSON CURTAIN GRAPHIC TEE","<p>Inspired by our Midnight Block lookbook stage, printed in deep crimson over off-white jersey.</p><ul><li>230 GSM Jersey Cotton</li><li>Regular Street Fit</li><li>Discharge Screenprint</li><li>Pre-Shrunk</li></ul>","KIDS OWN THE BLOCK","TEES","restocked, TEES",TRUE,Size,"S","KOTB-CRIMSO-S",shopify,14,deny,manual,980.00,TRUE,TRUE,active
+"crimson-curtain-graphic-tee",,,,,,,,"M","KOTB-CRIMSO-M",shopify,0,deny,manual,980.00,TRUE,TRUE,
+"crimson-curtain-graphic-tee",,,,,,,,"L","KOTB-CRIMSO-L",shopify,22,deny,manual,980.00,TRUE,TRUE,
+"crimson-curtain-graphic-tee",,,,,,,,"XL","KOTB-CRIMSO-XL",shopify,18,deny,manual,980.00,TRUE,TRUE,
+"crimson-curtain-graphic-tee",,,,,,,,"XXL","KOTB-CRIMSO-XXL",shopify,12,deny,manual,980.00,TRUE,TRUE,
+"heritage-001-box-hoodie","HERITAGE 001 BOX HOODIE","<p>Our foundational heather-stone hoodie reissued from the original 2024 block capsule.</p><ul><li>480 GSM Heavy Loopback</li><li>No-Drawstring Hood</li><li>Dropped Shoulder</li><li>Woven Hem Label</li></ul>","KIDS OWN THE BLOCK","HERITAGE PIECES","heritage, HERITAGE PIECES",TRUE,Size,"S","KOTB-HERITA-S",shopify,12,deny,manual,2350.00,TRUE,TRUE,active
+"heritage-001-box-hoodie",,,,,,,,"M","KOTB-HERITA-M",shopify,16,deny,manual,2350.00,TRUE,TRUE,
+"heritage-001-box-hoodie",,,,,,,,"L","KOTB-HERITA-L",shopify,0,deny,manual,2350.00,TRUE,TRUE,
+"heritage-001-box-hoodie",,,,,,,,"XL","KOTB-HERITA-XL",shopify,10,deny,manual,2350.00,TRUE,TRUE,
+"heritage-001-box-hoodie",,,,,,,,"XXL","KOTB-HERITA-XXL",shopify,0,deny,manual,2350.00,TRUE,TRUE,
+"subterranean-track-pants","SUBTERRANEAN TRACK PANTS","<p>Lightweight water-repellent crinkle nylon track pants engineered for late-night city miles.</p><ul><li>Crinkle Nylon Shell</li><li>Mesh Ventilation Lining</li><li>Ankle Zip Gussets</li><li>Reflective Side Stripe</li></ul>","KIDS OWN THE BLOCK","RUNNING","heritage, RUNNING",TRUE,Size,"S","KOTB-SUBTER-S",shopify,0,deny,manual,1850.00,TRUE,TRUE,active
+"subterranean-track-pants",,,,,,,,"M","KOTB-SUBTER-M",shopify,0,deny,manual,1850.00,TRUE,TRUE,
+"subterranean-track-pants",,,,,,,,"L","KOTB-SUBTER-L",shopify,0,deny,manual,1850.00,TRUE,TRUE,
+"subterranean-track-pants",,,,,,,,"XL","KOTB-SUBTER-XL",shopify,0,deny,manual,1850.00,TRUE,TRUE,
+"subterranean-track-pants",,,,,,,,"XXL","KOTB-SUBTER-XXL",shopify,0,deny,manual,1850.00,TRUE,TRUE,
+"cobalt-studio-coach-jacket","COBALT STUDIO COACH JACKET","<p>Crisp cobalt-navy coach jacket with minimalist chest typography and full back emblem.</p><ul><li>Water-Resistant Taslan</li><li>Matte Snap Placket</li><li>Cotton Flannel Lining</li><li>Back Graphic Print</li></ul>","KIDS OWN THE BLOCK","OUTERWEAR","heritage, new, OUTERWEAR",TRUE,Size,"S","KOTB-COBALT-S",shopify,10,deny,manual,2950.00,TRUE,TRUE,active
+"cobalt-studio-coach-jacket",,,,,,,,"M","KOTB-COBALT-M",shopify,14,deny,manual,2950.00,TRUE,TRUE,
+"cobalt-studio-coach-jacket",,,,,,,,"L","KOTB-COBALT-L",shopify,16,deny,manual,2950.00,TRUE,TRUE,
+"cobalt-studio-coach-jacket",,,,,,,,"XL","KOTB-COBALT-XL",shopify,0,deny,manual,2950.00,TRUE,TRUE,
+"cobalt-studio-coach-jacket",,,,,,,,"XXL","KOTB-COBALT-XXL",shopify,8,deny,manual,2950.00,TRUE,TRUE,

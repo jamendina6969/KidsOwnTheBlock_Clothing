@@ -1,0 +1,100 @@
+<main class="bg-black text-white min-h-[calc(100vh-76px)] pt-12 pb-16">
+  <div class="max-w-[1600px] mx-auto px-3 md:px-6">
+    <div class="mb-8 anim-fade-up">
+      <div class="font-mono-meta text-[11px] text-[#999] tracking-[0.14em] mb-2.5">KOTB CREW / STREET DIVISION</div>
+      <div class="font-display inline-block border border-white px-3 py-1 text-xs tracking-[0.2em] mb-4">KOTB RUN CLUB</div>
+      <h1 class="font-display text-3xl md:text-4xl leading-tight">ONE BLOCK. MORE GROUND.</h1>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-7 items-start">
+      <div class="border border-white/25 bg-[#070707] p-5 min-h-[360px]">
+        <div class="font-mono-meta text-[10px] text-[#888] mb-3">CITY ROUTE RADAR — SELECT PIN</div>
+        <svg viewBox="0 0 100 75" class="w-full h-[290px] block">
+          <line x1="0" y1="15" x2="100" y2="15" stroke="rgba(255,255,255,0.07)" stroke-width="0.3" />
+          <line x1="0" y1="30" x2="100" y2="30" stroke="rgba(255,255,255,0.07)" stroke-width="0.3" />
+          <line x1="0" y1="45" x2="100" y2="45" stroke="rgba(255,255,255,0.07)" stroke-width="0.3" />
+          <line x1="0" y1="60" x2="100" y2="60" stroke="rgba(255,255,255,0.07)" stroke-width="0.3" />
+          <line x1="20" y1="0" x2="20" y2="75" stroke="rgba(255,255,255,0.07)" stroke-width="0.3" />
+          <line x1="40" y1="0" x2="40" y2="75" stroke="rgba(255,255,255,0.07)" stroke-width="0.3" />
+          <line x1="60" y1="0" x2="60" y2="75" stroke="rgba(255,255,255,0.07)" stroke-width="0.3" />
+          <line x1="80" y1="0" x2="80" y2="75" stroke="rgba(255,255,255,0.07)" stroke-width="0.3" />
+          <polyline points="46,42 24,58 74,36 58,20" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="0.5" stroke-dasharray="1.5 1.5" />
+
+          <g class="rc-pin cursor-pointer" data-rc-idx="0">
+            <circle class="rc-ring" cx="46" cy="42" r="4.2" fill="none" stroke="#d9ff00" stroke-width="0.4" style="transform-origin: 46px 42px; animation: radarPing 2s ease-out infinite;" />
+            <circle class="rc-dot" cx="46" cy="42" r="2.2" fill="#d9ff00" />
+            <text class="rc-label" x="49.2" y="43" fill="#d9ff00" font-size="2.7" font-family="JetBrains Mono, monospace">DOWNTOWN CORE</text>
+          </g>
+          <g class="rc-pin cursor-pointer" data-rc-idx="1">
+            <circle class="rc-ring hidden" cx="24" cy="58" r="4.2" fill="none" stroke="#d9ff00" stroke-width="0.4" style="transform-origin: 24px 58px; animation: radarPing 2s ease-out infinite;" />
+            <circle class="rc-dot" cx="24" cy="58" r="1.5" fill="#ffffff" />
+            <text class="rc-label" x="27.2" y="59" fill="#aaaaaa" font-size="2.7" font-family="JetBrains Mono, monospace">WESTSIDE PIER</text>
+          </g>
+          <g class="rc-pin cursor-pointer" data-rc-idx="2">
+            <circle class="rc-ring hidden" cx="74" cy="36" r="4.2" fill="none" stroke="#d9ff00" stroke-width="0.4" style="transform-origin: 74px 36px; animation: radarPing 2s ease-out infinite;" />
+            <circle class="rc-dot" cx="74" cy="36" r="1.5" fill="#ffffff" />
+            <text class="rc-label" x="77.2" y="37" fill="#aaaaaa" font-size="2.7" font-family="JetBrains Mono, monospace">EAST BLOCK</text>
+          </g>
+          <g class="rc-pin cursor-pointer" data-rc-idx="3">
+            <circle class="rc-ring hidden" cx="58" cy="20" r="4.2" fill="none" stroke="#d9ff00" stroke-width="0.4" style="transform-origin: 58px 20px; animation: radarPing 2s ease-out infinite;" />
+            <circle class="rc-dot" cx="58" cy="20" r="1.5" fill="#ffffff" />
+            <text class="rc-label" x="61.2" y="21" fill="#aaaaaa" font-size="2.7" font-family="JetBrains Mono, monospace">NORTH TRACK</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="flex flex-col gap-5">
+        <div class="border border-white/35 p-6 bg-[#050505]">
+          <div id="rc-district" class="font-mono-meta text-[11px] text-[#d9ff00] mb-2">NEXT RUN · DISTRICT 01</div>
+          <h2 id="rc-city" class="font-display text-[22px] mb-3.5">DOWNTOWN CORE</h2>
+
+          <div class="font-mono-meta grid grid-cols-2 gap-3 py-3.5 border-y border-white/15 text-xs mb-4">
+            <div>
+              <div class="text-[#777] text-[10px]">DATE &amp; TIME</div>
+              <div id="rc-date">THU · NOV 26 · 7:30 PM</div>
+            </div>
+            <div>
+              <div class="text-[#777] text-[10px]">DISTANCE / PACE</div>
+              <div id="rc-pace">5.2 KM · 5:30 / KM</div>
+            </div>
+          </div>
+
+          <div id="rc-spot" class="text-[13px] text-[#ccc] mb-5">📍 KOTB Flagship Steps, 4th &amp; Mercer</div>
+
+          {% form 'contact', class: 'flex flex-col gap-3' %}
+            <input type="hidden" name="contact[subject]" value="KOTB Run Club RSVP" />
+            <input type="hidden" id="rc-chapter-input" name="contact[body]" value="RSVP Chapter: DOWNTOWN CORE" />
+            {%- if form.posted_successfully? -%}
+              <div class="font-mono-meta border border-[#d9ff00] text-[#d9ff00] px-4 py-3 text-xs">
+                ✓ REGISTERED FOR SESSION. SEE YOU ON THE BLOCK.
+              </div>
+            {%- else -%}
+              <input type="email" name="contact[email]" required placeholder="Your email for RSVP confirmation" class="h-10 rounded-[8px] border border-white/35 bg-black text-white px-3 text-xs outline-none focus:border-white" />
+              <button type="submit" class="font-display self-start border border-white px-5 py-3 text-white text-xs inline-flex items-center gap-2 hover:bg-white hover:text-black transition-colors cursor-pointer">
+                <span>REGISTER NOW</span>
+                <span>↗</span>
+              </button>
+            {%- endif -%}
+          {% endform %}
+        </div>
+
+        <div>
+          <div class="font-mono-meta text-[10px] text-[#888] mb-2.5">ACTIVE CHAPTERS</div>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" data-rc-idx="0" class="rc-pill font-mono-meta rounded-[30px] border px-3.5 py-1.5 text-[11px] cursor-pointer border-white bg-white text-black">DOWNTOWN CORE</button>
+            <button type="button" data-rc-idx="1" class="rc-pill font-mono-meta rounded-[30px] border px-3.5 py-1.5 text-[11px] cursor-pointer border-white/30 text-white">WESTSIDE PIER</button>
+            <button type="button" data-rc-idx="2" class="rc-pill font-mono-meta rounded-[30px] border px-3.5 py-1.5 text-[11px] cursor-pointer border-white/30 text-white">EAST BLOCK</button>
+            <button type="button" data-rc-idx="3" class="rc-pill font-mono-meta rounded-[30px] border px-3.5 py-1.5 text-[11px] cursor-pointer border-white/30 text-white">NORTH TRACK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "KOTB Run Club",
+  "settings": []
+}
+{% endschema %}
