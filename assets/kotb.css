@@ -2112,3 +2112,70 @@ html, body {
     min-width: 180px;
   }
 }
+
+/* HOODLUMS / KOTB Recommended Animation Pack (VHS Concrete Flash + Monolith Sheen + Drop Pulse) */
+@keyframes kotbFlashReveal {
+  0% {
+    opacity: 0;
+    filter: brightness(1.6) contrast(1.2);
+    transform: translateY(14px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1) contrast(1);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes kotbSheenSweep {
+  0% { transform: translateX(-140%) skewX(-20deg); }
+  100% { transform: translateX(240%) skewX(-20deg); }
+}
+
+@keyframes kotbDropPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.reveal-on-scroll.is-visible {
+  animation: kotbFlashReveal 0.52s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (hover: hover) {
+  .product-card {
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s ease, box-shadow 0.22s ease;
+    border: 1px solid transparent;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    border-color: #000000;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.09);
+  }
+  .product-card:hover .product-card-media img {
+    transform: scale(1.035);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: translateX(-140%) skewX(-20deg);
+  pointer-events: none;
+}
+.btn-sheen:hover::after {
+  animation: kotbSheenSweep 0.65s ease;
+}
+
+#kotb-drop-countdown {
+  animation: kotbDropPulse 1.8s ease-in-out infinite;
+}
