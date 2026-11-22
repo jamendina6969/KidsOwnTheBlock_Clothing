@@ -1,4 +1,4 @@
-{%- assign current_variant = product.selected_or_first_available_variant -%}
+﻿{%- assign current_variant = product.selected_or_first_available_variant -%}
 
 <main class="bg-white pt-8 pb-20">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
@@ -113,9 +113,9 @@
         {%- endif -%}
 
         <div class="border-t border-black/10 pt-5 font-mono-meta text-[11px] text-[#666] space-y-1.5">
-          <div>· 240 GSM HEAVYWEIGHT CONSTRUCTION</div>
-          <div>· FREE EXPRESS SHIPPING ON ORDERS OVER {{ settings.free_shipping_threshold | default: 3500 | times: 100 | money }}</div>
-          <div>· WORLDWIDE DISPATCH · 7-DAY SIZE EXCHANGE</div>
+          <div>{{ section.settings.spec_1 | default: '· 400 GSM ULTRA-HEAVYWEIGHT COTTON' }}</div>
+          <div>{{ section.settings.spec_2 | default: '· FREE EXPRESS SHIPPING ON ORDERS OVER $100' }}</div>
+          <div>{{ section.settings.spec_3 | default: '· WORLDWIDE DISPATCH · 7-DAY SIZE EXCHANGE' }}</div>
         </div>
       </div>
     </div>
@@ -125,6 +125,10 @@
 {% schema %}
 {
   "name": "KOTB Product Detail",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "spec_1", "label": "Spec Line 1", "default": "· 400 GSM ULTRA-HEAVYWEIGHT COTTON" },
+    { "type": "text", "id": "spec_2", "label": "Spec Line 2", "default": "· FREE EXPRESS SHIPPING ON ORDERS OVER $100" },
+    { "type": "text", "id": "spec_3", "label": "Spec Line 3", "default": "· WORLDWIDE DISPATCH · 7-DAY SIZE EXCHANGE" }
+  ]
 }
 {% endschema %}
