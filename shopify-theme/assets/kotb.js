@@ -505,66 +505,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 10. Lookbooks Interactive Viewer
-  if (document.getElementById('lb-main-svg')) {
-    const collections = [
-      {
-        title: 'BLOCK PARTY COLLECTION 2026',
-        slides: [
-          { look: 1, title: 'KOTB Block Heavyweight Tee + Midnight Utility Shorts', garments: '240 GSM Washed Onyx Tee / Ripstop Cargo', bg: '#6e0e0e', drape: '#3d0404', sil: '#0d0d0d', acc: '#ffffff' },
-          { look: 2, title: 'Concrete Youth Zip Hoodie + Stone Wash Baggy Denim', garments: '460 GSM Charcoal Fleece / 14oz Skate Denim', bg: '#161b26', drape: '#090c12', sil: '#222428', acc: '#d9ff00' },
-          { look: 3, title: 'Two-Block Cropped Baby Tee + Cobalt Coach Jacket', garments: 'Bone Rib Knit / Water-Resistant Taslan', bg: '#751010', drape: '#2b0505', sil: '#162742', acc: '#f4f2ed' },
-          { look: 4, title: 'Night Shift Work Jacket + Archive 6-Panel Cap', garments: '14oz Bull Denim Canvas / Brushed Twill', bg: '#181818', drape: '#070707', sil: '#262626', acc: '#c9a96e' },
-          { look: 5, title: 'Block Run Club Mesh Jersey + Subterranean Track Pants', garments: '165 GSM Micro-Mesh / Crinkle Nylon', bg: '#111927', drape: '#05080f', sil: '#0e0e0e', acc: '#ffffff' },
-        ],
-      },
-      {
-        title: 'CONCRETE YOUTH ARCHIVE 2025',
-        slides: [
-          { look: 1, title: 'Heritage 001 Box Hoodie + Utility Shorts', garments: '480 GSM Heather Stone / 310 GSM Ripstop', bg: '#2c2c2c', drape: '#111111', sil: '#cfccc4', acc: '#111111' },
-          { look: 2, title: 'Crimson Curtain Graphic Tee + Baggy Denim', garments: '230 GSM Off-White Jersey / 14oz Denim', bg: '#5a0c0c', drape: '#240303', sil: '#eceae4', acc: '#a81818' },
-          { look: 3, title: 'Full Monochrome Block Uniform', garments: 'Onyx Heavyweight Tee / Archive 6-Panel', bg: '#0a0a0a', drape: '#000000', sil: '#1a1a1a', acc: '#ffffff' },
-        ],
-      },
-    ];
-    let colIdx = 0;
+  // 10. Lookbooks Interactive Viewer (Real Photo Slides)
+  const lbWrap = document.getElementById('lb-stage-wrap');
+  const lbMainImg = document.getElementById('lb-main-img');
+  if (lbWrap && lbMainImg) {
+    let slides = [];
+    try {
+      slides = JSON.parse(lbWrap.getAttribute('data-lookbook-slides') || '[]');
+    } catch (_) {
+      slides = [];
+    }
     let slideIdx = 0;
 
     const renderThumbs = () => {
       const thumbs = document.getElementById('lb-thumbs');
       if (!thumbs) return;
-      thumbs.innerHTML = collections[colIdx].slides
+      thumbs.innerHTML = slides
         .map(
           (s, idx) => `
-          <button type="button" data-lb-idx="${idx}" class="lb-thumb aspect-[4/5] overflow-hidden border ${idx === slideIdx ? 'border-black p-0.5' : 'border-transparent'} cursor-pointer">
-            <svg viewBox="0 0 400 520" class="w-full h-full block" style="background:${s.bg}">
-              <rect width="400" height="520" fill="${s.bg}" />
-              <circle cx="200" cy="112" r="26" fill="${s.sil}" />
-              <path d="M148 164 Q200 144 252 164 L276 312 L242 318 L234 475 L204 475 L200 340 L196 475 L166 475 L158 318 L124 312 Z" fill="${s.sil}" />
-            </svg>
+          <button type="button" data-lb-idx="${idx}" class="lb-thumb aspect-[3/4] overflow-hidden border ${idx === slideIdx ? 'border-black p-0.5' : 'border-transparent'} cursor-pointer bg-black">
+            <img src="${s.img}" alt="Look ${s.look}" class="w-full h-full object-cover object-top block" />
           </button>`
         )
         .join('');
     };
 
     const renderSlide = () => {
-      const col = collections[colIdx];
-      const slide = col.slides[slideIdx] || col.slides[0];
-      const mainSvg = document.getElementById('lb-main-svg');
-      mainSvg.classList.remove('anim-shutter');
-      void mainSvg.offsetWidth;
-      mainSvg.classList.add('anim-shutter');
-      document.getElementById('lb-bg').setAttribute('fill', slide.bg);
-      ['lb-d1', 'lb-d2', 'lb-d3', 'lb-d4'].forEach((id) => document.getElementById(id).setAttribute('fill', slide.drape));
-      document.getElementById('lb-head').setAttribute('fill', slide.sil);
-      document.getElementById('lb-body').setAttribute('fill', slide.sil);
-      document.getElementById('lb-box').setAttribute('stroke', slide.acc);
-      document.getElementById('lb-text').setAttribute('fill', slide.acc);
+      const slide = slides[slideIdx] || slides[0];
+      if (!slide) return;
+      lbMainImg.src = slide.img;
       document.getElementById('lb-look-tag').textContent = `LOOK 0${slide.look}`;
-      document.getElementById('lb-col-title').textContent = col.title;
       document.getElementById('lb-look-label').textContent = `Look ${slide.look}`;
       document.getElementById('lb-look-caption').textContent = `${slide.title} — ${slide.garments}`;
-      document.getElementById('lb-counter').textContent = `${slideIdx + 1} of ${col.slides.length}`;
+      document.getElementById('lb-counter').textContent = `${slideIdx + 1} of ${slides.length}`;
       renderThumbs();
     };
 
@@ -576,26 +549,14 @@ document.addEventListener('DOMContentLoaded', () => {
       renderSlide();
     });
     document.getElementById('lb-prev')?.addEventListener('click', () => {
-      const len = collections[colIdx].slides.length;
-      slideIdx = (slideIdx - 1 + len) % len;
+      if (!slides.length) return;
+      slideIdx = (slideIdx - 1 + slides.length) % slides.length;
       renderSlide();
     });
     document.getElementById('lb-next')?.addEventListener('click', () => {
-      const len = collections[colIdx].slides.length;
-      slideIdx = (slideIdx + 1) % len;
+      if (!slides.length) return;
+      slideIdx = (slideIdx + 1) % slides.length;
       renderSlide();
-    });
-    document.getElementById('lb-archive-toggle')?.addEventListener('click', () => {
-      const list = document.getElementById('lb-archive-list');
-      list?.classList.toggle('hidden');
-      list?.classList.toggle('flex');
-    });
-    document.querySelectorAll('.lb-col-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        colIdx = parseInt(btn.getAttribute('data-col-idx'), 10);
-        slideIdx = 0;
-        renderSlide();
-      });
     });
   }
 
