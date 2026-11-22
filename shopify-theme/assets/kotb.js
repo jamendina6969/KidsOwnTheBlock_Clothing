@@ -18,6 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1. Preloader on internal link navigation
   const preloader = document.getElementById('kotb-preloader');
+  window.addEventListener('pageshow', () => {
+    if (preloader) {
+      preloader.classList.add('hidden');
+      preloader.classList.remove('flex');
+    }
+  });
   document.querySelectorAll('a[data-nav]').forEach((link) => {
     link.addEventListener('click', () => {
       const href = link.getAttribute('href');
@@ -321,12 +327,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // 9. Product Detail Page (PDP)
   const pdpForm = document.getElementById('pdp-add-to-cart-form');
   if (pdpForm) {
-    document.querySelectorAll('.pdp-thumb').forEach((btn) => {
+    const mainImg = document.getElementById('pdp-main-img');
+    const thumbBtns = document.querySelectorAll('[data-pdp-thumb]');
+    thumbBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const view = btn.getAttribute('data-pdp-thumb');
-        document.querySelectorAll('.pdp-stage').forEach((s) => s.classList.add('hidden'));
-        document.getElementById(`pdp-stage-${view}`)?.classList.remove('hidden');
-        document.querySelectorAll('.pdp-thumb').forEach((t) => {
+        const val = btn.getAttribute('data-pdp-thumb') || '';
+        const stageEl = document.getElementById(`pdp-stage-${val}`);
+        if (stageEl) {
+          document.querySelectorAll('.pdp-stage').forEach((s) => s.classList.add('hidden'));
+          stageEl.classList.remove('hidden');
+        } else if (mainImg && val) {
+          mainImg.src = val;
+        }
+        thumbBtns.forEach((t) => {
           t.classList.remove('border-black');
           t.classList.add('border-transparent');
         });
@@ -374,12 +387,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const addCurrentVariant = async () => {
       const errBox = document.getElementById('pdp-stock-error');
       errBox?.classList.add('hidden');
+      const liveQty = Math.max(1, parseInt(qtyInput?.value || String(qty), 10) || 1);
       const res = await fetch('/cart/add.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id: parseInt(variantInput?.value || '0', 10),
-          quantity: qty,
+          quantity: liveQty,
         }),
       });
       const data = await res.json();
