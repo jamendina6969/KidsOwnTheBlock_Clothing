@@ -1,71 +1,55 @@
-<main class="bg-white pt-10 pb-16">
+﻿<main class="bg-white pt-10 pb-16">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
     <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-12 items-start">
       <div class="anim-fade-up">
-        <div class="aspect-[4/5.2] w-full max-w-[560px] overflow-hidden bg-black">
-          <svg id="lb-main-svg" viewBox="0 0 400 520" class="anim-ken-burns w-full h-full block">
-            <rect id="lb-bg" width="400" height="520" fill="#6e0e0e" />
-            <path id="lb-d1" d="M0 0 Q55 260 15 520 L0 520 Z" fill="#3d0404" opacity="0.7" />
-            <path id="lb-d2" d="M120 0 Q150 260 100 520 L65 520 Q95 260 75 0 Z" fill="#3d0404" opacity="0.45" />
-            <path id="lb-d3" d="M295 0 Q330 260 285 520 L250 520 Q285 260 260 0 Z" fill="#3d0404" opacity="0.5" />
-            <path id="lb-d4" d="M400 0 L400 520 L355 520 Q330 260 365 0 Z" fill="#3d0404" opacity="0.75" />
-            <ellipse cx="200" cy="482" rx="110" ry="16" fill="rgba(0,0,0,0.45)" />
-            <circle id="lb-head" cx="200" cy="112" r="26" fill="#0d0d0d" />
-            <path id="lb-body" d="M148 164 Q200 144 252 164 L276 312 L242 318 L234 475 L204 475 L200 340 L196 475 L166 475 L158 318 L124 312 Z" fill="#0d0d0d" />
-            <rect id="lb-box" x="172" y="204" width="56" height="20" fill="none" stroke="#ffffff" stroke-width="2" />
-            <text id="lb-text" x="200" y="218" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800" font-family="Archivo, sans-serif" letter-spacing="2">KOTB</text>
-            <text id="lb-look-tag" x="24" y="494" fill="rgba(255,255,255,0.65)" font-size="10" font-family="JetBrains Mono, monospace">LOOK 01</text>
-          </svg>
+        <div
+          id="lb-stage-wrap"
+          class="aspect-[3/4] w-full max-w-[560px] overflow-hidden bg-black relative"
+          data-lookbook-slides='[
+            {"look":1,"title":"HOODLUMS NO EVIL // STAIRWELL DUO","garments":"400 GSM Boxy Oversized Tee & Snow-Washed Tee","img":"{{ 'campaign-duo-tees.jpg' | asset_url }}"},
+            {"look":2,"title":"NO EVIL BOXY OVERSIZED TEE — CONCRETE FLASH","garments":"400 GSM Ultra-Heavyweight Cotton / Drop Shoulder","img":"{{ 'campaign-female.jpg' | asset_url }}"},
+            {"look":3,"title":"NO EVIL BOXY TEE — INDUSTRIAL CORRIDOR","garments":"400 GSM Boxy Oversized Tee / Baggy Utility Cargo","img":"{{ 'campaign-male.jpg' | asset_url }}"},
+            {"look":4,"title":"NO EVIL CAPSULE — TANK & WASHED TEE","garments":"340 GSM Frayed French Terry Tank & Snow-Washed Tee","img":"{{ 'campaign-duo-tank.jpg' | asset_url }}"}
+          ]'
+        >
+          <img
+            id="lb-main-img"
+            src="{{ 'campaign-duo-tees.jpg' | asset_url }}"
+            alt="HOODLUMS NO EVIL Lookbook"
+            class="w-full h-full object-cover object-top block"
+          />
+          <span id="lb-look-tag" class="font-mono-meta absolute bottom-3 left-3 bg-black/75 text-white px-2.5 py-1 text-[10px] tracking-[0.14em]">LOOK 01</span>
         </div>
-        <h1 id="lb-col-title" class="font-display text-[22px] mt-5 mb-1.5">BLOCK PARTY COLLECTION 2026</h1>
+        <h1 id="lb-col-title" class="font-display text-[22px] mt-5 mb-1.5">NO EVIL CAPSULE // 2026</h1>
         <div id="lb-look-label" class="text-[13px] font-semibold">Look 1</div>
         <div id="lb-look-caption" class="font-mono-meta text-xs text-[#666] mt-1">
-          KOTB Block Heavyweight Tee + Midnight Utility Shorts — 240 GSM Washed Onyx Tee / Ripstop Cargo
+          HOODLUMS NO EVIL // STAIRWELL DUO — 400 GSM Boxy Oversized Tee &amp; Snow-Washed Tee
         </div>
       </div>
 
       <div class="flex flex-col gap-6 anim-fade-up" style="animation-delay: 120ms;">
-        <div id="lb-thumbs" class="grid grid-cols-5 gap-1.5"></div>
+        <div id="lb-thumbs" class="grid grid-cols-4 gap-2"></div>
 
         <div class="font-mono-meta flex items-center justify-between gap-4 text-[13px]">
           <div class="flex items-center gap-4">
             <button id="lb-prev" type="button" aria-label="Previous look" class="cursor-pointer">←</button>
-            <span id="lb-counter">1 of 5</span>
+            <span id="lb-counter">1 of 4</span>
             <button id="lb-next" type="button" aria-label="Next look" class="cursor-pointer">→</button>
           </div>
-          <a href="{{ routes.all_products_collection_url }}" data-nav class="btn-sheen font-display bg-black text-white rounded-[30px] px-4 py-2 text-[11px]">
+          <a href="/collections/no-evil" data-nav class="btn-sheen font-display bg-black text-white rounded-[30px] px-4 py-2 text-[11px]">
             SHOP THIS LOOK ↗
           </a>
-        </div>
-
-        <div class="border-t border-black/10 pt-5">
-          <button id="lb-archive-toggle" type="button" class="font-display inline-flex items-center gap-2 text-[13px] cursor-pointer">
-            <span>COLLECTIONS</span>
-            <span>▾</span>
-          </button>
-          <div id="lb-archive-list" class="hidden flex-col gap-2.5 mt-3.5">
-            <button type="button" data-col-idx="0" class="lb-col-btn text-left px-3.5 py-2.5 border border-black bg-[#f5f5f5] cursor-pointer">
-              <div class="font-display text-xs">BLOCK PARTY COLLECTION 2026</div>
-              <div class="font-mono-meta text-[11px] text-[#666] mt-0.5">FALL / WINTER 2026 · 5 LOOKS</div>
-            </button>
-            <button type="button" data-col-idx="1" class="lb-col-btn text-left px-3.5 py-2.5 border border-black/10 bg-white cursor-pointer">
-              <div class="font-display text-xs">CONCRETE YOUTH ARCHIVE 2025</div>
-              <div class="font-mono-meta text-[11px] text-[#666] mt-0.5">SPRING / SUMMER 2025 · 3 LOOKS</div>
-            </button>
-          </div>
         </div>
 
         {%- if collections.all.products.size > 0 -%}
           <div class="border-t border-black/10 pt-5">
             <div class="font-mono-meta text-[10px] text-[#666] mb-3">TAGGED GARMENTS IN THIS COLLECTION</div>
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {%- for lp in collections.all.products limit: 4 -%}
                 <a href="{{ lp.url }}" data-nav class="border border-black/15 hover:border-black p-2.5 flex items-center gap-2.5 transition-colors bg-[#fafafa]">
                   <div class="w-10 h-12 shrink-0 bg-white overflow-hidden">
                     {%- if lp.featured_image != blank -%}
                       <img src="{{ lp.featured_image | image_url: width: 120 }}" alt="{{ lp.title | escape }}" class="w-full h-full object-contain" />
-                    {%- else -%}
-                      {% render 'garment-svg', product: lp, view: 'front' %}
                     {%- endif -%}
                   </div>
                   <div class="min-w-0">

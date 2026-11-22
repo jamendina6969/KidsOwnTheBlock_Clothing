@@ -1,4 +1,4 @@
-<main class="bg-white pt-10 pb-20">
+﻿<main class="bg-white pt-10 pb-20">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
     <div class="pb-6 mb-10 border-b border-black">
       <div class="font-mono-meta text-xs text-[#666] mb-1">CHRONOLOGICAL CAPSULE TIMELINE</div>
@@ -8,43 +8,13 @@
     <div class="flex flex-col gap-14">
       <section class="reveal-on-scroll border-l-2 border-black pl-5 md:pl-8" data-delay="0">
         <div class="flex flex-wrap items-baseline gap-3 mb-2">
-          <span class="font-mono-meta text-xs bg-black text-white px-2.5 py-0.5">DROP 04</span>
-          <span class="font-mono-meta text-xs text-[#666]">NOV 2026</span>
+          <span class="font-mono-meta text-xs bg-black text-white px-2.5 py-0.5">DROP 01</span>
+          <span class="font-mono-meta text-xs text-[#666]">LIVE NOW</span>
         </div>
-        <h2 class="font-display text-xl mb-1.5">BLOCK PARTY COLLECTION</h2>
-        <p class="font-mono-meta text-xs text-[#555] mb-5 max-w-2xl">240 GSM combed cotton tees, 460 GSM charcoal zip hoodies &amp; utility cargo.</p>
+        <h2 class="font-display text-xl mb-1.5">NO EVIL CAPSULE</h2>
+        <p class="font-mono-meta text-xs text-[#555] mb-5 max-w-2xl">400 GSM boxy oversized tees, snow-washed oversized tees &amp; frayed French terry boxy tank tops.</p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-2">
-          {%- for item in collections.all.products limit: 4 -%}
-            {%- assign d = forloop.index0 | times: 50 -%}
-            {% render 'product-card', product: item, surface: 'white', delay: d %}
-          {%- endfor -%}
-        </div>
-      </section>
-
-      <section class="reveal-on-scroll border-l-2 border-black pl-5 md:pl-8" data-delay="80">
-        <div class="flex flex-wrap items-baseline gap-3 mb-2">
-          <span class="font-mono-meta text-xs bg-black text-white px-2.5 py-0.5">DROP 03</span>
-          <span class="font-mono-meta text-xs text-[#666]">AUG 2026</span>
-        </div>
-        <h2 class="font-display text-xl mb-1.5">NIGHT SHIFT WORKWEAR</h2>
-        <p class="font-mono-meta text-xs text-[#555] mb-5 max-w-2xl">14oz bull denim canvas work jackets, baggy skate denim &amp; studio coach jackets.</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-2">
-          {%- for item in collections.all.products offset: 4 limit: 4 -%}
-            {%- assign d = forloop.index0 | times: 50 -%}
-            {% render 'product-card', product: item, surface: 'white', delay: d %}
-          {%- endfor -%}
-        </div>
-      </section>
-
-      <section class="reveal-on-scroll border-l-2 border-black pl-5 md:pl-8" data-delay="160">
-        <div class="flex flex-wrap items-baseline gap-3 mb-2">
-          <span class="font-mono-meta text-xs bg-black text-white px-2.5 py-0.5">DROP 02</span>
-          <span class="font-mono-meta text-xs text-[#666]">MAY 2026</span>
-        </div>
-        <h2 class="font-display text-xl mb-1.5">RUN CLUB DIVISION</h2>
-        <p class="font-mono-meta text-xs text-[#555] mb-5 max-w-2xl">165 GSM micro-mesh running singlets &amp; crinkle nylon subterranean track pants.</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-2">
-          {%- for item in collections.all.products offset: 8 limit: 4 -%}
+          {%- for item in collections.all.products limit: 8 -%}
             {%- assign d = forloop.index0 | times: 50 -%}
             {% render 'product-card', product: item, surface: 'white', delay: d %}
           {%- endfor -%}
