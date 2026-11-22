@@ -2087,3 +2087,28 @@
     }
   }
 }
+
+/* Cross-Device Responsive Polish (Mobile, Tablet, Laptop, PC) */
+html, body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+.kotb-splash-main {
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: 100dvh;
+}
+
+@media (max-width: 640px) {
+  #kotb-chat-panel {
+    width: calc(100vw - 2.25rem) !important;
+    max-width: 320px;
+  }
+  #pdp-add-to-cart-form .flex.items-center.gap-3 {
+    flex-wrap: wrap;
+  }
+  #pdp-submit-btn {
+    min-width: 180px;
+  }
+}
