@@ -1,8 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "marquee_text": "DROP 04 LIVE · 400 GSM HEAVYWEIGHT · HOODLUMS · WORLDWIDE DISPATCH ·",
     "countdown_label": "DROP 05 ARCHIVE CAPSULE UNLOCKS IN:",
     "countdown_target": "2026-12-31T23:59:59Z",
-    "free_shipping_threshold": 3500
+    "free_shipping_threshold": 3500,
+    "sections": {
+      "kotb-header": {
+        "type": "kotb-header",
+        "settings": {
+          "header_height": 76,
+          "header_bg": "#ededed",
+          "logo_size": 44,
+          "show_wordmark": false,
+          "logo_link": "",
+          "show_announcement": true,
+          "announcement_text": "MANILA // 14.5995° N, 120.9842° E · HOODLUMS DROP 04 LIVE · FREE SHIPPING OVER ₱3,500",
+          "announcement_link": "",
+          "announcement_bg": "#000000",
+          "announcement_color": "#ffffff",
+          "show_search": true,
+          "show_account": true,
+          "show_cart": true,
+          "link_1_label": "HOOD STORY",
+          "link_1_url": "",
+          "link_2_label": "SHOP",
+          "link_2_url": "",
+          "link_3_label": "LOOKBOOKS",
+          "link_3_url": "",
+          "link_4_label": "DROP ARCHIVE",
+          "link_4_url": "",
+          "link_5_label": "HELP",
+          "link_5_url": "",
+          "link_6_label": "TRACK ORDER",
+          "link_6_url": "",
+          "show_drawer_socials": true
+        }
+      },
+      "kotb-footer": {
+        "type": "kotb-footer",
+        "settings": {
+          "bg_color": "#ebebeb",
+          "text_color": "#000000",
+          "show_about": true,
+          "about_heading": "HOODLUMS",
+          "about_text": "Underground heavyweight streetwear crafted with 400 GSM combed cotton. Direct DTF prints and brutalist tailoring.",
+          "footer_menu": "",
+          "show_newsletter": true,
+          "subscribe_heading": "SUBSCRIBE TO HOOD DROPS",
+          "subscribe_subtext": "Get secret password access for Drop 05, private restocks, and exclusive lookbook previews.",
+          "show_socials": true,
+          "copyright_text": "© 2026 HOODLUMS. All rights reserved.",
+          "help_link_label": "Help & Privacy",
+          "help_link_url": "shopify://pages/help"
+        }
+      }
+    },
+    "content_for_index": []
   }
 }
