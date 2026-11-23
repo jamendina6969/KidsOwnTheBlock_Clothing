@@ -11,7 +11,10 @@
   "sections": {
     "main": {
       "type": "kotb-splash",
-      "settings": {}
+      "settings": {
+        "splash_video": "shopify://files/videos/dreamina-2026-11-22-7893-tark black-and-white high-contrast edito.mp4",
+        "video_url": ""
+      }
     }
   },
   "order": [
