@@ -3,13 +3,26 @@
 {%- assign bg_class = 'bg-white' -%}
 {%- if card_surface == 'grey' -%}{%- assign bg_class = 'bg-[#ededed]' -%}{%- endif -%}
 
+{%- capture card_images_json -%}[{%- for img in product.images limit: 10 -%}{{ img | image_url: width: 900 | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]{%- endcapture -%}
+
 <div class="hood-card-outer reveal-on-scroll" data-delay="{{ card_delay }}">
-  <div class="hood-card-media-box product-card {{ bg_class }}">
+  <div
+    class="hood-card-media-box product-card {{ bg_class }}"
+    {% if product.images.size > 1 %}data-card-images='{{ card_images_json }}'{% endif %}
+  >
     {%- unless product.available -%}
-      <span class="anim-badge-glow absolute top-2.5 left-2.5 z-10 bg-white text-black border border-black rounded-[4rem] px-3 py-1 text-[11px] font-medium leading-tight">
+      <span class="anim-badge-glow absolute top-2.5 left-2.5 z-20 bg-white text-black border border-black rounded-[4rem] px-3 py-1 text-[11px] font-medium leading-tight">
         Sold out
       </span>
     {%- endunless -%}
+
+    {%- if product.images.size > 1 -%}
+      <div class="hood-card-bars" aria-hidden="true">
+        {%- for img in product.images limit: 10 -%}
+          <span class="hood-card-bar{% if forloop.first %} is-active{% endif %}" data-card-bar-idx="{{ forloop.index0 }}"></span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
 
     <a
       href="{{ product.url }}"
@@ -23,7 +36,7 @@
             <img
               src="{{ product.featured_image | image_url: width: 900 }}"
               alt="{{ product.featured_image.alt | default: product.title | escape }}"
-              class="w-full h-full object-contain block"
+              class="hood-card-primary-img w-full h-full object-contain block"
               loading="lazy"
             />
           {%- else -%}
@@ -32,11 +45,11 @@
         </div>
 
         {%- if product.images.size > 1 -%}
-          <div class="view-back w-full h-full {{ bg_class }}">
+          <div class="hood-card-showcase-layer w-full h-full {{ bg_class }}">
             <img
               src="{{ product.images[1] | image_url: width: 900 }}"
-              alt="{{ product.title | escape }} alternate view"
-              class="w-full h-full object-contain block"
+              alt="{{ product.title | escape }} showcase view"
+              class="hood-card-showcase-img w-full h-full object-contain block"
               loading="lazy"
             />
           </div>
@@ -84,7 +97,7 @@
     <div class="hood-card-title group-hover:underline">{{ product.title }}</div>
     <div class="hood-card-meta-row">
       <span class="hood-card-price">{{ product.price | money }}</span>
-      <span class="hood-card-gsm">{% if product.title contains 'Tank' or product.title contains 'TANK' %}340 GSM{% else %}400 GSM{% endif %}</span>
+      <span class="hood-card-gsm">{% if product.title contains 'Tank' or product.title contains 'TANK' %}340 GSM{% elsif product.title contains 'Waffle' or product.title contains 'WAFFLE' %}350 GSM{% else %}400 GSM{% endif %}</span>
     </div>
   </a>
 </div>

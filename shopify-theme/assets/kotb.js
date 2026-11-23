@@ -454,6 +454,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // 6D. Product Card Multi-Image Hover Showcase (All Products)
+  document.querySelectorAll('.hood-card-media-box[data-card-images]').forEach((card) => {
+    let images = [];
+    try {
+      images = JSON.parse(card.getAttribute('data-card-images') || '[]');
+    } catch (_) {
+      images = [];
+    }
+    if (images.length < 2) return;
+
+    const showcaseImg = card.querySelector('.hood-card-showcase-img');
+    const bars = card.querySelectorAll('.hood-card-bar');
+    let currentIdx = 0;
+    let timer = null;
+    let preloaded = false;
+
+    const setFrame = (idx) => {
+      currentIdx = idx % images.length;
+      if (currentIdx === 0) {
+        card.classList.remove('is-showcasing');
+      } else {
+        if (showcaseImg && showcaseImg.src !== images[currentIdx]) {
+          showcaseImg.src = images[currentIdx];
+        }
+        card.classList.add('is-showcasing');
+      }
+      bars.forEach((b, i) => b.classList.toggle('is-active', i === currentIdx));
+    };
+
+    const startShowcase = () => {
+      if (!preloaded) {
+        preloaded = true;
+        images.slice(1).forEach((url) => {
+          const img = new Image();
+          img.src = url;
+        });
+      }
+      if (timer) clearInterval(timer);
+      setFrame(1);
+      timer = setInterval(() => {
+        setFrame((currentIdx + 1) % images.length);
+      }, 1100);
+    };
+
+    const stopShowcase = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+      setFrame(0);
+    };
+
+    card.addEventListener('mouseenter', startShowcase);
+    card.addEventListener('mouseleave', stopShowcase);
+
+    bars.forEach((bar) => {
+      const jump = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const idx = parseInt(bar.getAttribute('data-card-bar-idx') || '0', 10);
+        if (timer) clearInterval(timer);
+        setFrame(idx);
+        timer = setInterval(() => {
+          setFrame((currentIdx + 1) % images.length);
+        }, 1400);
+      };
+      bar.addEventListener('mouseenter', jump);
+      bar.addEventListener('click', jump);
+    });
+  });
+
   // 7. Horizontal Slider Arrows & Collection Sort
   document.querySelectorAll('[data-slider-btn]').forEach((btn) => {
     btn.addEventListener('click', () => {

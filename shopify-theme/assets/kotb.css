@@ -2751,6 +2751,48 @@ html.hood-splash-lock .kotb-splash-main {
   overflow: hidden !important;
 }
 
+/* Product Card Multi-Image Hover Showcase */
+.hood-card-showcase-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease;
+  z-index: 5;
+}
+.hood-card-media-box.is-showcasing .hood-card-showcase-layer {
+  opacity: 1;
+}
+.hood-card-bars {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  z-index: 25;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: auto;
+}
+.hood-card-media-box:hover .hood-card-bars,
+.hood-card-media-box.is-showcasing .hood-card-bars {
+  opacity: 1;
+}
+.hood-card-bar {
+  flex: 1;
+  height: 2.5px;
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.hood-card-bar.is-active {
+  background: #000000;
+  transform: scaleY(1.3);
+}
+
+
 
 
 
