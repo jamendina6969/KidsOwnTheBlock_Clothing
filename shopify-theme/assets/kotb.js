@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return cur === 'PHP' ? `₱${amount} PHP` : `${amount} ${cur}`;
   };
 
-  // 1. Preloader on internal link navigation
+  // 1. Preloader on internal link navigation (safe against new tabs & external links)
   const preloader = document.getElementById('kotb-preloader');
   window.addEventListener('pageshow', () => {
     if (preloader) {
@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   document.querySelectorAll('a[data-nav]').forEach((link) => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (e) => {
+      if (e.ctrlKey || e.metaKey || e.shiftKey || link.target === '_blank') return;
       const href = link.getAttribute('href');
       if (!href || href.startsWith('#')) return;
       if (preloader) {
@@ -114,20 +115,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Sticky Header shrink on scroll
+  // 3. Sticky Header shrink on scroll (handling dynamic inline heights)
   const headerBar = document.getElementById('kotb-header-bar');
   const headerLogo = document.getElementById('kotb-header-logo');
   if (headerBar && headerLogo) {
+    const originalHeight = headerBar.style.height || '76px';
     window.addEventListener(
       'scroll',
       () => {
         if (window.scrollY > 30) {
-          headerBar.classList.remove('h-[76px]');
-          headerBar.classList.add('h-[62px]');
+          headerBar.style.height = '60px';
           headerLogo.classList.add('scale-90');
         } else {
-          headerBar.classList.add('h-[76px]');
-          headerBar.classList.remove('h-[62px]');
+          headerBar.style.height = originalHeight;
           headerLogo.classList.remove('scale-90');
         }
       },
@@ -292,6 +292,38 @@ document.addEventListener('DOMContentLoaded', () => {
     cartDrawer.classList.toggle('flex', open);
   };
 
+  const cartTimerEl = document.getElementById('hood-cart-timer');
+  const cartTimerBox = document.getElementById('hood-cart-timer-box');
+  let cartReservationSeconds = 600;
+  let cartTimerInterval = null;
+
+  const startCartTimer = () => {
+    if (cartTimerInterval) return; // already running
+    cartReservationSeconds = 600;
+    cartTimerBox?.classList.remove('hidden');
+    const update = () => {
+      const m = String(Math.floor(cartReservationSeconds / 60)).padStart(2, '0');
+      const s = String(cartReservationSeconds % 60).padStart(2, '0');
+      if (cartTimerEl) cartTimerEl.textContent = `${m}:${s}`;
+      if (cartReservationSeconds <= 0) {
+        clearInterval(cartTimerInterval);
+        cartTimerInterval = null;
+        if (cartTimerEl) cartTimerEl.textContent = 'EXPIRED';
+      }
+      cartReservationSeconds--;
+    };
+    update();
+    cartTimerInterval = setInterval(update, 1000);
+  };
+
+  const stopCartTimer = () => {
+    if (cartTimerInterval) {
+      clearInterval(cartTimerInterval);
+      cartTimerInterval = null;
+    }
+    cartTimerBox?.classList.add('hidden');
+  };
+
   const renderCart = (cart) => {
     const items = cart.items || [];
     const count = cart.item_count || 0;
@@ -305,6 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (items.length === 0) {
+      stopCartTimer();
       cartEmptyEl?.classList.remove('hidden');
       cartEmptyEl?.classList.add('flex');
       cartItemsEl?.classList.add('hidden');
@@ -324,6 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
           ? '✓ FREE EXPRESS SHIPPING UNLOCKED'
           : `ADD ${formatMoney(rem)} MORE FOR FREE SHIPPING`;
     }
+
+    startCartTimer();
 
     cartEmptyEl?.classList.add('hidden');
     cartEmptyEl?.classList.remove('flex');
@@ -705,6 +740,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // 10C. Mobile Touch Support for Shop The Look Pins
+  document.querySelectorAll('.hood-pin').forEach((pin) => {
+    pin.addEventListener('click', (e) => {
+      const isOpen = pin.classList.contains('is-open');
+      document.querySelectorAll('.hood-pin').forEach((p) => p.classList.remove('is-open'));
+      if (!isOpen) pin.classList.add('is-open');
+      e.stopPropagation();
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.hood-pin').forEach((p) => p.classList.remove('is-open'));
+  });
+
   // 11. Run Club Radar Map
   if (document.getElementById('rc-city')) {
     const locations = [
@@ -783,15 +831,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 13. Floating KOTB Concierge Chat (Instant FAQ auto-responder)
+  // 13. Floating HOODLUMS Concierge Chat (Instant FAQ auto-responder)
   const chatPanel = document.getElementById('kotb-chat-panel');
   const chatLog = document.getElementById('kotb-chat-log');
   const chatReplies = {
-    sizing: 'Our 240 GSM tees & 460 GSM hoodies have a boxy drop-shoulder street fit. Take your true size for a relaxed drape or use the Size Finder on any product page.',
-    shipping: 'Domestic PH orders ship in 1–2 business days (2–4 days delivery). Free express shipping unlocks automatically at ₱3,500!',
-    gcash: 'We accept GCash, Cards, and Cash on Delivery (COD) directly at Shopify Checkout.',
-    cod: 'We accept GCash, Cards, and Cash on Delivery (COD) directly at Shopify Checkout.',
-    promo: 'Subscribe to our footer newsletter for early Drop 05 access and exclusive Hood Member promo codes.',
+    sizing: 'Our 400 GSM heavyweight tees and boxy tanks have an oversized H-line drop-shoulder fit. Take your true size for a relaxed drape or check the On-Body Fit guide on any product page.',
+    shipping: 'Domestic PH orders dispatch within 24h via J&T Express / LBC (2–4 days delivery). Free express shipping unlocks automatically at ₱3,500!',
+    gcash: 'We accept GCash, Maya, Debit/Credit Cards, and Cash on Delivery (COD) nationwide directly at Shopify Checkout.',
+    cod: 'Yes! Cash on Delivery (COD) is available nationwide across Metro Manila and all PH provinces.',
+    promo: 'Subscribe to our footer newsletter or unlock our VIP Drop Vault with code HOOD2026 for exclusive private discount access.',
     track: 'You can track your order anytime at /pages/track-order or inside your Customer Account.',
   };
 
@@ -805,7 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
     div.innerHTML =
       from === 'visitor'
         ? escapeHtml(msg)
-        : `<div class="font-mono-meta text-[9px] text-[#666] mb-0.5">KOTB ASSISTANT</div><div>${escapeHtml(msg)}</div>`;
+        : `<div class="font-mono-meta text-[9px] text-[#666] mb-0.5">HOODLUMS ASSISTANT</div><div>${escapeHtml(msg)}</div>`;
     chatLog.appendChild(div);
     chatLog.scrollTop = chatLog.scrollHeight;
   };
@@ -840,6 +888,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') {
       toggleMenu(false);
       toggleCart(false);
+      toggleVault(false);
       searchOverlay?.classList.add('hidden');
       document.getElementById('fit-finder-modal')?.classList.add('hidden');
     }

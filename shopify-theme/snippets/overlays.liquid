@@ -52,6 +52,14 @@
       </div>
     </div>
 
+    <div id="hood-cart-timer-box" class="px-6 py-2 bg-black text-[#d9ff00] flex items-center justify-between font-mono-meta text-[11px] tracking-wider {% if cart.item_count == 0 %}hidden{% endif %}">
+      <span class="flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-[#d9ff00] animate-ping inline-block"></span>
+        CART RESERVED:
+      </span>
+      <span id="hood-cart-timer" class="font-bold">09:59</span>
+    </div>
+
     <div class="flex-1 overflow-y-auto p-6">
       <div id="kotb-cart-empty" class="h-full flex-col items-center justify-center text-center gap-4 {% if cart.item_count == 0 %}flex{% else %}hidden{% endif %}">
         <div class="font-display text-xl">Your cart is empty</div>
@@ -165,7 +173,7 @@
 <div class="fixed right-5 bottom-5 z-40">
   <div id="kotb-chat-panel" class="hidden w-[305px] bg-white border border-black mb-3 flex flex-col anim-fade-up">
     <div class="bg-black text-white px-3.5 py-3 flex items-center justify-between">
-      <span class="font-display text-xs">KOTB CONCIERGE</span>
+      <span class="font-display text-xs tracking-wider">HOODLUMS CONCIERGE</span>
       <button id="kotb-chat-close" type="button" class="text-white cursor-pointer">✕</button>
     </div>
     <div id="kotb-chat-log" class="p-3.5 h-48 overflow-y-auto flex flex-col gap-2.5 bg-[#fafafa]">
