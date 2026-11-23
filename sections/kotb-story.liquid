@@ -26,6 +26,24 @@
               <img src="{{ 'campaign-duo-tees.jpg' | asset_url }}" alt="HOODLUMS NO EVIL Campaign" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-out story-img" />
             {%- endif -%}
             <div class="story-flash-overlay pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-300"></div>
+
+            {%- if section.settings.show_hero_pins != false -%}
+              <div class="hood-pin" style="top: 57%; left: 32%;" aria-label="Shop Male Tee">
+                <span>+</span>
+                <div class="hood-pin-popover">
+                  <div class="font-display text-[11px] tracking-wide">{{ section.settings.pin1_title | default: 'NO EVIL BOXY OVERSIZED TEE' }}</div>
+                  <div class="font-mono-meta text-[10px] text-[#d9ff00] mt-0.5">{{ section.settings.pin1_spec | default: '400 GSM · ₱1,450' }} ↗</div>
+                </div>
+              </div>
+
+              <div class="hood-pin" style="top: 59%; left: 51%;" aria-label="Shop Female Tee">
+                <span>+</span>
+                <div class="hood-pin-popover">
+                  <div class="font-display text-[11px] tracking-wide">{{ section.settings.pin2_title | default: 'NO EVIL WASHED OVERSIZED TEE' }}</div>
+                  <div class="font-mono-meta text-[10px] text-[#d9ff00] mt-0.5">{{ section.settings.pin2_spec | default: '380 GSM · ₱1,450' }} ↗</div>
+                </div>
+              </div>
+            {%- endif -%}
           </div>
           <div class="p-4 bg-white relative z-10">
             <div class="font-mono-meta text-[11px] text-[#666] mb-1.5">{{ section.settings.hero_tag | default: 'CAMPAIGN · NO EVIL DROP' }}</div>
@@ -45,6 +63,13 @@
                 <img src="{{ 'campaign-female.jpg' | asset_url }}" alt="NO EVIL Boxy Oversized Tee" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
               {%- endif -%}
               <div class="story-flash-overlay pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200"></div>
+              <div class="hood-pin" style="top: 50%; left: 48%;" aria-label="Shop Male Tee">
+                <span>+</span>
+                <div class="hood-pin-popover">
+                  <div class="font-display text-[11px] tracking-wide">NO EVIL BOXY TEE // STAIRWELL</div>
+                  <div class="font-mono-meta text-[10px] text-[#d9ff00] mt-0.5">400 GSM · ₱1,450 ↗</div>
+                </div>
+              </div>
             </div>
             <div class="p-3.5 bg-white">
               <div class="font-mono-meta text-[10px] text-[#666] mb-1">{{ section.settings.card1_tag | default: 'EDITORIAL · 400 GSM' }}</div>
@@ -61,6 +86,13 @@
                 <img src="{{ 'campaign-male.jpg' | asset_url }}" alt="NO EVIL Industrial Lookbook" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
               {%- endif -%}
               <div class="story-flash-overlay pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200"></div>
+              <div class="hood-pin" style="top: 50%; left: 48%;" aria-label="Shop Male Tee">
+                <span>+</span>
+                <div class="hood-pin-popover">
+                  <div class="font-display text-[11px] tracking-wide">NO EVIL BOXY TEE // STAIRWELL</div>
+                  <div class="font-mono-meta text-[10px] text-[#d9ff00] mt-0.5">400 GSM · ₱1,450 ↗</div>
+                </div>
+              </div>
             </div>
             <div class="p-3.5 bg-white">
               <div class="font-mono-meta text-[10px] text-[#666] mb-1">{{ section.settings.card2_tag | default: 'LOOKBOOK · DROP 01' }}</div>
@@ -86,6 +118,13 @@
                 <img src="{{ 'campaign-duo-tank.jpg' | asset_url }}" alt="NO EVIL Tank & Washed Tee" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
               {%- endif -%}
               <div class="story-flash-overlay pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200"></div>
+              <div class="hood-pin" style="top: 50%; left: 48%;" aria-label="Shop Male Tee">
+                <span>+</span>
+                <div class="hood-pin-popover">
+                  <div class="font-display text-[11px] tracking-wide">NO EVIL BOXY TEE // STAIRWELL</div>
+                  <div class="font-mono-meta text-[10px] text-[#d9ff00] mt-0.5">400 GSM · ₱1,450 ↗</div>
+                </div>
+              </div>
             </div>
             <div class="font-display text-sm mb-1">{{ section.settings.side_title | default: 'NO EVIL // TANK & WASHED TEE' }}</div>
             <p class="text-xs text-[#444] leading-relaxed">{{ section.settings.side_desc | default: 'Now live worldwide in S–2XL. Direct DTF print on 100% heavyweight cotton.' }}</p>

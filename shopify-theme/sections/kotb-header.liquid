@@ -114,6 +114,14 @@
             <span>{{ section.settings.link_6_label }}</span>
           </a>
         {%- endif -%}
+
+        <button id="open-vault-btn" type="button" class="font-display w-full flex items-center justify-between px-6 py-4 text-base text-left text-black bg-[#d9ff00]/15 hover:bg-[#d9ff00]/30 transition-colors cursor-pointer border-t border-black/10 mt-2">
+          <span class="flex items-center gap-2">
+            <span>DROP VAULT</span>
+            <span class="text-xs">🔒</span>
+          </span>
+          <span class="font-mono-meta text-[10px] tracking-wider text-black font-bold uppercase bg-[#d9ff00] px-2 py-0.5">VIP PASS</span>
+        </button>
       </nav>
 
       <nav id="menu-view-story" class="hidden py-4">
@@ -163,8 +171,8 @@
     { "type": "checkbox", "id": "show_wordmark", "label": "Show text wordmark beneath logo", "default": false },
     { "type": "url", "id": "logo_link", "label": "Logo Destination Link" },
     { "type": "header", "content": "Announcement Bar (Optional)" },
-    { "type": "checkbox", "id": "show_announcement", "label": "Enable Announcement Bar", "default": false },
-    { "type": "text", "id": "announcement_text", "label": "Announcement Text", "default": "DROP 04 LIVE · 400 GSM HEAVYWEIGHT · HOODLUMS · WORLDWIDE DISPATCH" },
+    { "type": "checkbox", "id": "show_announcement", "label": "Enable Announcement Bar", "default": true },
+    { "type": "text", "id": "announcement_text", "label": "Announcement Text", "default": "MANILA // 14.5995° N, 120.9842° E · HOODLUMS DROP 04 LIVE · FREE SHIPPING OVER ₱3,500" },
     { "type": "url", "id": "announcement_link", "label": "Announcement Link" },
     { "type": "color", "id": "announcement_bg", "label": "Announcement Background", "default": "#000000" },
     { "type": "color", "id": "announcement_color", "label": "Announcement Text Color", "default": "#ffffff" },
