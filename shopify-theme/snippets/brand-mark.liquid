@@ -21,7 +21,7 @@
 
   {%- if bm_show_wordmark -%}
     <span class="font-display leading-none" style="color: {{ bm_fill }}; font-size: {{ bm_font_size }}px; letter-spacing: 0.16em;">
-      KIDS OWN THE BLOCK
+      {{ settings.brand_wordmark | default: 'HOODLUMS' }}
     </span>
   {%- endif -%}
 </div>

@@ -2179,3 +2179,78 @@ html, body {
 #kotb-drop-countdown {
   animation: kotbDropPulse 1.8s ease-in-out infinite;
 }
+
+/* ========================================================
+   HOODLUMS ANIMATION COMBOS: HOOD STORY & LOOKBOOKS
+   ======================================================== */
+
+/* Combo 1: 35mm Direct Flash Strobe */
+@keyframes hoodFlashStrobe {
+  0% { opacity: 0.88; }
+  35% { opacity: 0.25; }
+  100% { opacity: 0; }
+}
+
+@keyframes hoodFlashSheen {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%) skewX(-25deg);
+  }
+  30% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(140%) skewX(-25deg);
+  }
+}
+
+.flash-active #lb-flash-curtain {
+  animation: hoodFlashStrobe 0.26s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+.story-hero-card:hover .story-flash-overlay,
+.story-card:hover .story-flash-overlay {
+  animation: hoodFlashSheen 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Combo 2: Brutalist Mechanical Shutter Blink */
+@keyframes hoodShutterCut {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  60% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+@keyframes hoodAperturePunch {
+  0% { transform: scale(1.045); filter: contrast(1.15) brightness(1.05); }
+  100% { transform: scale(1); filter: contrast(1) brightness(1); }
+}
+
+.shutter-active #lb-shutter-curtain {
+  animation: hoodShutterCut 0.22s ease-in-out forwards;
+}
+
+.shutter-active #lb-main-img {
+  animation: hoodAperturePunch 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Combo 3: Editorial Magnetic Parallax & Active Thumb Pop */
+.lb-thumb {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s ease;
+}
+.lb-thumb:hover {
+  transform: translateY(-2px);
+}
+.lb-thumb.is-active {
+  border-color: #000000 !important;
+  transform: scale(1.02);
+}
+
+#lb-stage-wrap {
+  perspective: 1000px;
+}
+#lb-stage-wrap img {
+  will-change: transform;
+}
+

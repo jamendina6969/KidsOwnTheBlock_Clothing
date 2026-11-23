@@ -49,7 +49,7 @@
 
   <nav aria-label="Splash navigation" class="absolute inset-x-0 top-[50vh] z-10 flex flex-col items-center gap-2.5">
     <a href="{{ section.settings.link_1_url | default: '/pages/story' }}" data-nav class="anim-link-smooth link-sweep font-display text-white text-[11px] tracking-[0.14em] py-0.5 px-2 hover:opacity-70 transition-opacity" style="animation-delay: 480ms;">
-      {{ section.settings.link_1_label | default: 'BLOCK STORY' }}
+      {{ section.settings.link_1_label | default: 'HOOD STORY' }}
     </a>
     <a href="{{ section.settings.link_2_url | default: routes.all_products_collection_url }}" data-nav class="anim-link-smooth link-sweep font-display text-white text-[11px] tracking-[0.14em] py-0.5 px-2 hover:opacity-70 transition-opacity" style="animation-delay: 600ms;">
       {{ section.settings.link_2_label | default: 'SHOP' }}
@@ -62,12 +62,12 @@
 
 {% schema %}
 {
-  "name": "KOTB Splash Landing",
+  "name": "HOOD Splash Landing",
   "settings": [
     { "type": "video", "id": "splash_video", "label": "Splash background video (upload MP4)" },
     { "type": "url", "id": "video_url", "label": "Or paste MP4 video URL (optional)" },
     { "type": "range", "id": "logo_size", "label": "Center Logo Width (px)", "min": 80, "max": 260, "step": 4, "default": 144 },
-    { "type": "text", "id": "link_1_label", "label": "Link 1 Label", "default": "BLOCK STORY" },
+    { "type": "text", "id": "link_1_label", "label": "Link 1 Label", "default": "HOOD STORY" },
     { "type": "url", "id": "link_1_url", "label": "Link 1 URL" },
     { "type": "text", "id": "link_2_label", "label": "Link 2 Label", "default": "SHOP" },
     { "type": "url", "id": "link_2_url", "label": "Link 2 URL" },
