@@ -2832,6 +2832,130 @@ html.hood-splash-lock .kotb-splash-main {
   transform: translateX(130%);
 }
 
+/* ========================================================
+   HOOD STORY: COMBO 3 — CCTV CASE-FILE VIEWFINDER + 35MM FLASH
+   ======================================================== */
+.story-cctv-card {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.2s ease;
+}
+.story-cctv-card:hover {
+  transform: translate(-4px, -4px);
+  border-color: #000000 !important;
+  box-shadow: 5px 5px 0px #000000;
+}
+.story-cctv-img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.story-cctv-card:hover .story-cctv-img {
+  transform: scale(1.035);
+}
+.story-cctv-hud {
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  z-index: 14;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.story-cctv-card:hover .story-cctv-hud {
+  opacity: 1;
+}
+.story-cctv-rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.78);
+  padding: 4px 9px;
+  width: fit-content;
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.story-cctv-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #ef4444;
+  flex-shrink: 0;
+  animation: hoodCctvBlink 1s infinite;
+}
+@keyframes hoodCctvBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.18; }
+}
+.story-cctv-corners::before,
+.story-cctv-corners::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: #ffffff;
+  border-style: solid;
+}
+.story-cctv-c1::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
+.story-cctv-c1::after { top: 0; right: 0; border-width: 2px 2px 0 0; }
+.story-cctv-c2::before { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+.story-cctv-c2::after { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+.story-cctv-flash {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 16;
+}
+@keyframes hoodStoryFlashPop {
+  0% { opacity: 0.65; }
+  100% { opacity: 0; }
+}
+.story-cctv-card.is-flashing .story-cctv-flash {
+  animation: hoodStoryFlashPop 0.28s ease-out forwards;
+}
+
+/* ========================================================
+   HOOD LOOKBOOKS: COMBO 1 — 3D EDITORIAL GLASS TILT + SHEEN
+   ======================================================== */
+.lb-tilt-perspective {
+  perspective: 1000px;
+}
+.lb-glass-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.2s ease;
+}
+.lb-glass-card:hover {
+  border-color: #000000;
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.22);
+}
+.lb-glass-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 18;
+  background: linear-gradient(
+    125deg,
+    transparent 26%,
+    rgba(255, 255, 255, 0.36) 48%,
+    rgba(255, 255, 255, 0.1) 56%,
+    transparent 74%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lb-glass-card:hover .lb-glass-sheen {
+  transform: translateX(130%);
+}
+
+
 
 
 

@@ -1,7 +1,10 @@
-{%- comment -%} HOOD Story Editorial Section with Full Customizer Controls {%- endcomment -%}
-{%- assign anim_style = section.settings.animation_style | default: 'flash-35mm' -%}
+{%- comment -%} HOOD Story Editorial Section — CCTV Case-File Viewfinder + 35mm Flash {%- endcomment -%}
+{%- assign hero_rec = section.settings.hero_rec_label | default: section.settings.hero_tag | default: 'NO EVIL DROP' -%}
+{%- assign card1_rec = section.settings.card1_rec_label | default: section.settings.card1_tag | default: 'EDITORIAL · 400 GSM' -%}
+{%- assign card2_rec = section.settings.card2_rec_label | default: section.settings.card2_tag | default: 'LOOKBOOK · DROP 01' -%}
+{%- assign side_rec = section.settings.side_rec_label | default: section.settings.side_title | default: 'NO EVIL // TANK & WASHED TEE' -%}
 
-<main class="bg-white pt-10 pb-16 hood-story-section" data-animation-style="{{ anim_style }}">
+<main class="bg-white pt-10 pb-16 hood-story-section" data-animation-style="cctv-flash">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
     <div class="flex justify-between items-baseline flex-wrap gap-3 mb-7">
       <h1 class="font-display text-[28px] tracking-[0.04em]">{{ section.settings.heading | default: 'HOOD STORY' }}</h1>
@@ -18,14 +21,22 @@
     <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_0.6fr] gap-9 items-start">
       <div>
         {%- comment -%} Featured Campaign Hero Photo {%- endcomment -%}
-        <div class="story-hero-card block border border-black mb-5 group overflow-hidden relative bg-white">
+        <div class="story-cctv-card story-hero-card block border border-black mb-5 group overflow-hidden relative bg-white">
           <a href="{{ section.settings.hero_link | default: '/collections/no-evil' }}" data-nav class="block relative overflow-hidden" style="aspect-ratio: 4/5; max-height: 740px; width: 100%; background-color: #0a0a0a;">
             {%- if section.settings.hero_image != blank -%}
-              <img src="{{ section.settings.hero_image | image_url: width: 1600 }}" alt="{{ section.settings.hero_title | escape }}" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-out story-img" />
+              <img src="{{ section.settings.hero_image | image_url: width: 1600 }}" alt="{{ section.settings.hero_title | escape }}" class="w-full h-full object-cover object-top story-cctv-img story-img" />
             {%- else -%}
-              <img src="{{ 'campaign-duo-tees.jpg' | asset_url }}" alt="HOODLUMS NO EVIL Campaign" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-out story-img" />
+              <img src="{{ 'campaign-duo-tees.jpg' | asset_url }}" alt="HOODLUMS NO EVIL Campaign" class="w-full h-full object-cover object-top story-cctv-img story-img" />
             {%- endif -%}
-            <div class="story-flash-overlay pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-300"></div>
+            <div class="story-cctv-flash" aria-hidden="true"></div>
+            <div class="story-cctv-hud" aria-hidden="true">
+              <div class="story-cctv-corners story-cctv-c1"></div>
+              <div class="story-cctv-rec">
+                <span class="story-cctv-dot"></span>
+                <span>REC // {{ hero_rec | upcase }}</span>
+              </div>
+              <div class="story-cctv-corners story-cctv-c2"></div>
+            </div>
           </a>
           <div class="p-4 bg-white relative z-10">
             <div class="font-mono-meta text-[11px] text-[#666] mb-1.5">{{ section.settings.hero_tag | default: 'CAMPAIGN · NO EVIL DROP' }}</div>
@@ -49,30 +60,46 @@
 
         {%- comment -%} Editorial Grid Photos {%- endcomment -%}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <a href="{{ section.settings.card1_link | default: '/collections/no-evil' }}" data-nav class="story-card block border border-black/15 hover:border-black transition-colors group overflow-hidden bg-white">
+          <a href="{{ section.settings.card1_link | default: '/collections/no-evil' }}" data-nav class="story-cctv-card story-card block border border-black/15 group overflow-hidden bg-white">
             <div class="overflow-hidden relative" style="aspect-ratio: 3/4; width: 100%; background-color: #141414;">
               {%- if section.settings.card1_image != blank -%}
-                <img src="{{ section.settings.card1_image | image_url: width: 1000 }}" alt="{{ section.settings.card1_title | escape }}" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
+                <img src="{{ section.settings.card1_image | image_url: width: 1000 }}" alt="{{ section.settings.card1_title | escape }}" class="w-full h-full object-cover object-top story-cctv-img story-img" />
               {%- else -%}
-                <img src="{{ 'campaign-female.jpg' | asset_url }}" alt="NO EVIL Boxy Oversized Tee" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
+                <img src="{{ 'campaign-female.jpg' | asset_url }}" alt="NO EVIL Boxy Oversized Tee" class="w-full h-full object-cover object-top story-cctv-img story-img" />
               {%- endif -%}
-              <div class="story-flash-overlay pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200"></div>
+              <div class="story-cctv-flash" aria-hidden="true"></div>
+              <div class="story-cctv-hud" aria-hidden="true">
+                <div class="story-cctv-corners story-cctv-c1"></div>
+                <div class="story-cctv-rec">
+                  <span class="story-cctv-dot"></span>
+                  <span>REC // {{ card1_rec | upcase }}</span>
+                </div>
+                <div class="story-cctv-corners story-cctv-c2"></div>
+              </div>
             </div>
             <div class="p-3.5 bg-white">
-              <div class="font-mono-meta text-[10px] text-[#666] mb-1">{{ section.settings.card1_tag | default: 'EDITORIAL · 400 GSM' }}</div>
+              <div class="font-mono-meta text-[10px] text-[#666] mb-1">{{ section.settings.card1_tag | default: 'EDITORIAL · HEAVYWEIGHT' }}</div>
               <h3 class="font-display text-[13px] mb-1.5 leading-snug">{{ section.settings.card1_title | default: 'BOXY OVERSIZED TEE — CONCRETE FLASH' }}</h3>
               <p class="text-xs text-[#444] leading-relaxed">{{ section.settings.card1_desc | default: 'Structured H-line drop shoulder fit with distressed sand-grain front print.' }}</p>
             </div>
           </a>
 
-          <a href="{{ section.settings.card2_link | default: '/collections/no-evil' }}" data-nav class="story-card block border border-black/15 hover:border-black transition-colors group overflow-hidden bg-white">
+          <a href="{{ section.settings.card2_link | default: '/collections/no-evil' }}" data-nav class="story-cctv-card story-card block border border-black/15 group overflow-hidden bg-white">
             <div class="overflow-hidden relative" style="aspect-ratio: 3/4; width: 100%; background-color: #141414;">
               {%- if section.settings.card2_image != blank -%}
-                <img src="{{ section.settings.card2_image | image_url: width: 1000 }}" alt="{{ section.settings.card2_title | escape }}" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
+                <img src="{{ section.settings.card2_image | image_url: width: 1000 }}" alt="{{ section.settings.card2_title | escape }}" class="w-full h-full object-cover object-top story-cctv-img story-img" />
               {%- else -%}
-                <img src="{{ 'campaign-male.jpg' | asset_url }}" alt="NO EVIL Industrial Lookbook" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
+                <img src="{{ 'campaign-male.jpg' | asset_url }}" alt="NO EVIL Industrial Lookbook" class="w-full h-full object-cover object-top story-cctv-img story-img" />
               {%- endif -%}
-              <div class="story-flash-overlay pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200"></div>
+              <div class="story-cctv-flash" aria-hidden="true"></div>
+              <div class="story-cctv-hud" aria-hidden="true">
+                <div class="story-cctv-corners story-cctv-c1"></div>
+                <div class="story-cctv-rec">
+                  <span class="story-cctv-dot"></span>
+                  <span>REC // {{ card2_rec | upcase }}</span>
+                </div>
+                <div class="story-cctv-corners story-cctv-c2"></div>
+              </div>
             </div>
             <div class="p-3.5 bg-white">
               <div class="font-mono-meta text-[10px] text-[#666] mb-1">{{ section.settings.card2_tag | default: 'LOOKBOOK · DROP 01' }}</div>
@@ -90,14 +117,22 @@
           <a href="{{ section.settings.side_view_link | default: '/collections/no-evil' }}" data-nav class="font-mono-meta text-[10px] underline">{{ section.settings.side_view_label | default: 'VIEW COLLECTION ↗' }}</a>
         </div>
         <div class="flex flex-col gap-4">
-          <a href="{{ section.settings.side_link | default: '/collections/no-evil' }}" data-nav class="story-card block border border-black/15 hover:border-black transition-colors p-3 group bg-white">
+          <a href="{{ section.settings.side_link | default: '/collections/no-evil' }}" data-nav class="story-cctv-card story-card block border border-black/15 p-3 group bg-white">
             <div class="overflow-hidden mb-3 relative" style="aspect-ratio: 3/4; width: 100%; background-color: #161616;">
               {%- if section.settings.side_image != blank -%}
-                <img src="{{ section.settings.side_image | image_url: width: 1000 }}" alt="{{ section.settings.side_title | escape }}" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
+                <img src="{{ section.settings.side_image | image_url: width: 1000 }}" alt="{{ section.settings.side_title | escape }}" class="w-full h-full object-cover object-top story-cctv-img story-img" />
               {%- else -%}
-                <img src="{{ 'campaign-duo-tank.jpg' | asset_url }}" alt="NO EVIL Tank & Washed Tee" class="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500 story-img" />
+                <img src="{{ 'campaign-duo-tank.jpg' | asset_url }}" alt="NO EVIL Tank & Washed Tee" class="w-full h-full object-cover object-top story-cctv-img story-img" />
               {%- endif -%}
-              <div class="story-flash-overlay pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200"></div>
+              <div class="story-cctv-flash" aria-hidden="true"></div>
+              <div class="story-cctv-hud" aria-hidden="true">
+                <div class="story-cctv-corners story-cctv-c1"></div>
+                <div class="story-cctv-rec">
+                  <span class="story-cctv-dot"></span>
+                  <span>REC // {{ side_rec | upcase }}</span>
+                </div>
+                <div class="story-cctv-corners story-cctv-c2"></div>
+              </div>
             </div>
             <div class="font-display text-sm mb-1">{{ section.settings.side_title | default: 'NO EVIL // TANK & WASHED TEE' }}</div>
             <p class="text-xs text-[#444] leading-relaxed">{{ section.settings.side_desc | default: 'Now live worldwide in S–2XL. Direct DTF print on 100% heavyweight cotton.' }}</p>
@@ -112,25 +147,15 @@
 {
   "name": "HOOD Story",
   "settings": [
-    { "type": "header", "content": "Page Header & Animation" },
+    { "type": "header", "content": "Page Header" },
     { "type": "text", "id": "heading", "label": "Page Heading", "default": "HOOD STORY" },
-    {
-      "type": "select",
-      "id": "animation_style",
-      "label": "Animation & Transition Style",
-      "options": [
-        { "value": "flash-35mm", "label": "35mm Direct Flash & Vignette" },
-        { "value": "shutter-blink", "label": "Brutalist Mechanical Shutter" },
-        { "value": "lens-push", "label": "Editorial Lens Push & Parallax" }
-      ],
-      "default": "flash-35mm"
-    },
     { "type": "text", "id": "sublink_1_label", "label": "Top Sublink 1 Label", "default": "SHOP ALL ↗" },
     { "type": "url", "id": "sublink_1_url", "label": "Top Sublink 1 URL" },
     { "type": "text", "id": "sublink_2_label", "label": "Top Sublink 2 Label", "default": "NO EVIL CAPSULE ↗" },
     { "type": "url", "id": "sublink_2_url", "label": "Top Sublink 2 URL" },
     { "type": "header", "content": "Featured Hero Campaign" },
     { "type": "image_picker", "id": "hero_image", "label": "Hero Image (Optional override)" },
+    { "type": "text", "id": "hero_rec_label", "label": "CCTV REC Label (blank = uses Hero Eyebrow)" },
     { "type": "text", "id": "hero_tag", "label": "Hero Eyebrow", "default": "CAMPAIGN · NO EVIL DROP" },
     { "type": "text", "id": "hero_title", "label": "Hero Title", "default": "HOODLUMS — NO EVIL 400 GSM CAMPAIGN" },
     { "type": "textarea", "id": "hero_desc", "label": "Hero Description", "default": "See nothing. Hear nothing. Say nothing. Shot on 35mm direct flash featuring our heavyweight boxy & snow-washed tees." },
@@ -138,12 +163,14 @@
     { "type": "url", "id": "hero_link", "label": "Hero Destination Link" },
     { "type": "header", "content": "Editorial Card 1" },
     { "type": "image_picker", "id": "card1_image", "label": "Card 1 Image (Optional override)" },
+    { "type": "text", "id": "card1_rec_label", "label": "CCTV REC Label (blank = uses Card 1 Eyebrow)" },
     { "type": "text", "id": "card1_tag", "label": "Card 1 Eyebrow", "default": "EDITORIAL · 400 GSM" },
     { "type": "text", "id": "card1_title", "label": "Card 1 Title", "default": "BOXY OVERSIZED TEE — CONCRETE FLASH" },
     { "type": "textarea", "id": "card1_desc", "label": "Card 1 Description", "default": "Structured H-line drop shoulder fit with distressed sand-grain front print." },
     { "type": "url", "id": "card1_link", "label": "Card 1 Link" },
     { "type": "header", "content": "Editorial Card 2" },
     { "type": "image_picker", "id": "card2_image", "label": "Card 2 Image (Optional override)" },
+    { "type": "text", "id": "card2_rec_label", "label": "CCTV REC Label (blank = uses Card 2 Eyebrow)" },
     { "type": "text", "id": "card2_tag", "label": "Card 2 Eyebrow", "default": "LOOKBOOK · DROP 01" },
     { "type": "text", "id": "card2_title", "label": "Card 2 Title", "default": "INDUSTRIAL STAIRWELL // HEAVYWEIGHT" },
     { "type": "textarea", "id": "card2_desc", "label": "Card 2 Description", "default": "Built to hold its shape from the hood to late nights out." },
@@ -153,6 +180,7 @@
     { "type": "text", "id": "side_view_label", "label": "Sidebar Link Label", "default": "VIEW COLLECTION ↗" },
     { "type": "url", "id": "side_view_link", "label": "Sidebar Link URL" },
     { "type": "image_picker", "id": "side_image", "label": "Sidebar Image (Optional override)" },
+    { "type": "text", "id": "side_rec_label", "label": "CCTV REC Label (blank = uses Sidebar Title)" },
     { "type": "text", "id": "side_title", "label": "Sidebar Title", "default": "NO EVIL // TANK & WASHED TEE" },
     { "type": "textarea", "id": "side_desc", "label": "Sidebar Description", "default": "Now live worldwide in S–2XL. Direct DTF print on 100% heavyweight cotton." },
     { "type": "url", "id": "side_link", "label": "Sidebar Link" }

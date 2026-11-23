@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
-    const cur = KOTB.currency || 'PHP';
-    return cur === 'PHP' ? `₱${amount} PHP` : `${amount} ${cur}`;
+    const cur = KOTB.currency || 'USD';
+    return cur === 'PHP' ? `₱${amount} PHP` : `$${amount}`;
   };
 
   // 1. Preloader on internal link navigation (safe against new tabs & external links)
@@ -810,16 +810,18 @@ document.addEventListener('DOMContentLoaded', () => {
       renderThumbs();
     };
 
-    // Parallax mouse drift on stage
-    lbWrap.addEventListener('mousemove', (e) => {
-      const rect = lbWrap.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      lbMainImg.style.transform = `scale(1.035) translate3d(${x * -10}px, ${y * -10}px, 0)`;
-    });
-    lbWrap.addEventListener('mouseleave', () => {
-      lbMainImg.style.transform = 'scale(1) translate3d(0, 0, 0)';
-    });
+    // 3D Editorial Glass Tilt on Lookbook Stage (Combo 1)
+    if (window.matchMedia('(pointer: fine)').matches) {
+      lbWrap.addEventListener('mousemove', (e) => {
+        const rect = lbWrap.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        lbWrap.style.transform = `rotateX(${(y * -7).toFixed(2)}deg) rotateY(${(x * 7).toFixed(2)}deg) scale(1.012)`;
+      });
+      lbWrap.addEventListener('mouseleave', () => {
+        lbWrap.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+      });
+    }
 
     renderThumbs();
     document.getElementById('lb-thumbs')?.addEventListener('click', (e) => {
@@ -840,22 +842,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Hood Story Parallax Tilt on Campaign Hero
-  const storyHero = document.querySelector('.story-hero-card');
-  if (storyHero) {
-    const heroImg = storyHero.querySelector('.story-img');
-    if (heroImg) {
-      storyHero.addEventListener('mousemove', (e) => {
-        const rect = storyHero.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        heroImg.style.transform = `scale(1.03) translate3d(${x * -8}px, ${y * -8}px, 0)`;
-      });
-      storyHero.addEventListener('mouseleave', () => {
-        heroImg.style.transform = 'scale(1) translate3d(0, 0, 0)';
-      });
-    }
-  }
+  // Hood Story Combo 3: CCTV Viewfinder + 35mm Flash Pop on Hover
+  document.querySelectorAll('.story-cctv-card').forEach((card) => {
+    card.addEventListener('mouseenter', () => {
+      card.classList.remove('is-flashing');
+      void card.offsetWidth;
+      card.classList.add('is-flashing');
+    });
+  });
 
   // 10C. Mobile Touch Support for Shop The Look Pins
   document.querySelectorAll('.hood-pin').forEach((pin) => {
@@ -873,7 +867,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 11. Run Club Radar Map
   if (document.getElementById('rc-city')) {
     const locations = [
-      { city: 'DOWNTOWN CORE', district: 'DISTRICT 01', distance: '5.2 KM', pace: '5:30 / KM', nextDate: 'THU · NOV 26 · 7:30 PM', meetupSpot: 'KOTB Flagship Steps, 4th & Mercer' },
+      { city: 'DOWNTOWN CORE', district: 'DISTRICT 01', distance: '5.2 KM', pace: '5:30 / KM', nextDate: 'THU · NOV 26 · 7:30 PM', meetupSpot: 'HOODLUMS Meetup Point, District 01' },
       { city: 'WESTSIDE PIER', district: 'HARBOR LOOP', distance: '7.0 KM', pace: '5:15 / KM', nextDate: 'SUN · NOV 29 · 7:00 AM', meetupSpot: 'Pier 14 Concrete Ramp' },
       { city: 'EAST HOOD', district: 'INDUSTRIAL', distance: '6.0 KM', pace: '5:45 / KM', nextDate: 'TUE · DEC 01 · 8:00 PM', meetupSpot: 'Old Rail Yard Mural Wall' },
       { city: 'NORTH TRACK', district: 'STADIUM', distance: '400M INTERVALS', pace: 'OPEN PACE', nextDate: 'THU · DEC 03 · 7:30 PM', meetupSpot: 'North Oval Gate B' },
@@ -952,11 +946,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatPanel = document.getElementById('kotb-chat-panel');
   const chatLog = document.getElementById('kotb-chat-log');
   const chatReplies = {
-    sizing: 'Our 400 GSM heavyweight tees and boxy tanks have an oversized H-line drop-shoulder fit. Take your true size for a relaxed drape or check the On-Body Fit guide on any product page.',
-    shipping: 'Domestic PH orders dispatch within 24h via J&T Express / LBC (2–4 days delivery). Free express shipping unlocks automatically at ₱3,500!',
-    gcash: 'We accept GCash, Maya, Debit/Credit Cards, and Cash on Delivery (COD) nationwide directly at Shopify Checkout.',
-    cod: 'Yes! Cash on Delivery (COD) is available nationwide across Metro Manila and all PH provinces.',
-    promo: 'Subscribe to our footer newsletter or unlock our VIP Drop Vault with code HOOD2026 for exclusive private discount access.',
+    sizing: 'Our heavyweight hoodies and boxy tees have an oversized drop-shoulder fit. Take your true size for a relaxed drape or check the size chart on any product page.',
+    shipping: 'Every piece is made to order and dispatches within 3–5 business days. Worldwide tracked shipping typically takes 7–14 business days.',
+    payment: 'We accept all major credit/debit cards, Shop Pay, Apple Pay, and Google Pay securely through Shopify Checkout.',
+    promo: 'Subscribe to our footer newsletter for early access to new drops and private archive releases.',
     track: 'You can track your order anytime at /pages/track-order or inside your Customer Account.',
   };
 
