@@ -11,17 +11,17 @@
 <main class="bg-white pt-10 pb-16 hood-lookbooks-section" data-animation-style="{{ anim_style }}">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
     <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-12 items-start">
-      <div class="anim-fade-up">
+      <div class="anim-fade-up lb-tilt-perspective">
         <div
           id="lb-stage-wrap"
-          class="aspect-[3/4] w-full max-w-[560px] overflow-hidden bg-black relative border border-black/15 transition-transform duration-300"
+          class="lb-glass-card aspect-[3/4] w-full max-w-[560px] overflow-hidden bg-black relative border border-black/15"
           style="aspect-ratio: 3/4; background-color: #0a0a0a;"
           data-animation-style="{{ anim_style }}"
           data-lookbook-slides='[
-            {"look":1,"title":"{{ section.settings.look1_title | default: 'HOODLUMS NO EVIL // STAIRWELL DUO' | escape }}","garments":"{{ section.settings.look1_garments | default: '400 GSM Boxy Oversized Tee & Snow-Washed Tee' | escape }}","img":"{{ look1_img }}"},
-            {"look":2,"title":"{{ section.settings.look2_title | default: 'NO EVIL BOXY OVERSIZED TEE — CONCRETE FLASH' | escape }}","garments":"{{ section.settings.look2_garments | default: '400 GSM Ultra-Heavyweight Cotton / Drop Shoulder' | escape }}","img":"{{ look2_img }}"},
-            {"look":3,"title":"{{ section.settings.look3_title | default: 'NO EVIL BOXY TEE — INDUSTRIAL CORRIDOR' | escape }}","garments":"{{ section.settings.look3_garments | default: '400 GSM Boxy Oversized Tee / Baggy Utility Cargo' | escape }}","img":"{{ look3_img }}"},
-            {"look":4,"title":"{{ section.settings.look4_title | default: 'NO EVIL CAPSULE — TANK & WASHED TEE' | escape }}","garments":"{{ section.settings.look4_garments | default: '340 GSM Frayed French Terry Tank & Snow-Washed Tee' | escape }}","img":"{{ look4_img }}"}
+            {"look":1,"title":"{{ section.settings.look1_title | default: 'HOODLUMS NO EVIL // STAIRWELL DUO' | escape }}","garments":"{{ section.settings.look1_garments | default: 'Heavyweight Boxy Oversized Tee & Snow-Washed Tee' | escape }}","img":"{{ look1_img }}"},
+            {"look":2,"title":"{{ section.settings.look2_title | default: 'NO EVIL BOXY OVERSIZED TEE — CONCRETE FLASH' | escape }}","garments":"{{ section.settings.look2_garments | default: 'Heavyweight Combed Cotton / Drop Shoulder' | escape }}","img":"{{ look2_img }}"},
+            {"look":3,"title":"{{ section.settings.look3_title | default: 'NO EVIL BOXY TEE — INDUSTRIAL CORRIDOR' | escape }}","garments":"{{ section.settings.look3_garments | default: 'Heavyweight Boxy Oversized Tee / Baggy Utility Cargo' | escape }}","img":"{{ look3_img }}"},
+            {"look":4,"title":"{{ section.settings.look4_title | default: 'NO EVIL CAPSULE — TANK & WASHED TEE' | escape }}","garments":"{{ section.settings.look4_garments | default: 'Frayed French Terry Tank & Snow-Washed Tee' | escape }}","img":"{{ look4_img }}"}
           ]'
         >
           <img
@@ -30,6 +30,7 @@
             alt="{{ section.settings.look1_title | default: 'HOODLUMS NO EVIL Lookbook' | escape }}"
             class="w-full h-full object-cover object-top block transition-all duration-300"
           />
+          <div class="lb-glass-sheen" aria-hidden="true"></div>
           <div id="lb-shutter-curtain" class="pointer-events-none absolute inset-0 bg-black opacity-0 transition-opacity duration-150 z-20"></div>
           <div id="lb-flash-curtain" class="pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200 z-20"></div>
           <span id="lb-look-tag" class="font-mono-meta absolute bottom-3 left-3 text-white px-2.5 py-1 text-[10px] tracking-[0.14em] z-30" style="background-color: rgba(0, 0, 0, 0.85);">LOOK 01</span>
@@ -37,7 +38,7 @@
         <h1 id="lb-col-title" class="font-display text-[22px] mt-5 mb-1.5 tracking-[0.04em]">{{ section.settings.col_title | default: 'NO EVIL CAPSULE // 2026' }}</h1>
         <div id="lb-look-label" class="text-[13px] font-semibold">Look 1</div>
         <div id="lb-look-caption" class="font-mono-meta text-xs text-[#666] mt-1">
-          {{ section.settings.look1_title | default: 'HOODLUMS NO EVIL // STAIRWELL DUO' }} — {{ section.settings.look1_garments | default: '400 GSM Boxy Oversized Tee & Snow-Washed Tee' }}
+          {{ section.settings.look1_title | default: 'HOODLUMS NO EVIL // STAIRWELL DUO' }} — {{ section.settings.look1_garments | default: 'Heavyweight Boxy Oversized Tee & Snow-Washed Tee' }}
         </div>
       </div>
 
@@ -102,15 +103,15 @@
     { "type": "header", "content": "Look 1 (Stairwell Duo)" },
     { "type": "image_picker", "id": "look1_image", "label": "Look 1 Image (Optional override)" },
     { "type": "text", "id": "look1_title", "label": "Look 1 Title", "default": "HOODLUMS NO EVIL // STAIRWELL DUO" },
-    { "type": "text", "id": "look1_garments", "label": "Look 1 Garments", "default": "400 GSM Boxy Oversized Tee & Snow-Washed Tee" },
+    { "type": "text", "id": "look1_garments", "label": "Look 1 Garments", "default": "Heavyweight Boxy Oversized Tee & Snow-Washed Tee" },
     { "type": "header", "content": "Look 2 (Concrete Flash Female)" },
     { "type": "image_picker", "id": "look2_image", "label": "Look 2 Image (Optional override)" },
     { "type": "text", "id": "look2_title", "label": "Look 2 Title", "default": "NO EVIL BOXY OVERSIZED TEE — CONCRETE FLASH" },
-    { "type": "text", "id": "look2_garments", "label": "Look 2 Garments", "default": "400 GSM Ultra-Heavyweight Cotton / Drop Shoulder" },
+    { "type": "text", "id": "look2_garments", "label": "Look 2 Garments", "default": "Heavyweight Combed Cotton / Drop Shoulder" },
     { "type": "header", "content": "Look 3 (Industrial Corridor Male)" },
     { "type": "image_picker", "id": "look3_image", "label": "Look 3 Image (Optional override)" },
     { "type": "text", "id": "look3_title", "label": "Look 3 Title", "default": "NO EVIL BOXY TEE — INDUSTRIAL CORRIDOR" },
-    { "type": "text", "id": "look3_garments", "label": "Look 3 Garments", "default": "400 GSM Boxy Oversized Tee / Baggy Utility Cargo" },
+    { "type": "text", "id": "look3_garments", "label": "Look 3 Garments", "default": "Heavyweight Boxy Oversized Tee / Baggy Utility Cargo" },
     { "type": "header", "content": "Look 4 (Tank & Washed Duo)" },
     { "type": "image_picker", "id": "look4_image", "label": "Look 4 Image (Optional override)" },
     { "type": "text", "id": "look4_title", "label": "Look 4 Title", "default": "NO EVIL CAPSULE — TANK & WASHED TEE" },
