@@ -1,19 +1,20 @@
-{%- comment -%} HOOD Footer with Full Theme Customizer Controls {%- endcomment -%}
+{%- comment -%} HOOD Footer with Full Theme Customizer Controls & Native Shopify Policies {%- endcomment -%}
 {%- assign f_bg = section.settings.bg_color | default: '#ebebeb' -%}
 {%- assign f_color = section.settings.text_color | default: '#000000' -%}
+{%- assign f_menu_handle = section.settings.footer_menu | default: 'footer' -%}
 
 <footer class="border-t border-black/10 pt-12 pb-7 transition-colors" style="background-color: {{ f_bg }}; color: {{ f_color }};">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_auto] gap-8 pb-10">
+    <div class="hood-footer-grid pb-10">
       {%- if section.settings.show_about != false -%}
         <div class="max-w-md">
           <h3 class="font-display text-base tracking-[0.12em] mb-2">{{ section.settings.about_heading | default: 'HOODLUMS' }}</h3>
           <p class="font-mono-meta text-xs text-[#555] leading-relaxed mb-4">
             {{ section.settings.about_text | default: 'Underground heavyweight streetwear crafted with 400 GSM combed cotton. Direct DTF prints and brutalist tailoring.' }}
           </p>
-          {%- if section.settings.footer_menu != blank and linklists[section.settings.footer_menu].links.size > 0 -%}
-            <div class="flex flex-wrap gap-4">
-              {%- for link in linklists[section.settings.footer_menu].links -%}
+          {%- if linklists[f_menu_handle].links.size > 0 -%}
+            <div class="flex flex-wrap gap-x-4 gap-y-2">
+              {%- for link in linklists[f_menu_handle].links -%}
                 <a href="{{ link.url }}" data-nav class="font-mono-meta text-[11px] underline hover:opacity-70">{{ link.title }}</a>
               {%- endfor -%}
             </div>
@@ -43,9 +44,9 @@
       {%- endif -%}
 
       {%- if section.settings.show_socials != false -%}
-        <div class="flex flex-col md:items-end justify-between gap-4">
+        <div class="flex flex-col lg:items-end justify-between gap-4">
           <div class="font-mono-meta text-[11px] text-[#666] tracking-[0.14em]">CONNECT // SOCIALS</div>
-          <div class="flex items-center gap-3">
+          <div class="flex flex-wrap items-center gap-2.5">
             {%- assign socials = 'FB,IG,YT,TT,PIN' | split: ',' -%}
             {%- for s in socials -%}
               {%- assign s_key = s | downcase | prepend: 'social_' -%}
@@ -60,13 +61,34 @@
       <span class="font-mono-meta text-[11px] text-[#666]">
         {{ section.settings.copyright_text | default: '© 2026 HOODLUMS. All rights reserved.' }}
       </span>
-      <div class="flex items-center gap-4">
-        <a href="{{ section.settings.help_link_url | default: '/pages/help' }}" data-nav class="font-mono-meta text-[11px] text-[#666] hover:text-black underline">
-          {{ section.settings.help_link_label | default: 'Help & Privacy' }}
+
+      <div class="flex flex-wrap items-center justify-center sm:justify-end gap-x-4 gap-y-2">
+        {%- assign returns_target = section.settings.returns_url | default: shop.refund_policy.url | default: '/policies/refund-policy' -%}
+        <a href="{{ returns_target }}" data-nav class="font-mono-meta text-[11px] text-[#666] hover:text-black underline">
+          {{ section.settings.returns_label | default: 'Returns & Cancellations' }}
         </a>
-        <a href="{{ routes.root_url }}" data-nav class="font-mono-meta text-[11px] text-[#666] hover:text-black">
+
+        {%- if section.settings.show_policies != false -%}
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}
+              {%- unless policy.url == shop.refund_policy.url or policy.url == returns_target -%}
+                <a href="{{ policy.url }}" data-nav class="font-mono-meta text-[11px] text-[#666] hover:text-black underline">
+                  {{ policy.title }}
+                </a>
+              {%- endunless -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- if section.settings.help_link_label != blank -%}
+          <a href="{{ section.settings.help_link_url | default: '/pages/help' }}" data-nav class="font-mono-meta text-[11px] text-[#666] hover:text-black underline">
+            {{ section.settings.help_link_label }}
+          </a>
+        {%- endif -%}
+
+        <button type="button" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="font-mono-meta text-[11px] text-[#666] hover:text-black cursor-pointer bg-transparent border-0 p-0">
           Top ↑
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -83,17 +105,20 @@
     { "type": "checkbox", "id": "show_about", "label": "Show Brand Description", "default": true },
     { "type": "text", "id": "about_heading", "label": "Brand Heading", "default": "HOODLUMS" },
     { "type": "textarea", "id": "about_text", "label": "Brand Description", "default": "Underground heavyweight streetwear crafted with 400 GSM combed cotton. Direct DTF prints and brutalist tailoring." },
-    { "type": "link_list", "id": "footer_menu", "label": "Footer Navigation Menu" },
+    { "type": "link_list", "id": "footer_menu", "label": "Footer Navigation Menu", "default": "footer" },
     { "type": "header", "content": "Newsletter Signup" },
     { "type": "checkbox", "id": "show_newsletter", "label": "Show Newsletter Signup", "default": true },
     { "type": "text", "id": "subscribe_heading", "label": "Newsletter Heading", "default": "SUBSCRIBE TO HOOD DROPS" },
     { "type": "textarea", "id": "subscribe_subtext", "label": "Newsletter Subtext", "default": "Get secret password access for Drop 05, private restocks, and exclusive lookbook previews." },
     { "type": "header", "content": "Social Media" },
     { "type": "checkbox", "id": "show_socials", "label": "Show Social Badges", "default": true },
-    { "type": "header", "content": "Copyright & Legal" },
-    { "type": "text", "id": "copyright_text", "label": "Copyright Text", "default": "© 2026 HOODLUMS. All rights reserved." },
-    { "type": "text", "id": "help_link_label", "label": "Help Link Label", "default": "Help & Privacy" },
-    { "type": "url", "id": "help_link_url", "label": "Help Link URL" }
+    { "type": "header", "content": "Policies, Returns & Legal" },
+    { "type": "checkbox", "id": "show_policies", "label": "Auto-show Shopify Store Policies (Privacy, Terms, Shipping)", "default": true },
+    { "type": "text", "id": "returns_label", "label": "Returns & Cancellations Link Label", "default": "Returns & Cancellations" },
+    { "type": "url", "id": "returns_url", "label": "Returns & Cancellations URL (blank = Shopify Refund Policy)" },
+    { "type": "text", "id": "help_link_label", "label": "Help Link Label", "default": "Help & FAQ" },
+    { "type": "url", "id": "help_link_url", "label": "Help Link URL" },
+    { "type": "text", "id": "copyright_text", "label": "Copyright Text", "default": "© 2026 HOODLUMS. All rights reserved." }
   ]
 }
 {% endschema %}
