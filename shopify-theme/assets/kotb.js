@@ -425,6 +425,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // 6C. 1-Click Quick-Add from Shop Grid Product Cards
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-quick-add-id]');
+    if (!btn || btn.disabled) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const variantId = parseInt(btn.getAttribute('data-quick-add-id') || '0', 10);
+    if (!variantId) return;
+    const origText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '…';
+    try {
+      const res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: 1 }),
+      });
+      if (res.ok) {
+        await refreshCart();
+        toggleCart(true);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = origText;
+    }
+  });
+
   // 7. Horizontal Slider Arrows & Collection Sort
   document.querySelectorAll('[data-slider-btn]').forEach((btn) => {
     btn.addEventListener('click', () => {

@@ -3,46 +3,88 @@
 {%- assign bg_class = 'bg-white' -%}
 {%- if card_surface == 'grey' -%}{%- assign bg_class = 'bg-[#ededed]' -%}{%- endif -%}
 
-<a
-  href="{{ product.url }}"
-  data-nav
-  data-delay="{{ card_delay }}"
-  aria-label="{{ product.title | escape }} — {{ product.price | money }}{% unless product.available %} (Sold out){% endunless %}"
-  class="product-card reveal-on-scroll relative block w-full aspect-[4/5] overflow-hidden {{ bg_class }}"
->
-  {%- unless product.available -%}
-    <span class="anim-badge-glow absolute top-2.5 left-2.5 z-10 bg-white text-black border border-black rounded-[4rem] px-3 py-1 text-[11px] font-medium leading-tight">
-      Sold out
-    </span>
-  {%- endunless -%}
+<div class="hood-card-outer reveal-on-scroll" data-delay="{{ card_delay }}">
+  <div class="hood-card-media-box product-card {{ bg_class }}">
+    {%- unless product.available -%}
+      <span class="anim-badge-glow absolute top-2.5 left-2.5 z-10 bg-white text-black border border-black rounded-[4rem] px-3 py-1 text-[11px] font-medium leading-tight">
+        Sold out
+      </span>
+    {%- endunless -%}
 
-  <div class="product-card-media">
-    <div class="w-full h-full">
-      {%- if product.featured_image != blank -%}
-        <img
-          src="{{ product.featured_image | image_url: width: 900 }}"
-          alt="{{ product.featured_image.alt | default: product.title | escape }}"
-          class="w-full h-full object-contain block"
-          loading="lazy"
-        />
-      {%- else -%}
-        {% render 'garment-svg', product: product, view: 'front' %}
-      {%- endif -%}
-    </div>
+    <a
+      href="{{ product.url }}"
+      data-nav
+      aria-label="{{ product.title | escape }} — {{ product.price | money }}{% unless product.available %} (Sold out){% endunless %}"
+      class="block w-full h-full"
+    >
+      <div class="product-card-media">
+        <div class="w-full h-full">
+          {%- if product.featured_image != blank -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 900 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              class="w-full h-full object-contain block"
+              loading="lazy"
+            />
+          {%- else -%}
+            {% render 'garment-svg', product: product, view: 'front' %}
+          {%- endif -%}
+        </div>
 
-    {%- if product.images.size > 1 -%}
-      <div class="view-back w-full h-full {{ bg_class }}">
-        <img
-          src="{{ product.images[1] | image_url: width: 900 }}"
-          alt="{{ product.title | escape }} back view"
-          class="w-full h-full object-contain block"
-          loading="lazy"
-        />
+        {%- if product.images.size > 1 -%}
+          <div class="view-back w-full h-full {{ bg_class }}">
+            <img
+              src="{{ product.images[1] | image_url: width: 900 }}"
+              alt="{{ product.title | escape }} alternate view"
+              class="w-full h-full object-contain block"
+              loading="lazy"
+            />
+          </div>
+        {%- elsif product.featured_image == blank -%}
+          <div class="view-back w-full h-full {{ bg_class }}">
+            {% render 'garment-svg', product: product, view: 'back' %}
+          </div>
+        {%- endif -%}
       </div>
-    {%- elsif product.featured_image == blank -%}
-      <div class="view-back w-full h-full {{ bg_class }}">
-        {% render 'garment-svg', product: product, view: 'back' %}
+    </a>
+
+    {%- if product.available -%}
+      <div class="hood-quick-add">
+        <div class="hood-quick-add-label">QUICK ADD</div>
+        <div class="hood-quick-sizes">
+          {%- if product.has_only_default_variant -%}
+            <button
+              type="button"
+              data-quick-add-id="{{ product.first_available_variant.id }}"
+              class="hood-quick-size-btn"
+              style="padding: 0 12px;"
+            >
+              + ADD TO CART
+            </button>
+          {%- else -%}
+            {%- for variant in product.variants limit: 6 -%}
+              {%- assign short_lbl = variant.title | split: '/' | last | strip -%}
+              <button
+                type="button"
+                data-quick-add-id="{{ variant.id }}"
+                {% unless variant.available %}disabled{% endunless %}
+                class="hood-quick-size-btn"
+                title="Add {{ product.title | escape }} — {{ variant.title | escape }}"
+              >
+                {{ short_lbl }}
+              </button>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
       </div>
     {%- endif -%}
   </div>
-</a>
+
+  <a href="{{ product.url }}" data-nav class="hood-card-meta group">
+    <div class="hood-card-title group-hover:underline">{{ product.title }}</div>
+    <div class="hood-card-meta-row">
+      <span class="hood-card-price">{{ product.price | money }}</span>
+      <span class="hood-card-gsm">{% if product.title contains 'Tank' or product.title contains 'TANK' %}340 GSM{% else %}400 GSM{% endif %}</span>
+    </div>
+  </a>
+</div>

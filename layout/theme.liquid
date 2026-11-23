@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}">
+<html lang="{{ request.locale.iso_code }}"{% if template.name == 'index' %} class="hood-splash-lock"{% endif %}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
     {%- if page_title == blank -%}
-      {{ shop.name }} | Philippine Streetwear &amp; Block Community
+      {{ shop.name }} | Heavyweight Streetwear &amp; Hood Community
     {%- else -%}
       {{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
     {%- endif -%}

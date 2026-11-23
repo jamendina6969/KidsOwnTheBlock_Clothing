@@ -2274,14 +2274,15 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 6px;
-    height: 6px;
-    background: #d9ff00;
+    width: 7px;
+    height: 7px;
+    background: #ffffff;
+    mix-blend-mode: difference;
     border-radius: 50%;
     pointer-events: none;
     z-index: 99999;
     transform: translate(-50%, -50%);
-    transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease;
+    transition: width 0.15s ease, height 0.15s ease;
   }
   #hood-cursor-ring {
     position: fixed;
@@ -2289,18 +2290,19 @@ html, body {
     left: 0;
     width: 28px;
     height: 28px;
-    border: 1px solid rgba(217, 255, 0, 0.65);
+    border: 1.5px solid #ffffff;
+    mix-blend-mode: difference;
     border-radius: 50%;
     pointer-events: none;
     z-index: 99998;
     transform: translate(-50%, -50%);
-    transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
+    transition: width 0.18s ease, height 0.18s ease, background-color 0.18s ease;
   }
   #hood-cursor-ring.is-hovering {
-    width: 46px;
-    height: 46px;
-    border-color: #d9ff00;
-    background: rgba(217, 255, 0, 0.08);
+    width: 44px;
+    height: 44px;
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
   }
 }
 
@@ -2589,6 +2591,167 @@ html, body {
   text-decoration: underline;
   color: #000000;
 }
+
+/* Adaptive Shop Grids (3-col for <=3 products, 4-col for 4+) */
+.hood-shop-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .hood-shop-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+.hood-shop-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .hood-shop-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Upgraded Streetwear Product Card + Hover Quick-Add Bar */
+.hood-card-outer {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+.hood-card-media-box {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.22s ease;
+}
+.hood-card-outer:hover .hood-card-media-box {
+  border-color: #000000;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07);
+}
+.hood-quick-add {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
+  padding: 8px 6px;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+}
+.hood-card-outer:hover .hood-quick-add,
+.hood-card-outer:focus-within .hood-quick-add {
+  transform: translateY(0);
+  opacity: 1;
+}
+.hood-quick-add-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: #666666;
+  text-align: center;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+.hood-quick-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+.hood-quick-size-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 28px;
+  height: 26px;
+  padding: 0 6px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.hood-quick-size-btn:hover:not(:disabled) {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+.hood-quick-size-btn:disabled {
+  opacity: 0.35;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.hood-card-meta {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.hood-card-title {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #000000;
+  line-height: 1.3;
+}
+.hood-card-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.hood-card-price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #222222;
+  font-weight: 500;
+}
+.hood-card-gsm {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #666666;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 1px 5px;
+}
+
+/* Hard-Lock Splash Landing Page to 100% Viewport (Zero Scrollbar / Zero Whitespace) */
+html.hood-splash-lock,
+html.hood-splash-lock body {
+  overflow: hidden !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overscroll-behavior: none !important;
+  background: #000000 !important;
+}
+html.hood-splash-lock .kotb-splash-main {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
+}
+
+
 
 
 
