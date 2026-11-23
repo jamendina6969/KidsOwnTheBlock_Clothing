@@ -1,0 +1,146 @@
+{%- comment -%} Overlays: Predictive Search, Cart Drawer, and Chat Widget (Menu Drawer is now managed in HOOD Header) {%- endcomment -%}
+
+{%- comment -%} Predictive Search Overlay (Shopify Predictive Search API) {%- endcomment -%}
+<div id="kotb-search-overlay" class="fixed inset-0 z-50 hidden">
+  <div id="search-backdrop" class="absolute inset-0 bg-black/40"></div>
+  <div class="anim-drop-down relative bg-white border-b border-black px-6 pt-5 pb-7">
+    <form action="{{ routes.search_url }}" method="get" class="max-w-[820px] mx-auto flex items-center gap-3.5">
+      <input type="hidden" name="type" value="product" />
+      <div class="flex-1 relative flex items-center">
+        <input id="kotb-search-input" name="q" type="text" autocomplete="off" placeholder="Search tees, hoodies, cargo, run club..." class="w-full h-[46px] rounded-[8px] border border-black pl-4 pr-11 text-sm outline-none bg-white" />
+        <button type="submit" aria-label="Submit search" class="absolute right-3.5 cursor-pointer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+      </div>
+      <button id="close-search-btn" type="button" aria-label="Close search" class="p-1.5 cursor-pointer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </form>
+    <div class="max-w-[820px] mx-auto mt-5">
+      <div id="kotb-search-count" class="font-mono-meta text-[11px] text-[#666] mb-3">POPULAR SEARCHES</div>
+      <div id="kotb-search-results" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} Right Slide-Over Cart Drawer (Shopify AJAX Cart API) {%- endcomment -%}
+{%- assign free_ship_cents = settings.free_shipping_threshold | default: 3500 | times: 100 -%}
+{%- assign ship_pct = cart.total_price | times: 100 | divided_by: free_ship_cents -%}
+{%- if ship_pct > 100 -%}{%- assign ship_pct = 100 -%}{%- endif -%}
+{%- assign ship_rem = free_ship_cents | minus: cart.total_price -%}
+
+<div id="kotb-cart-drawer" class="fixed inset-0 z-50 hidden justify-end">
+  <div id="cart-backdrop" class="absolute inset-0 bg-black/35"></div>
+  <aside role="dialog" aria-label="Shopping cart" class="anim-slide-right relative w-full max-w-[420px] h-full bg-white border-l border-black flex flex-col">
+    <div class="flex items-center justify-between px-6 py-5 border-b border-black/10">
+      <span class="font-display text-[15px]">YOUR CART</span>
+      <button id="close-cart-btn" type="button" aria-label="Close cart" class="p-1 cursor-pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="kotb-shipping-bar" class="px-6 py-3 bg-[#f7f7f7] border-b border-black/10 {% if cart.item_count == 0 %}hidden{% endif %}">
+      <div id="kotb-shipping-text" class="font-mono-meta text-[11px] mb-1.5">
+        {%- if ship_rem <= 0 -%}
+          ✓ FREE EXPRESS SHIPPING UNLOCKED
+        {%- else -%}
+          ADD {{ ship_rem | money }} MORE FOR FREE SHIPPING
+        {%- endif -%}
+      </div>
+      <div class="w-full h-1.5 bg-black/10 overflow-hidden">
+        <div id="kotb-shipping-fill" class="h-full bg-black transition-all duration-300" style="width: {{ ship_pct }}%"></div>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-6">
+      <div id="kotb-cart-empty" class="h-full flex-col items-center justify-center text-center gap-4 {% if cart.item_count == 0 %}flex{% else %}hidden{% endif %}">
+        <div class="font-display text-xl">Your cart is empty</div>
+        <button id="continue-shopping-btn" type="button" class="font-display bg-black text-white rounded-[30px] px-7 py-3 text-xs cursor-pointer">
+          CONTINUE SHOPPING
+        </button>
+      </div>
+
+      <div id="kotb-cart-items" class="flex flex-col gap-5 {% if cart.item_count == 0 %}hidden{% endif %}">
+        {%- for item in cart.items -%}
+          <div class="grid grid-cols-[76px_1fr] gap-3.5 pb-4 border-b border-black/10">
+            <div class="aspect-[4/5] bg-[#f7f7f7] overflow-hidden">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" class="w-full h-full object-contain" />
+              {%- endif -%}
+            </div>
+            <div class="flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start gap-2">
+                  <a href="{{ item.url }}" class="font-display text-xs leading-snug text-left">{{ item.product.title }}</a>
+                  <button type="button" data-cart-remove="{{ item.key }}" class="text-[11px] text-[#666] hover:text-black cursor-pointer">Remove</button>
+                </div>
+                {%- unless item.product.has_only_default_variant -%}
+                  <div class="font-mono-meta text-[11px] text-[#666] mt-1">SIZE: {{ item.variant.title }}</div>
+                {%- endunless -%}
+              </div>
+              <div class="flex items-center justify-between mt-2.5">
+                <div class="inline-flex items-center border border-black rounded-[8px] h-8">
+                  <button type="button" data-cart-qty="{{ item.quantity | minus: 1 }}" data-cart-key="{{ item.key }}" class="w-7 h-full flex items-center justify-center text-xs cursor-pointer">-</button>
+                  <span class="font-mono-meta w-6 text-center text-xs">{{ item.quantity }}</span>
+                  <button type="button" data-cart-qty="{{ item.quantity | plus: 1 }}" data-cart-key="{{ item.key }}" class="w-7 h-full flex items-center justify-center text-xs cursor-pointer">+</button>
+                </div>
+                <div class="font-mono-meta text-xs">{{ item.final_line_price | money }}</div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div id="kotb-cart-footer" class="px-6 pt-5 pb-7 border-t border-black/10 bg-[#fafafa] {% if cart.item_count == 0 %}hidden{% endif %}">
+      <div class="flex justify-between mb-1.5">
+        <span class="font-display text-[13px]">SUBTOTAL</span>
+        <span id="kotb-cart-subtotal" class="font-mono-meta text-[15px] font-semibold">{{ cart.total_price | money }}</span>
+      </div>
+      <p class="text-[11px] text-[#666] mb-4">Taxes and shipping calculated at checkout.</p>
+      <a href="/checkout" class="btn-sheen font-display block text-center w-full bg-black text-white rounded-[30px] py-3.5 text-[13px] cursor-pointer hover:opacity-85 transition-opacity">
+        CHECK OUT
+      </a>
+    </div>
+  </aside>
+</div>
+
+{%- comment -%} Floating KOTB Concierge Chat Pill {%- endcomment -%}
+{%- unless template.name == 'index' -%}
+<div class="fixed right-5 bottom-5 z-40">
+  <div id="kotb-chat-panel" class="hidden w-[305px] bg-white border border-black mb-3 flex flex-col anim-fade-up">
+    <div class="bg-black text-white px-3.5 py-3 flex items-center justify-between">
+      <span class="font-display text-xs">KOTB CONCIERGE</span>
+      <button id="kotb-chat-close" type="button" class="text-white cursor-pointer">✕</button>
+    </div>
+    <div id="kotb-chat-log" class="p-3.5 h-48 overflow-y-auto flex flex-col gap-2.5 bg-[#fafafa]">
+      <div class="self-start bg-[#ededed] text-black px-3 py-2 text-xs max-w-[85%]">
+        Welcome to HOODLUMS. Tap a topic below or ask about sizing, shipping, COD, or drops.
+      </div>
+    </div>
+    <div class="px-2.5 py-1.5 border-t border-black/10 bg-white flex flex-wrap gap-1">
+      {%- assign chips = 'Sizing,Shipping,GCash / COD,Promo Code,Track Order' | split: ',' -%}
+      {%- for chip in chips -%}
+        <button type="button" data-chat-chip="{{ chip }}" class="font-mono-meta text-[10px] border border-black/25 px-2 py-0.5 rounded-full hover:bg-black hover:text-white transition-colors cursor-pointer">{{ chip }}</button>
+      {%- endfor -%}
+    </div>
+    <form id="kotb-chat-form" class="flex border-t border-black/10 p-2 gap-2">
+      <input id="kotb-chat-input" type="text" placeholder="Write a message..." class="flex-1 border border-black/15 rounded-[8px] px-2.5 py-1.5 text-xs outline-none" />
+      <button type="submit" class="bg-black text-white rounded-[8px] px-3 text-xs cursor-pointer">→</button>
+    </form>
+  </div>
+  <button id="kotb-chat-toggle" type="button" class="bg-[#1a1a1a] text-white rounded-[30px] px-4 py-2.5 inline-flex items-center gap-2 text-[13px] font-semibold border border-white/20 cursor-pointer hover:bg-black transition-colors">
+    <span>Chat</span>
+  </button>
+</div>
+{%- endunless -%}
+
+{%- comment -%} Page Transition Preloader {%- endcomment -%}
+<div id="kotb-preloader" class="fixed inset-0 z-50 hidden flex-col items-center justify-center gap-4 bg-[#ededed]/90">
+  <div class="anim-emblem-pulse">
+    {% render 'brand-mark', color: 'black', size: 46, show_wordmark: false %}
+  </div>
+  <div class="w-[140px] h-[2px] bg-black/15 overflow-hidden relative">
+    <div class="anim-preloader-sweep absolute inset-0 bg-black"></div>
+  </div>
+</div>

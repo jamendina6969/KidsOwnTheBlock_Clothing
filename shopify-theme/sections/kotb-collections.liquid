@@ -1,0 +1,47 @@
+<main class="bg-white pt-10 pb-20">
+  <div class="max-w-[1600px] mx-auto px-3 md:px-6">
+    <div class="flex items-baseline justify-between flex-wrap gap-3 pb-6 mb-8 border-b border-black/10">
+      <h1 class="font-display text-2xl md:text-3xl">COLLECTIONS</h1>
+      <span class="font-mono-meta text-xs text-[#666]">{{ collections.size }} COLLECTIONS</span>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
+      {%- for col in collections -%}
+        {%- assign mod_i = forloop.index0 | modulo: 4 -%}
+        {%- assign d = mod_i | times: 60 -%}
+        <a
+          href="{{ col.url }}"
+          data-nav
+          data-delay="{{ d }}"
+          class="product-card reveal-on-scroll group block bg-[#ededed] border border-transparent hover:border-black transition-colors"
+        >
+          <div class="aspect-[4/5] w-full overflow-hidden p-4">
+            <div class="product-card-media">
+              {%- if col.image != blank -%}
+                <img src="{{ col.image | image_url: width: 800 }}" alt="{{ col.title | escape }}" class="w-full h-full object-contain block" loading="lazy" />
+              {%- elsif col.products.first.featured_image != blank -%}
+                <img src="{{ col.products.first.featured_image | image_url: width: 800 }}" alt="{{ col.title | escape }}" class="w-full h-full object-contain block" loading="lazy" />
+              {%- elsif col.products.first != blank -%}
+                {% render 'garment-svg', product: col.products.first, view: 'front' %}
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="bg-white px-3 py-3.5 border-t border-black/10 flex items-center justify-between gap-2">
+            <span class="font-display text-xs md:text-sm group-hover:underline">{{ col.title | upcase }}</span>
+            <span class="font-mono-meta text-[11px] text-[#666] shrink-0">{{ col.products_count }} →</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "HOOD Collections Grid",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "COLLECTIONS" },
+    { "type": "text", "id": "subtext", "label": "Eyebrow Text", "default": "ALL DROPS & CAPSULES" }
+  ]
+}
+{% endschema %}

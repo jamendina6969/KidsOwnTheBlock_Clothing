@@ -1,20 +1,25 @@
 {%- comment -%} Brutalist Animated Marquee Ticker {%- endcomment -%}
-<div class="marquee-wrapper bg-black text-white border-b border-white/15 overflow-hidden py-2">
-  <div class="marquee-track font-mono-meta text-[11px] tracking-[0.18em] uppercase">
-    {%- for i in (1..6) -%}
-      <span class="mx-6">{{ settings.marquee_text | default: 'DROP 04 LIVE · 240 GSM HEAVYWEIGHT · KIDS OWN THE BLOCK · WORLDWIDE DISPATCH ·' }}</span>
-    {%- endfor -%}
+{%- if section.settings.show_marquee != false -%}
+  <div class="marquee-wrapper bg-black text-white border-b border-white/15 overflow-hidden py-2">
+    <div class="marquee-track font-mono-meta text-[11px] tracking-[0.18em] uppercase">
+      {%- assign m_text = section.settings.custom_marquee_text | default: settings.marquee_text | default: 'DROP 04 LIVE · 400 GSM HEAVYWEIGHT · HOODLUMS · WORLDWIDE DISPATCH ·' -%}
+      {%- for i in (1..6) -%}
+        <span class="mx-6">{{ m_text }}</span>
+      {%- endfor -%}
+    </div>
   </div>
-</div>
+{%- endif -%}
 
 {%- comment -%} Drop 05 Live Countdown Bar {%- endcomment -%}
-<div class="bg-[#111] text-white border-b border-black py-2 px-4 text-center font-mono-meta text-[11px] tracking-[0.12em]">
-  {{ settings.countdown_label | default: 'DROP 05 ARCHIVE CAPSULE UNLOCKS IN:' }}
-  <span id="kotb-drop-countdown" data-target="{{ settings.countdown_target | default: '2026-12-31T23:59:59Z' }}" class="text-[#d9ff00] font-bold ml-1">02D : 14H : 38M : 12S</span>
-</div>
+{%- if section.settings.show_countdown != false -%}
+  <div class="bg-[#111] text-white border-b border-black py-2 px-4 text-center font-mono-meta text-[11px] tracking-[0.12em]">
+    {{ section.settings.custom_countdown_label | default: settings.countdown_label | default: 'DROP 05 ARCHIVE CAPSULE UNLOCKS IN:' }}
+    <span id="kotb-drop-countdown" data-target="{{ settings.countdown_target | default: '2026-12-31T23:59:59Z' }}" class="text-[#d9ff00] font-bold ml-1">02D : 14H : 38M : 12S</span>
+  </div>
+{%- endif -%}
 
 {%- comment -%} 3 Horizontal Slider Bands on #EDEDED (only on All Products collection) {%- endcomment -%}
-{%- if collection.handle == 'all' -%}
+{%- if collection.handle == 'all' and section.settings.show_sliders != false -%}
   {%- assign band_titles = 'NEW COLLECTION,RESTOCKED PRODUCTS,HERITAGE PIECES' | split: ',' -%}
   {%- assign band_tags = 'new,restocked,heritage' | split: ',' -%}
   {%- assign band_ids = 'slider-new,slider-restocked,slider-heritage' | split: ',' -%}
@@ -58,7 +63,8 @@
 {%- endif -%}
 
 {%- comment -%} Main Collection Grid on Pure White {%- endcomment -%}
-{%- paginate collection.products by 12 -%}
+{%- assign per_page = section.settings.products_per_page | default: 24 -%}
+{%- paginate collection.products by per_page -%}
 <section class="bg-white pt-11 pb-16">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
     <div class="flex items-baseline justify-between flex-wrap gap-3 mb-6">
@@ -132,7 +138,16 @@
 
 {% schema %}
 {
-  "name": "KOTB Shop & Sliders",
-  "settings": []
+  "name": "HOOD Shop & Sliders",
+  "settings": [
+    { "type": "header", "content": "Marquee & Countdown Banners" },
+    { "type": "checkbox", "id": "show_marquee", "label": "Show Top Marquee Ticker", "default": true },
+    { "type": "text", "id": "custom_marquee_text", "label": "Custom Marquee Ticker Override" },
+    { "type": "checkbox", "id": "show_countdown", "label": "Show Countdown Bar", "default": true },
+    { "type": "text", "id": "custom_countdown_label", "label": "Custom Countdown Label" },
+    { "type": "header", "content": "Collection Sliders (All Products Page)" },
+    { "type": "checkbox", "id": "show_sliders", "label": "Show Featured Slider Bands", "default": true },
+    { "type": "range", "id": "products_per_page", "label": "Products Per Page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
 }
 {% endschema %}

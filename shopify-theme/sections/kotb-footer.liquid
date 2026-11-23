@@ -1,0 +1,99 @@
+{%- comment -%} HOOD Footer with Full Theme Customizer Controls {%- endcomment -%}
+{%- assign f_bg = section.settings.bg_color | default: '#ebebeb' -%}
+{%- assign f_color = section.settings.text_color | default: '#000000' -%}
+
+<footer class="border-t border-black/10 pt-12 pb-7 transition-colors" style="background-color: {{ f_bg }}; color: {{ f_color }};">
+  <div class="max-w-[1600px] mx-auto px-3 md:px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_auto] gap-8 pb-10">
+      {%- if section.settings.show_about != false -%}
+        <div class="max-w-md">
+          <h3 class="font-display text-base tracking-[0.12em] mb-2">{{ section.settings.about_heading | default: 'HOODLUMS' }}</h3>
+          <p class="font-mono-meta text-xs text-[#555] leading-relaxed mb-4">
+            {{ section.settings.about_text | default: 'Underground heavyweight streetwear crafted with 400 GSM combed cotton. Direct DTF prints and brutalist tailoring.' }}
+          </p>
+          {%- if section.settings.footer_menu != blank and linklists[section.settings.footer_menu].links.size > 0 -%}
+            <div class="flex flex-wrap gap-4">
+              {%- for link in linklists[section.settings.footer_menu].links -%}
+                <a href="{{ link.url }}" data-nav class="font-mono-meta text-[11px] underline hover:opacity-70">{{ link.title }}</a>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_newsletter != false -%}
+        <div class="w-full max-w-[420px]">
+          <h3 class="font-display text-base mb-2">{{ section.settings.subscribe_heading | default: 'SUBSCRIBE TO HOOD DROPS' }}</h3>
+          {%- if section.settings.subscribe_subtext != blank -%}
+            <p class="font-mono-meta text-xs text-[#555] mb-3 leading-relaxed">{{ section.settings.subscribe_subtext }}</p>
+          {%- endif -%}
+          {% form 'customer', id: 'kotb-newsletter-form', class: 'relative' %}
+            <input type="hidden" name="contact[tags]" value="newsletter" />
+            <input type="email" name="contact[email]" required placeholder="Enter your email" aria-label="Email address" class="w-full h-11 rounded-[8px] border border-black/55 bg-transparent pl-3.5 pr-11 text-[13px] outline-none focus:border-black" />
+            <button type="submit" aria-label="Subscribe" class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+            {%- if form.posted_successfully? -%}
+              <div class="font-mono-meta text-[11px] mt-2 text-black">
+                ✓ Subscribed to drop alerts &amp; early access.
+              </div>
+            {%- endif -%}
+          {% endform %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_socials != false -%}
+        <div class="flex flex-col md:items-end justify-between gap-4">
+          <div class="font-mono-meta text-[11px] text-[#666] tracking-[0.14em]">CONNECT // SOCIALS</div>
+          <div class="flex items-center gap-3">
+            {%- assign socials = 'FB,IG,YT,TT,PIN' | split: ',' -%}
+            {%- for s in socials -%}
+              {%- assign s_key = s | downcase | prepend: 'social_' -%}
+              <a href="{{ settings[s_key] | default: '#' }}" {% if settings[s_key] != blank %}target="_blank" rel="noopener"{% endif %} class="font-mono-meta text-[11px] font-semibold text-black border border-black px-2.5 py-1 hover:bg-black hover:text-white transition-colors">{{ s }}</a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="border-t border-black/10 pt-5 flex flex-wrap justify-between items-center gap-3 text-center sm:text-left">
+      <span class="font-mono-meta text-[11px] text-[#666]">
+        {{ section.settings.copyright_text | default: '© 2026 HOODLUMS. All rights reserved.' }}
+      </span>
+      <div class="flex items-center gap-4">
+        <a href="{{ section.settings.help_link_url | default: '/pages/help' }}" data-nav class="font-mono-meta text-[11px] text-[#666] hover:text-black underline">
+          {{ section.settings.help_link_label | default: 'Help & Privacy' }}
+        </a>
+        <a href="{{ routes.root_url }}" data-nav class="font-mono-meta text-[11px] text-[#666] hover:text-black">
+          Top ↑
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "HOOD Footer",
+  "settings": [
+    { "type": "header", "content": "Color & Styling" },
+    { "type": "color", "id": "bg_color", "label": "Footer Background Color", "default": "#ebebeb" },
+    { "type": "color", "id": "text_color", "label": "Footer Text Color", "default": "#000000" },
+    { "type": "header", "content": "About Section" },
+    { "type": "checkbox", "id": "show_about", "label": "Show Brand Description", "default": true },
+    { "type": "text", "id": "about_heading", "label": "Brand Heading", "default": "HOODLUMS" },
+    { "type": "textarea", "id": "about_text", "label": "Brand Description", "default": "Underground heavyweight streetwear crafted with 400 GSM combed cotton. Direct DTF prints and brutalist tailoring." },
+    { "type": "link_list", "id": "footer_menu", "label": "Footer Navigation Menu" },
+    { "type": "header", "content": "Newsletter Signup" },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show Newsletter Signup", "default": true },
+    { "type": "text", "id": "subscribe_heading", "label": "Newsletter Heading", "default": "SUBSCRIBE TO HOOD DROPS" },
+    { "type": "textarea", "id": "subscribe_subtext", "label": "Newsletter Subtext", "default": "Get secret password access for Drop 05, private restocks, and exclusive lookbook previews." },
+    { "type": "header", "content": "Social Media" },
+    { "type": "checkbox", "id": "show_socials", "label": "Show Social Badges", "default": true },
+    { "type": "header", "content": "Copyright & Legal" },
+    { "type": "text", "id": "copyright_text", "label": "Copyright Text", "default": "© 2026 HOODLUMS. All rights reserved." },
+    { "type": "text", "id": "help_link_label", "label": "Help Link Label", "default": "Help & Privacy" },
+    { "type": "url", "id": "help_link_url", "label": "Help Link URL" }
+  ]
+}
+{% endschema %}

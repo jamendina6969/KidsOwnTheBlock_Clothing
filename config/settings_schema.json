@@ -1,9 +1,9 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "KIDS OWN THE BLOCK",
+    "theme_name": "HOODLUMS",
     "theme_version": "1.0.0",
-    "theme_author": "KOTB Studio",
+    "theme_author": "HOODLUMS Studio",
     "theme_documentation_url": "https://shopify.dev/themes",
     "theme_support_url": "https://shopify.dev/themes"
   },
@@ -14,7 +14,7 @@
         "type": "text",
         "id": "marquee_text",
         "label": "Marquee ticker text",
-        "default": "DROP 04 LIVE · 240 GSM HEAVYWEIGHT · KIDS OWN THE BLOCK · WORLDWIDE DISPATCH ·"
+        "default": "DROP 04 LIVE · 400 GSM HEAVYWEIGHT · HOODLUMS · WORLDWIDE DISPATCH ·"
       },
       {
         "type": "text",

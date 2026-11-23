@@ -1,0 +1,49 @@
+<main class="bg-white pt-12 pb-20">
+  <div class="max-w-[720px] mx-auto px-3 md:px-6">
+    <h1 class="font-display text-2xl md:text-3xl mb-2 anim-fade-up">TRACK YOUR ORDER</h1>
+    <p class="font-mono-meta text-xs text-[#666] mb-7">
+      Sign in to your account to view live fulfillment status, tracking numbers, and receipts — or send us your order number below.
+    </p>
+
+    <div class="border border-black p-6 mb-8 anim-fade-up flex flex-col gap-4">
+      <div class="font-display text-sm">INSTANT ORDER HISTORY &amp; LIVE TRACKING</div>
+      <p class="text-xs text-[#444] leading-relaxed">
+        Every KOTB order confirmation email includes a direct live tracking link. You can also sign in to your customer account to view all past and active orders.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" data-nav class="btn-sheen font-display bg-black text-white rounded-[30px] px-6 py-3 text-xs">
+          {% if customer %}VIEW MY ORDERS{% else %}SIGN IN TO TRACK ORDERS{% endif %}
+        </a>
+        <a href="/pages/help" data-nav class="font-display border border-black text-black rounded-[30px] px-6 py-3 text-xs hover:bg-black hover:text-white transition-colors">
+          CONTACT SUPPORT
+        </a>
+      </div>
+    </div>
+
+    {% form 'contact', class: 'border border-black p-6 flex flex-col gap-3.5 anim-fade-up' %}
+      <div class="font-display text-sm">MANUAL ORDER LOOKUP REQUEST</div>
+      {%- if form.posted_successfully? -%}
+        <div class="font-mono-meta text-xs text-emerald-700 border border-emerald-700 bg-emerald-50 p-3">
+          ✓ Lookup request received. We'll email your latest tracking link shortly.
+        </div>
+      {%- else -%}
+        <input type="hidden" name="contact[subject]" value="Order Tracking Lookup" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <input type="text" name="contact[Order Number]" required placeholder="Order # (e.g. #1001)" class="h-11 rounded-[8px] border border-black px-3.5 text-xs font-mono-meta uppercase outline-none" />
+          <input type="email" name="contact[email]" required placeholder="Email used at checkout" class="h-11 rounded-[8px] border border-black px-3.5 text-xs outline-none" />
+        </div>
+        <input type="hidden" name="contact[body]" value="Customer requested tracking update for their order." />
+        <button type="submit" class="btn-sheen font-display self-start bg-black text-white rounded-[30px] px-7 py-3 text-xs cursor-pointer">
+          REQUEST STATUS UPDATE
+        </button>
+      {%- endif -%}
+    {% endform %}
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "HOOD Track Order",
+  "settings": []
+}
+{% endschema %}

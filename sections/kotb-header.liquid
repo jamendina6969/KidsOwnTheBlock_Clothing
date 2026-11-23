@@ -1,5 +1,22 @@
-<header class="sticky top-0 z-40 bg-[#ededed] border-b border-black/10 transition-all duration-200">
-  <div id="kotb-header-bar" class="max-w-[1600px] mx-auto px-3 md:px-6 grid grid-cols-3 items-center h-[76px] transition-all duration-200">
+{%- comment -%} HOOD Header with Theme Customizer controls and Drawer {%- endcomment -%}
+{%- assign h_height = section.settings.header_height | default: 76 -%}
+{%- assign h_bg = section.settings.header_bg | default: '#ededed' -%}
+{%- assign l_size = section.settings.logo_size | default: 44 -%}
+
+{%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
+  <div class="border-b border-black/15 py-2 px-4 text-center font-mono-meta text-[11px] tracking-[0.14em] uppercase" style="background-color: {{ section.settings.announcement_bg | default: '#000000' }}; color: {{ section.settings.announcement_color | default: '#ffffff' }};">
+    {%- if section.settings.announcement_link != blank -%}
+      <a href="{{ section.settings.announcement_link }}" class="hover:underline">
+        {{ section.settings.announcement_text }}
+      </a>
+    {%- else -%}
+      <span>{{ section.settings.announcement_text }}</span>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+<header class="sticky top-0 z-40 border-b border-black/10 transition-all duration-200" style="background-color: {{ h_bg }};">
+  <div id="kotb-header-bar" class="max-w-[1600px] mx-auto px-3 md:px-6 grid grid-cols-3 items-center transition-all duration-200" style="height: {{ h_height }}px;">
     <div class="flex items-center">
       <button id="open-menu-btn" type="button" aria-label="Open navigation menu" class="inline-flex items-center py-2 px-1 cursor-pointer">
         <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true">
@@ -11,33 +28,164 @@
     </div>
 
     <div class="flex justify-center">
-      <a id="kotb-header-logo" href="{{ routes.all_products_collection_url }}" data-nav aria-label="{{ shop.name }} Home" class="inline-flex items-center justify-center transition-transform duration-200">
-        {% render 'brand-mark', color: 'black', size: 44, show_wordmark: false %}
+      <a id="kotb-header-logo" href="{{ section.settings.logo_link | default: routes.all_products_collection_url }}" data-nav aria-label="{{ shop.name }} Home" class="inline-flex items-center justify-center transition-transform duration-200">
+        {%- if section.settings.custom_logo != blank -%}
+          <img src="{{ section.settings.custom_logo | image_url: width: 360 }}" alt="{{ shop.name }}" style="width: {{ l_size }}px; height: auto;" class="object-contain" />
+        {%- else -%}
+          {% render 'brand-mark', color: 'black', size: l_size, show_wordmark: section.settings.show_wordmark %}
+        {%- endif -%}
       </a>
     </div>
 
     <div class="flex items-center justify-end gap-4 md:gap-5">
-      <button id="open-search-btn" type="button" aria-label="Search products" class="p-1 cursor-pointer">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      </button>
+      {%- if section.settings.show_search != false -%}
+        <button id="open-search-btn" type="button" aria-label="Search products" class="p-1 cursor-pointer">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+      {%- endif -%}
 
-      {%- if shop.customer_accounts_enabled -%}
+      {%- if shop.customer_accounts_enabled and section.settings.show_account != false -%}
         <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" data-nav aria-label="Account" class="p-1 cursor-pointer">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </a>
       {%- endif -%}
 
-      <button id="open-cart-btn" type="button" aria-label="Shopping cart" class="p-1 relative cursor-pointer">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span id="kotb-cart-badge" class="font-mono-meta absolute -top-0.5 -right-1.5 min-w-[16px] h-4 rounded-full bg-black text-white text-[10px] items-center justify-center px-1 {% if cart.item_count > 0 %}flex{% else %}hidden{% endif %}">{{ cart.item_count }}</span>
-      </button>
+      {%- if section.settings.show_cart != false -%}
+        <button id="open-cart-btn" type="button" aria-label="Shopping cart" class="p-1 relative cursor-pointer">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span id="kotb-cart-badge" class="font-mono-meta absolute -top-0.5 -right-1.5 min-w-[16px] h-4 rounded-full bg-black text-white text-[10px] items-center justify-center px-1 {% if cart.item_count > 0 %}flex{% else %}hidden{% endif %}">{{ cart.item_count }}</span>
+        </button>
+      {%- endif -%}
     </div>
   </div>
 </header>
 
+{%- comment -%} Left Slide-Out Navigation Drawer {%- endcomment -%}
+<div id="kotb-menu-drawer" class="fixed inset-0 z-50 hidden">
+  <div id="menu-backdrop" class="absolute inset-0 bg-black/35"></div>
+  <aside id="kotb-menu-panel" role="dialog" aria-label="Site navigation" class="anim-slide-left relative w-full max-w-[400px] h-full bg-white border-r border-black flex flex-col justify-between overflow-y-auto">
+    <div>
+      <div class="flex items-center justify-between px-6 py-5 border-b border-black/10 bg-white">
+        <span id="menu-header-label" class="font-mono-meta text-[11px] text-[#666]">MENU</span>
+        <button id="menu-back-btn" type="button" class="hidden font-display items-center gap-2 text-[13px] cursor-pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          <span>BACK</span>
+        </button>
+        <button id="close-menu-btn" type="button" aria-label="Close menu" class="p-1 cursor-pointer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <nav id="menu-view-root" class="py-6">
+        {%- if section.settings.link_1_label != blank -%}
+          <button type="button" data-submenu="story" class="font-display w-full flex items-center justify-between px-6 py-4 text-lg text-left hover:bg-black/5 transition-colors cursor-pointer">
+            <span>{{ section.settings.link_1_label }}</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.link_2_label != blank -%}
+          <button type="button" data-submenu="shop" class="font-display w-full flex items-center justify-between px-6 py-4 text-lg text-left hover:bg-black/5 transition-colors cursor-pointer">
+            <span>{{ section.settings.link_2_label }}</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.link_3_label != blank -%}
+          <a href="{{ section.settings.link_3_url | default: '/pages/lookbooks' }}" data-nav class="font-display w-full flex items-center justify-between px-6 py-4 text-lg text-left hover:bg-black/5 transition-colors">
+            <span>{{ section.settings.link_3_label }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.link_4_label != blank -%}
+          <a href="{{ section.settings.link_4_url | default: '/pages/archive' }}" data-nav class="font-display w-full flex items-center justify-between px-6 py-4 text-lg text-left hover:bg-black/5 transition-colors">
+            <span>{{ section.settings.link_4_label }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.link_5_label != blank -%}
+          <a href="{{ section.settings.link_5_url | default: '/pages/help' }}" data-nav class="font-display w-full flex items-center justify-between px-6 py-4 text-lg text-left hover:bg-black/5 transition-colors">
+            <span>{{ section.settings.link_5_label }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.link_6_label != blank -%}
+          <a href="{{ section.settings.link_6_url | default: '/pages/track-order' }}" data-nav class="font-display w-full flex items-center justify-between px-6 py-4 text-lg text-left hover:bg-black/5 transition-colors">
+            <span>{{ section.settings.link_6_label }}</span>
+          </a>
+        {%- endif -%}
+      </nav>
+
+      <nav id="menu-view-story" class="hidden py-4">
+        <a href="{{ section.settings.link_1_url | default: '/pages/story' }}" data-nav class="font-display block px-6 py-3.5 text-base hover:bg-black/5">{{ section.settings.link_1_label | default: 'HOOD STORY' }}</a>
+        <a href="{{ section.settings.link_3_url | default: '/pages/lookbooks' }}" data-nav class="font-display block px-6 py-3.5 text-base hover:bg-black/5">{{ section.settings.link_3_label | default: 'LOOKBOOKS' }}</a>
+        <a href="{{ section.settings.link_4_url | default: '/pages/archive' }}" data-nav class="font-display block px-6 py-3.5 text-base hover:bg-black/5">{{ section.settings.link_4_label | default: 'DROP ARCHIVE' }}</a>
+      </nav>
+
+      <nav id="menu-view-shop" class="hidden py-4">
+        <a href="{{ routes.collections_url }}" data-nav class="font-display block px-6 py-3 text-[15px] hover:bg-black/5 border-b border-black/10">ALL COLLECTIONS</a>
+        <a href="{{ routes.all_products_collection_url }}" data-nav class="font-display block px-6 py-3 text-[15px] hover:bg-black/5">ALL PRODUCTS</a>
+        {%- for col in collections -%}
+          {%- unless col.handle == 'frontpage' -%}
+            <a href="{{ col.url }}" data-nav class="font-display block px-6 py-3 text-[15px] hover:bg-black/5">{{ col.title | upcase }}</a>
+          {%- endunless -%}
+        {%- endfor -%}
+      </nav>
+    </div>
+
+    <div class="px-6 py-5 border-t border-black/10 bg-[#ededed] flex flex-col gap-4">
+      <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" data-nav class="inline-flex items-center gap-2.5 text-sm font-medium">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>{% if customer %}My Account ({{ customer.first_name | default: customer.email }}){% else %}Log in{% endif %}</span>
+      </a>
+      {%- if section.settings.show_drawer_socials != false -%}
+        <div class="flex items-center gap-3.5">
+          {%- assign socials = 'FB,PIN,IG,TT,YT' | split: ',' -%}
+          {%- for social in socials -%}
+            {%- assign s_key = social | downcase | prepend: 'social_' -%}
+            <a href="{{ settings[s_key] | default: '#' }}" {% if settings[s_key] != blank %}target="_blank" rel="noopener"{% endif %} class="font-mono-meta text-[11px] font-semibold text-black border border-black px-2 py-1 hover:bg-black hover:text-white transition-colors">{{ social }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </aside>
+</div>
+
 {% schema %}
 {
-  "name": "KOTB Header",
-  "settings": []
+  "name": "HOOD Header",
+  "settings": [
+    { "type": "header", "content": "Header Layout & Logo" },
+    { "type": "range", "id": "header_height", "label": "Header Bar Height (px)", "min": 56, "max": 100, "step": 2, "default": 76 },
+    { "type": "color", "id": "header_bg", "label": "Header Background Color", "default": "#ededed" },
+    { "type": "image_picker", "id": "custom_logo", "label": "Custom Logo Image (Optional override)" },
+    { "type": "range", "id": "logo_size", "label": "Logo Width / Size (px)", "min": 24, "max": 120, "step": 2, "default": 44 },
+    { "type": "checkbox", "id": "show_wordmark", "label": "Show text wordmark beneath logo", "default": false },
+    { "type": "url", "id": "logo_link", "label": "Logo Destination Link" },
+    { "type": "header", "content": "Announcement Bar (Optional)" },
+    { "type": "checkbox", "id": "show_announcement", "label": "Enable Announcement Bar", "default": false },
+    { "type": "text", "id": "announcement_text", "label": "Announcement Text", "default": "DROP 04 LIVE · 400 GSM HEAVYWEIGHT · HOODLUMS · WORLDWIDE DISPATCH" },
+    { "type": "url", "id": "announcement_link", "label": "Announcement Link" },
+    { "type": "color", "id": "announcement_bg", "label": "Announcement Background", "default": "#000000" },
+    { "type": "color", "id": "announcement_color", "label": "Announcement Text Color", "default": "#ffffff" },
+    { "type": "header", "content": "Header Icons" },
+    { "type": "checkbox", "id": "show_search", "label": "Show Search Button", "default": true },
+    { "type": "checkbox", "id": "show_account", "label": "Show Account Button", "default": true },
+    { "type": "checkbox", "id": "show_cart", "label": "Show Cart Button", "default": true },
+    { "type": "header", "content": "Navigation Drawer Links" },
+    { "type": "text", "id": "link_1_label", "label": "Link 1 Label", "default": "HOOD STORY" },
+    { "type": "url", "id": "link_1_url", "label": "Link 1 URL" },
+    { "type": "text", "id": "link_2_label", "label": "Link 2 Label", "default": "SHOP" },
+    { "type": "url", "id": "link_2_url", "label": "Link 2 URL" },
+    { "type": "text", "id": "link_3_label", "label": "Link 3 Label", "default": "LOOKBOOKS" },
+    { "type": "url", "id": "link_3_url", "label": "Link 3 URL" },
+    { "type": "text", "id": "link_4_label", "label": "Link 4 Label", "default": "DROP ARCHIVE" },
+    { "type": "url", "id": "link_4_url", "label": "Link 4 URL" },
+    { "type": "text", "id": "link_5_label", "label": "Link 5 Label", "default": "HELP" },
+    { "type": "url", "id": "link_5_url", "label": "Link 5 URL" },
+    { "type": "text", "id": "link_6_label", "label": "Link 6 Label", "default": "TRACK ORDER" },
+    { "type": "url", "id": "link_6_url", "label": "Link 6 URL" },
+    { "type": "checkbox", "id": "show_drawer_socials", "label": "Show Social Badges in Drawer", "default": true }
+  ]
 }
 {% endschema %}

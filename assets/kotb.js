@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const KOTB = window.KOTB || {};
   const escapeHtml = (str) => String(str ?? '')
     .replace(/&/g, '&amp;')
@@ -103,7 +103,7 @@
       } else {
         menuBackBtn.classList.remove('hidden');
         menuBackBtn.classList.add('inline-flex');
-        menuBackBtn.querySelector('span').textContent = view === 'story' ? 'BLOCK STORY' : 'SHOP';
+        menuBackBtn.querySelector('span').textContent = view === 'story' ? 'HOOD STORY' : 'SHOP';
         menuHeaderLabel.classList.add('hidden');
       }
     }
@@ -516,6 +516,7 @@
       slides = [];
     }
     let slideIdx = 0;
+    const animStyle = lbWrap.getAttribute('data-animation-style') || 'shutter-blink';
 
     const renderThumbs = () => {
       const thumbs = document.getElementById('lb-thumbs');
@@ -523,23 +524,51 @@
       thumbs.innerHTML = slides
         .map(
           (s, idx) => `
-          <button type="button" data-lb-idx="${idx}" class="lb-thumb aspect-[3/4] overflow-hidden border ${idx === slideIdx ? 'border-black p-0.5' : 'border-transparent'} cursor-pointer bg-black">
+          <button type="button" data-lb-idx="${idx}" class="lb-thumb aspect-[3/4] overflow-hidden border ${idx === slideIdx ? 'is-active border-black p-0.5' : 'border-black/15'} cursor-pointer bg-black">
             <img src="${s.img}" alt="Look ${s.look}" class="w-full h-full object-cover object-top block" />
           </button>`
         )
         .join('');
     };
 
+    const triggerTransition = () => {
+      lbWrap.classList.remove('shutter-active', 'flash-active');
+      void lbWrap.offsetWidth; // Force reflow
+      if (animStyle === 'flash-35mm') {
+        lbWrap.classList.add('flash-active');
+        setTimeout(() => lbWrap.classList.remove('flash-active'), 300);
+      } else {
+        lbWrap.classList.add('shutter-active');
+        setTimeout(() => lbWrap.classList.remove('shutter-active'), 300);
+      }
+    };
+
     const renderSlide = () => {
       const slide = slides[slideIdx] || slides[0];
       if (!slide) return;
+      triggerTransition();
       lbMainImg.src = slide.img;
-      document.getElementById('lb-look-tag').textContent = `LOOK 0${slide.look}`;
-      document.getElementById('lb-look-label').textContent = `Look ${slide.look}`;
-      document.getElementById('lb-look-caption').textContent = `${slide.title} — ${slide.garments}`;
-      document.getElementById('lb-counter').textContent = `${slideIdx + 1} of ${slides.length}`;
+      const tag = document.getElementById('lb-look-tag');
+      if (tag) tag.textContent = `LOOK 0${slide.look}`;
+      const lbl = document.getElementById('lb-look-label');
+      if (lbl) lbl.textContent = `Look ${slide.look}`;
+      const cap = document.getElementById('lb-look-caption');
+      if (cap) cap.textContent = `${slide.title} — ${slide.garments}`;
+      const cnt = document.getElementById('lb-counter');
+      if (cnt) cnt.textContent = `${slideIdx + 1} of ${slides.length}`;
       renderThumbs();
     };
+
+    // Parallax mouse drift on stage
+    lbWrap.addEventListener('mousemove', (e) => {
+      const rect = lbWrap.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      lbMainImg.style.transform = `scale(1.035) translate3d(${x * -10}px, ${y * -10}px, 0)`;
+    });
+    lbWrap.addEventListener('mouseleave', () => {
+      lbMainImg.style.transform = 'scale(1) translate3d(0, 0, 0)';
+    });
 
     renderThumbs();
     document.getElementById('lb-thumbs')?.addEventListener('click', (e) => {
@@ -560,12 +589,29 @@
     });
   }
 
+  // Hood Story Parallax Tilt on Campaign Hero
+  const storyHero = document.querySelector('.story-hero-card');
+  if (storyHero) {
+    const heroImg = storyHero.querySelector('.story-img');
+    if (heroImg) {
+      storyHero.addEventListener('mousemove', (e) => {
+        const rect = storyHero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        heroImg.style.transform = `scale(1.03) translate3d(${x * -8}px, ${y * -8}px, 0)`;
+      });
+      storyHero.addEventListener('mouseleave', () => {
+        heroImg.style.transform = 'scale(1) translate3d(0, 0, 0)';
+      });
+    }
+  }
+
   // 11. Run Club Radar Map
   if (document.getElementById('rc-city')) {
     const locations = [
       { city: 'DOWNTOWN CORE', district: 'DISTRICT 01', distance: '5.2 KM', pace: '5:30 / KM', nextDate: 'THU · NOV 26 · 7:30 PM', meetupSpot: 'KOTB Flagship Steps, 4th & Mercer' },
       { city: 'WESTSIDE PIER', district: 'HARBOR LOOP', distance: '7.0 KM', pace: '5:15 / KM', nextDate: 'SUN · NOV 29 · 7:00 AM', meetupSpot: 'Pier 14 Concrete Ramp' },
-      { city: 'EAST BLOCK', district: 'INDUSTRIAL', distance: '6.0 KM', pace: '5:45 / KM', nextDate: 'TUE · DEC 01 · 8:00 PM', meetupSpot: 'Old Rail Yard Mural Wall' },
+      { city: 'EAST HOOD', district: 'INDUSTRIAL', distance: '6.0 KM', pace: '5:45 / KM', nextDate: 'TUE · DEC 01 · 8:00 PM', meetupSpot: 'Old Rail Yard Mural Wall' },
       { city: 'NORTH TRACK', district: 'STADIUM', distance: '400M INTERVALS', pace: 'OPEN PACE', nextDate: 'THU · DEC 03 · 7:30 PM', meetupSpot: 'North Oval Gate B' },
     ];
     document.querySelectorAll('[data-rc-idx]').forEach((el) => {
@@ -646,7 +692,7 @@
     shipping: 'Domestic PH orders ship in 1–2 business days (2–4 days delivery). Free express shipping unlocks automatically at ₱3,500!',
     gcash: 'We accept GCash, Cards, and Cash on Delivery (COD) directly at Shopify Checkout.',
     cod: 'We accept GCash, Cards, and Cash on Delivery (COD) directly at Shopify Checkout.',
-    promo: 'Subscribe to our footer newsletter for early Drop 05 access and exclusive Block Member promo codes.',
+    promo: 'Subscribe to our footer newsletter for early Drop 05 access and exclusive Hood Member promo codes.',
     track: 'You can track your order anytime at /pages/track-order or inside your Customer Account.',
   };
 

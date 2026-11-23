@@ -1,0 +1,37 @@
+<main class="bg-white pt-10 pb-20">
+  <div class="max-w-[1600px] mx-auto px-3 md:px-6">
+    <div class="pb-6 mb-10 border-b border-black">
+      <div class="font-mono-meta text-xs text-[#666] mb-1">CHRONOLOGICAL CAPSULE TIMELINE</div>
+      <h1 class="font-display text-2xl md:text-3xl">DROP ARCHIVE</h1>
+    </div>
+
+    <div class="flex flex-col gap-14">
+      <section class="reveal-on-scroll border-l-2 border-black pl-5 md:pl-8" data-delay="0">
+        <div class="flex flex-wrap items-baseline gap-3 mb-2">
+          <span class="font-mono-meta text-xs bg-black text-white px-2.5 py-0.5">{{ section.settings.drop_badge | default: 'DROP 01' }}</span>
+          <span class="font-mono-meta text-xs text-[#666]">{{ section.settings.drop_date | default: 'LIVE NOW' }}</span>
+        </div>
+        <h2 class="font-display text-xl mb-1.5">{{ section.settings.drop_title | default: 'NO EVIL CAPSULE' }}</h2>
+        <p class="font-mono-meta text-xs text-[#555] mb-5 max-w-2xl">{{ section.settings.drop_desc | default: '400 GSM boxy oversized tees, snow-washed oversized tees & frayed French terry boxy tank tops.' }}</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-2">
+          {%- for item in collections.all.products limit: 8 -%}
+            {%- assign d = forloop.index0 | times: 50 -%}
+            {% render 'product-card', product: item, surface: 'white', delay: d %}
+          {%- endfor -%}
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "HOOD Drop Archive",
+  "settings": [
+    { "type": "text", "id": "drop_badge", "label": "Drop Badge", "default": "DROP 01" },
+    { "type": "text", "id": "drop_date", "label": "Drop Date", "default": "LIVE NOW" },
+    { "type": "text", "id": "drop_title", "label": "Drop Title", "default": "NO EVIL CAPSULE" },
+    { "type": "textarea", "id": "drop_desc", "label": "Drop Description", "default": "400 GSM boxy oversized tees, snow-washed oversized tees & frayed French terry boxy tank tops." }
+  ]
+}
+{% endschema %}

@@ -1,37 +1,6 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "kotb-story",
-      "settings": {
-        "heading": "HOOD STORY",
-        "hero_tag": "CAMPAIGN · NO EVIL DROP",
-        "hero_title": "HOODLUMS — NO EVIL 400 GSM CAMPAIGN",
-        "hero_desc": "See nothing. Hear nothing. Say nothing. Shot on 35mm direct flash featuring our heavyweight boxy & snow-washed tees.",
-        "hero_link": "",
-        "card1_tag": "EDITORIAL · 400 GSM",
-        "card1_title": "BOXY OVERSIZED TEE — CONCRETE FLASH",
-        "card1_desc": "Structured H-line drop shoulder fit with distressed sand-grain front print.",
-        "card1_link": "",
-        "card2_tag": "LOOKBOOK · DROP 01",
-        "card2_title": "INDUSTRIAL STAIRWELL // HEAVYWEIGHT",
-        "card2_desc": "Built to hold its shape from the block to late nights out.",
-        "card2_link": "",
-        "side_title": "NO EVIL // TANK & WASHED TEE",
-        "side_desc": "Now live worldwide in S–2XL. Direct DTF print on 100% heavyweight cotton.",
-        "side_link": ""
-      }
-    }
+    "main": { "type": "kotb-story" }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }

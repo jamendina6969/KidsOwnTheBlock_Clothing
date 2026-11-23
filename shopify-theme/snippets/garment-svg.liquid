@@ -1,0 +1,82 @@
+{%- assign g_view = view | default: 'front' -%}
+{%- assign g_title = product.title | default: 'KOTB GARMENT' -%}
+{%- assign g_type = product.type | downcase -%}
+
+{%- if g_view == 'size-chart' -%}
+  <svg viewBox="0 0 400 500" class="w-full h-full block bg-[#0c0c0c]" role="img" aria-label="{{ g_title | escape }} size chart">
+    <rect width="400" height="500" fill="#0c0c0c" />
+    <line x1="28" y1="74" x2="372" y2="74" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+    <text x="28" y="48" fill="#ffffff" font-size="16" font-weight="800" font-family="Archivo, sans-serif" letter-spacing="2">SIZE SPECIFICATION (IN)</text>
+    <text x="28" y="64" fill="#888888" font-size="10" font-family="JetBrains Mono, monospace">{{ g_title | truncate: 36 }}</text>
+    <path d="M145 110 L175 102 Q200 118 225 102 L255 110 L295 150 L272 175 L252 156 L252 260 L148 260 L148 156 L128 175 L105 150 Z" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 3" />
+    <line x1="148" y1="205" x2="252" y2="205" stroke="#d9ff00" stroke-width="1.2" />
+    <text x="200" y="198" text-anchor="middle" fill="#d9ff00" font-size="9" font-family="JetBrains Mono, monospace">A: CHEST WIDTH</text>
+    <line x1="268" y1="106" x2="268" y2="260" stroke="#ffffff" stroke-width="1.2" />
+    <text x="276" y="190" fill="#ffffff" font-size="9" font-family="JetBrains Mono, monospace">B: LENGTH</text>
+    <text x="42" y="315" fill="#888888" font-size="11" font-weight="700" font-family="JetBrains Mono, monospace">SIZE</text>
+    <text x="100" y="315" fill="#ffffff" font-size="11" font-weight="700" font-family="JetBrains Mono, monospace">S</text>
+    <text x="158" y="315" fill="#ffffff" font-size="11" font-weight="700" font-family="JetBrains Mono, monospace">M</text>
+    <text x="216" y="315" fill="#ffffff" font-size="11" font-weight="700" font-family="JetBrains Mono, monospace">L</text>
+    <text x="274" y="315" fill="#ffffff" font-size="11" font-weight="700" font-family="JetBrains Mono, monospace">XL</text>
+    <text x="332" y="315" fill="#ffffff" font-size="11" font-weight="700" font-family="JetBrains Mono, monospace">XXL</text>
+    <line x1="28" y1="326" x2="372" y2="326" stroke="rgba(255,255,255,0.2)" />
+    <text x="42" y="352" fill="#888888" font-size="11" font-family="JetBrains Mono, monospace">CHEST</text>
+    <text x="100" y="352" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">21.5</text>
+    <text x="158" y="352" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">22.5</text>
+    <text x="216" y="352" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">23.8</text>
+    <text x="274" y="352" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">25.0</text>
+    <text x="332" y="352" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">26.2</text>
+    <line x1="28" y1="364" x2="372" y2="364" stroke="rgba(255,255,255,0.12)" />
+    <text x="42" y="390" fill="#888888" font-size="11" font-family="JetBrains Mono, monospace">LENGTH</text>
+    <text x="100" y="390" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">27.5</text>
+    <text x="158" y="390" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">28.5</text>
+    <text x="216" y="390" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">29.5</text>
+    <text x="274" y="390" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">30.5</text>
+    <text x="332" y="390" fill="#e5e5e5" font-size="11" font-family="JetBrains Mono, monospace">31.5</text>
+    <text x="28" y="468" fill="#666666" font-size="9" font-family="JetBrains Mono, monospace">TOLERANCE +/- 0.5 IN · PRE-SHRUNK GARMENT</text>
+  </svg>
+{%- else -%}
+  {%- assign g_base = '#141414' -%}
+  {%- assign g_accent = '#ffffff' -%}
+  {%- assign g_ink = '#e5e5e5' -%}
+  {%- if g_type contains 'womens' or g_title contains 'CRIMSON' -%}
+    {%- assign g_base = '#eceae4' -%}
+    {%- assign g_accent = '#a81818' -%}
+    {%- assign g_ink = '#111111' -%}
+  {%- elsif g_type contains 'heritage' -%}
+    {%- assign g_base = '#cfccc4' -%}
+    {%- assign g_accent = '#111111' -%}
+    {%- assign g_ink = '#111111' -%}
+  {%- elsif g_type contains 'hoodie' -%}
+    {%- assign g_base = '#222428' -%}
+    {%- assign g_accent = '#d9ff00' -%}
+  {%- elsif g_type contains 'outerwear' and g_title contains 'COBALT' -%}
+    {%- assign g_base = '#162742' -%}
+  {%- elsif g_type contains 'bottom' -%}
+    {%- assign g_base = '#1b2333' -%}
+  {%- endif -%}
+  {%- assign is_back = false -%}
+  {%- if g_view == 'back' -%}{%- assign is_back = true -%}{%- endif -%}
+  <svg viewBox="0 0 400 500" class="w-full h-full block" role="img" aria-label="{{ g_title | escape }} {{ g_view }} view">
+    <ellipse cx="200" cy="442" rx="95" ry="10" fill="rgba(0,0,0,0.06)" />
+    {%- if g_type contains 'hoodie' or g_type contains 'heritage' -%}
+      <path d="M150 96 Q200 50 250 96 L282 106 L350 218 L314 246 L282 186 L282 406 L118 406 L118 186 L86 246 L50 218 L118 106 Z" fill="{{ g_base }}" stroke="rgba(128,128,128,0.28)" stroke-width="1.5" />
+    {%- elsif g_type contains 'bottom' or g_title contains 'PANTS' or g_title contains 'DENIM' -%}
+      <path d="M138 98 H262 L274 420 H212 L200 220 L188 420 H126 Z" fill="{{ g_base }}" stroke="rgba(128,128,128,0.28)" stroke-width="1.5" />
+    {%- elsif g_type contains 'headwear' or g_title contains 'CAP' -%}
+      <path d="M115 260 Q115 165 200 165 Q285 165 285 260 Z" fill="{{ g_base }}" stroke="rgba(128,128,128,0.28)" stroke-width="1.5" />
+      <path d="M90 260 Q200 296 310 260 Q200 278 90 260 Z" fill="{{ g_base }}" stroke="rgba(128,128,128,0.35)" stroke-width="1.5" />
+    {%- else -%}
+      <path d="M132 86 L168 78 Q200 98 232 78 L268 86 L345 148 L308 198 L278 176 L278 416 L122 416 L122 176 L92 198 L55 148 Z" fill="{{ g_base }}" stroke="rgba(128,128,128,0.28)" stroke-width="1.5" />
+    {%- endif -%}
+    {%- unless is_back -%}
+      <rect x="148" y="166" width="104" height="36" fill="none" stroke="{{ g_accent }}" stroke-width="2" />
+      <text x="200" y="190" text-anchor="middle" fill="{{ g_accent }}" font-size="16" font-weight="900" font-family="Archivo, sans-serif" letter-spacing="2">KOTB</text>
+      <text x="200" y="218" text-anchor="middle" fill="{{ g_ink }}" font-size="8" font-family="JetBrains Mono, monospace" letter-spacing="2">{{ g_type | upcase | default: 'BLOCK DIV.' }}</text>
+    {%- else -%}
+      <text x="200" y="182" text-anchor="middle" fill="{{ g_accent }}" font-size="24" font-weight="900" font-family="Archivo, sans-serif" letter-spacing="3">KOTB</text>
+      <rect x="148" y="200" width="104" height="96" fill="none" stroke="{{ g_ink }}" stroke-width="1.5" />
+      <text x="200" y="254" text-anchor="middle" fill="{{ g_accent }}" font-size="10" font-family="JetBrains Mono, monospace" letter-spacing="2">OWN THE BLOCK</text>
+    {%- endunless -%}
+  </svg>
+{%- endif -%}

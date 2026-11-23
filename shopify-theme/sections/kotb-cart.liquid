@@ -1,0 +1,76 @@
+<main class="bg-white pt-10 pb-20">
+  <div class="max-w-[1040px] mx-auto px-3 md:px-6">
+    <div class="flex items-baseline justify-between flex-wrap gap-3 pb-6 mb-8 border-b border-black/10">
+      <h1 class="font-display text-2xl md:text-3xl">YOUR CART</h1>
+      <a href="{{ routes.all_products_collection_url }}" data-nav class="font-mono-meta text-[11px] underline">CONTINUE SHOPPING</a>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="py-16 text-center flex flex-col items-center gap-4">
+        <p class="font-display text-xl">Your cart is empty</p>
+        <a href="{{ routes.all_products_collection_url }}" data-nav class="font-display bg-black text-white rounded-[30px] px-7 py-3 text-xs">
+          BROWSE ALL PRODUCTS
+        </a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate class="flex flex-col gap-6">
+        <div class="flex flex-col divide-y divide-black/10 border-b border-black/10">
+          {%- for item in cart.items -%}
+            <div class="py-5 grid grid-cols-[88px_1fr] sm:grid-cols-[100px_1fr_auto] gap-4 items-center">
+              <a href="{{ item.url }}" class="aspect-[4/5] bg-[#ededed] overflow-hidden block">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}" class="w-full h-full object-contain block" />
+                {%- endif -%}
+              </a>
+
+              <div class="flex flex-col gap-1">
+                <a href="{{ item.url }}" class="font-display text-sm hover:underline">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <div class="font-mono-meta text-xs text-[#666]">{{ item.variant.title }}</div>
+                {%- endunless -%}
+                <div class="font-mono-meta text-xs text-[#666]">{{ item.price | money }}</div>
+                <a href="{{ item.url_to_remove }}" class="font-mono-meta text-[11px] text-[#666] hover:text-black underline w-fit mt-1">Remove</a>
+              </div>
+
+              <div class="col-span-2 sm:col-span-1 flex items-center justify-between sm:justify-end gap-5">
+                <input
+                  type="number"
+                  name="updates[]"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  aria-label="Quantity for {{ item.title | escape }}"
+                  class="font-mono-meta w-16 h-10 border border-black rounded-[8px] text-center text-xs outline-none"
+                />
+                <div class="font-mono-meta text-sm font-semibold min-w-[90px] text-right">{{ item.final_line_price | money }}</div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pt-2">
+          <button type="submit" name="update" class="font-mono-meta text-xs border border-black rounded-[30px] px-6 py-2.5 cursor-pointer hover:bg-black hover:text-white transition-colors w-fit">
+            UPDATE QUANTITIES
+          </button>
+
+          <div class="w-full sm:max-w-[340px] flex flex-col gap-3">
+            <div class="flex justify-between items-baseline">
+              <span class="font-display text-sm">SUBTOTAL</span>
+              <span class="font-mono-meta text-lg font-semibold">{{ cart.total_price | money }}</span>
+            </div>
+            <p class="text-[11px] text-[#666]">Taxes and shipping calculated at checkout.</p>
+            <button type="submit" name="checkout" class="btn-sheen font-display w-full bg-black text-white rounded-[30px] py-3.5 text-xs cursor-pointer hover:opacity-85 transition-opacity">
+              CHECK OUT
+            </button>
+          </div>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "KOTB Cart Page",
+  "settings": []
+}
+{% endschema %}

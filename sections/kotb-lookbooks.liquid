@@ -1,29 +1,42 @@
-﻿<main class="bg-white pt-10 pb-16">
+{%- comment -%} HOOD Lookbooks with Full Theme Customizer Controls & Animation Modes {%- endcomment -%}
+{%- assign anim_style = section.settings.animation_style | default: 'shutter-blink' -%}
+{%- assign tagged_col = collections[section.settings.tagged_collection] | default: collections.all -%}
+
+{%- comment -%} Build JSON slides with optional customizer overrides {%- endcomment -%}
+{%- capture look1_img -%}{%- if section.settings.look1_image != blank -%}{{ section.settings.look1_image | image_url: width: 1400 }}{%- else -%}{{ 'campaign-duo-tees.jpg' | asset_url }}{%- endif -%}{%- endcapture -%}
+{%- capture look2_img -%}{%- if section.settings.look2_image != blank -%}{{ section.settings.look2_image | image_url: width: 1400 }}{%- else -%}{{ 'campaign-female.jpg' | asset_url }}{%- endif -%}{%- endcapture -%}
+{%- capture look3_img -%}{%- if section.settings.look3_image != blank -%}{{ section.settings.look3_image | image_url: width: 1400 }}{%- else -%}{{ 'campaign-male.jpg' | asset_url }}{%- endif -%}{%- endcapture -%}
+{%- capture look4_img -%}{%- if section.settings.look4_image != blank -%}{{ section.settings.look4_image | image_url: width: 1400 }}{%- else -%}{{ 'campaign-duo-tank.jpg' | asset_url }}{%- endif -%}{%- endcapture -%}
+
+<main class="bg-white pt-10 pb-16 hood-lookbooks-section" data-animation-style="{{ anim_style }}">
   <div class="max-w-[1600px] mx-auto px-3 md:px-6">
     <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-12 items-start">
       <div class="anim-fade-up">
         <div
           id="lb-stage-wrap"
-          class="aspect-[3/4] w-full max-w-[560px] overflow-hidden bg-black relative"
+          class="aspect-[3/4] w-full max-w-[560px] overflow-hidden bg-black relative border border-black/15 transition-transform duration-300"
+          data-animation-style="{{ anim_style }}"
           data-lookbook-slides='[
-            {"look":1,"title":"HOODLUMS NO EVIL // STAIRWELL DUO","garments":"400 GSM Boxy Oversized Tee & Snow-Washed Tee","img":"{{ 'campaign-duo-tees.jpg' | asset_url }}"},
-            {"look":2,"title":"NO EVIL BOXY OVERSIZED TEE — CONCRETE FLASH","garments":"400 GSM Ultra-Heavyweight Cotton / Drop Shoulder","img":"{{ 'campaign-female.jpg' | asset_url }}"},
-            {"look":3,"title":"NO EVIL BOXY TEE — INDUSTRIAL CORRIDOR","garments":"400 GSM Boxy Oversized Tee / Baggy Utility Cargo","img":"{{ 'campaign-male.jpg' | asset_url }}"},
-            {"look":4,"title":"NO EVIL CAPSULE — TANK & WASHED TEE","garments":"340 GSM Frayed French Terry Tank & Snow-Washed Tee","img":"{{ 'campaign-duo-tank.jpg' | asset_url }}"}
+            {"look":1,"title":"{{ section.settings.look1_title | default: 'HOODLUMS NO EVIL // STAIRWELL DUO' | escape }}","garments":"{{ section.settings.look1_garments | default: '400 GSM Boxy Oversized Tee & Snow-Washed Tee' | escape }}","img":"{{ look1_img }}"},
+            {"look":2,"title":"{{ section.settings.look2_title | default: 'NO EVIL BOXY OVERSIZED TEE — CONCRETE FLASH' | escape }}","garments":"{{ section.settings.look2_garments | default: '400 GSM Ultra-Heavyweight Cotton / Drop Shoulder' | escape }}","img":"{{ look2_img }}"},
+            {"look":3,"title":"{{ section.settings.look3_title | default: 'NO EVIL BOXY TEE — INDUSTRIAL CORRIDOR' | escape }}","garments":"{{ section.settings.look3_garments | default: '400 GSM Boxy Oversized Tee / Baggy Utility Cargo' | escape }}","img":"{{ look3_img }}"},
+            {"look":4,"title":"{{ section.settings.look4_title | default: 'NO EVIL CAPSULE — TANK & WASHED TEE' | escape }}","garments":"{{ section.settings.look4_garments | default: '340 GSM Frayed French Terry Tank & Snow-Washed Tee' | escape }}","img":"{{ look4_img }}"}
           ]'
         >
           <img
             id="lb-main-img"
-            src="{{ 'campaign-duo-tees.jpg' | asset_url }}"
-            alt="HOODLUMS NO EVIL Lookbook"
-            class="w-full h-full object-cover object-top block"
+            src="{{ look1_img }}"
+            alt="{{ section.settings.look1_title | default: 'HOODLUMS NO EVIL Lookbook' | escape }}"
+            class="w-full h-full object-cover object-top block transition-all duration-300"
           />
-          <span id="lb-look-tag" class="font-mono-meta absolute bottom-3 left-3 bg-black/75 text-white px-2.5 py-1 text-[10px] tracking-[0.14em]">LOOK 01</span>
+          <div id="lb-shutter-curtain" class="pointer-events-none absolute inset-0 bg-black opacity-0 transition-opacity duration-150 z-20"></div>
+          <div id="lb-flash-curtain" class="pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200 z-20"></div>
+          <span id="lb-look-tag" class="font-mono-meta absolute bottom-3 left-3 bg-black/85 text-white px-2.5 py-1 text-[10px] tracking-[0.14em] z-30">LOOK 01</span>
         </div>
-        <h1 id="lb-col-title" class="font-display text-[22px] mt-5 mb-1.5">NO EVIL CAPSULE // 2026</h1>
+        <h1 id="lb-col-title" class="font-display text-[22px] mt-5 mb-1.5 tracking-[0.04em]">{{ section.settings.col_title | default: 'NO EVIL CAPSULE // 2026' }}</h1>
         <div id="lb-look-label" class="text-[13px] font-semibold">Look 1</div>
         <div id="lb-look-caption" class="font-mono-meta text-xs text-[#666] mt-1">
-          HOODLUMS NO EVIL // STAIRWELL DUO — 400 GSM Boxy Oversized Tee &amp; Snow-Washed Tee
+          {{ section.settings.look1_title | default: 'HOODLUMS NO EVIL // STAIRWELL DUO' }} — {{ section.settings.look1_garments | default: '400 GSM Boxy Oversized Tee & Snow-Washed Tee' }}
         </div>
       </div>
 
@@ -32,20 +45,20 @@
 
         <div class="font-mono-meta flex items-center justify-between gap-4 text-[13px]">
           <div class="flex items-center gap-4">
-            <button id="lb-prev" type="button" aria-label="Previous look" class="cursor-pointer">←</button>
+            <button id="lb-prev" type="button" aria-label="Previous look" class="cursor-pointer border border-black/20 hover:border-black w-8 h-8 rounded-full flex items-center justify-center transition-colors">←</button>
             <span id="lb-counter">1 of 4</span>
-            <button id="lb-next" type="button" aria-label="Next look" class="cursor-pointer">→</button>
+            <button id="lb-next" type="button" aria-label="Next look" class="cursor-pointer border border-black/20 hover:border-black w-8 h-8 rounded-full flex items-center justify-center transition-colors">→</button>
           </div>
-          <a href="/collections/no-evil" data-nav class="btn-sheen font-display bg-black text-white rounded-[30px] px-4 py-2 text-[11px]">
-            SHOP THIS LOOK ↗
+          <a href="{{ section.settings.shop_btn_url | default: '/collections/no-evil' }}" data-nav class="btn-sheen font-display bg-black text-white rounded-[30px] px-5 py-2.5 text-[11px] hover:opacity-85 transition-opacity">
+            {{ section.settings.shop_btn_label | default: 'SHOP THIS LOOK ↗' }}
           </a>
         </div>
 
-        {%- if collections.all.products.size > 0 -%}
+        {%- if section.settings.show_tagged_products != false and tagged_col.products.size > 0 -%}
           <div class="border-t border-black/10 pt-5">
-            <div class="font-mono-meta text-[10px] text-[#666] mb-3">TAGGED GARMENTS IN THIS COLLECTION</div>
+            <div class="font-mono-meta text-[10px] text-[#666] mb-3 tracking-[0.14em]">{{ section.settings.tagged_heading | default: 'TAGGED GARMENTS IN THIS COLLECTION' }}</div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {%- for lp in collections.all.products limit: 4 -%}
+              {%- for lp in tagged_col.products limit: 4 -%}
                 <a href="{{ lp.url }}" data-nav class="border border-black/15 hover:border-black p-2.5 flex items-center gap-2.5 transition-colors bg-[#fafafa]">
                   <div class="w-10 h-12 shrink-0 bg-white overflow-hidden">
                     {%- if lp.featured_image != blank -%}
@@ -68,7 +81,43 @@
 
 {% schema %}
 {
-  "name": "KOTB Lookbooks",
-  "settings": []
+  "name": "HOOD Lookbooks",
+  "settings": [
+    { "type": "header", "content": "Lookbook Headings & Animation" },
+    { "type": "text", "id": "col_title", "label": "Collection Title", "default": "NO EVIL CAPSULE // 2026" },
+    {
+      "type": "select",
+      "id": "animation_style",
+      "label": "Animation & Transition Effect",
+      "options": [
+        { "value": "shutter-blink", "label": "Brutalist Mechanical Shutter" },
+        { "value": "flash-35mm", "label": "35mm Direct Flash Strobe" },
+        { "value": "lens-push", "label": "Editorial Lens Push & Pan" }
+      ],
+      "default": "shutter-blink"
+    },
+    { "type": "text", "id": "shop_btn_label", "label": "Shop Button Label", "default": "SHOP THIS LOOK ↗" },
+    { "type": "url", "id": "shop_btn_url", "label": "Shop Button URL" },
+    { "type": "header", "content": "Look 1 (Stairwell Duo)" },
+    { "type": "image_picker", "id": "look1_image", "label": "Look 1 Image (Optional override)" },
+    { "type": "text", "id": "look1_title", "label": "Look 1 Title", "default": "HOODLUMS NO EVIL // STAIRWELL DUO" },
+    { "type": "text", "id": "look1_garments", "label": "Look 1 Garments", "default": "400 GSM Boxy Oversized Tee & Snow-Washed Tee" },
+    { "type": "header", "content": "Look 2 (Concrete Flash Female)" },
+    { "type": "image_picker", "id": "look2_image", "label": "Look 2 Image (Optional override)" },
+    { "type": "text", "id": "look2_title", "label": "Look 2 Title", "default": "NO EVIL BOXY OVERSIZED TEE — CONCRETE FLASH" },
+    { "type": "text", "id": "look2_garments", "label": "Look 2 Garments", "default": "400 GSM Ultra-Heavyweight Cotton / Drop Shoulder" },
+    { "type": "header", "content": "Look 3 (Industrial Corridor Male)" },
+    { "type": "image_picker", "id": "look3_image", "label": "Look 3 Image (Optional override)" },
+    { "type": "text", "id": "look3_title", "label": "Look 3 Title", "default": "NO EVIL BOXY TEE — INDUSTRIAL CORRIDOR" },
+    { "type": "text", "id": "look3_garments", "label": "Look 3 Garments", "default": "400 GSM Boxy Oversized Tee / Baggy Utility Cargo" },
+    { "type": "header", "content": "Look 4 (Tank & Washed Duo)" },
+    { "type": "image_picker", "id": "look4_image", "label": "Look 4 Image (Optional override)" },
+    { "type": "text", "id": "look4_title", "label": "Look 4 Title", "default": "NO EVIL CAPSULE — TANK & WASHED TEE" },
+    { "type": "text", "id": "look4_garments", "label": "Look 4 Garments", "default": "340 GSM Frayed French Terry Tank & Snow-Washed Tee" },
+    { "type": "header", "content": "Tagged Products" },
+    { "type": "checkbox", "id": "show_tagged_products", "label": "Show Tagged Garments Section", "default": true },
+    { "type": "text", "id": "tagged_heading", "label": "Tagged Garments Heading", "default": "TAGGED GARMENTS IN THIS COLLECTION" },
+    { "type": "collection", "id": "tagged_collection", "label": "Select Collection to tag" }
+  ]
 }
 {% endschema %}

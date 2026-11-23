@@ -1,0 +1,27 @@
+{%- assign bm_color = color | default: 'black' -%}
+{%- assign bm_size = size | default: 44 -%}
+{%- assign bm_show_wordmark = show_wordmark | default: false -%}
+{%- if bm_color == 'white' -%}
+  {%- assign bm_fill = '#FFFFFF' -%}
+  {%- assign bm_stroke = '#000000' -%}
+{%- else -%}
+  {%- assign bm_fill = '#000000' -%}
+  {%- assign bm_stroke = '#FFFFFF' -%}
+{%- endif -%}
+{%- assign bm_height = bm_size | times: 0.85 | round -%}
+{%- assign bm_font_size = bm_size | times: 0.21 | round -%}
+{%- if bm_font_size < 9 -%}{%- assign bm_font_size = 9 -%}{%- endif -%}
+
+<div class="inline-flex flex-col items-center select-none" style="gap: {% if bm_show_wordmark %}6px{% else %}0px{% endif %};">
+  {%- if settings.custom_logo != blank -%}
+    <img src="{{ settings.custom_logo | image_url: width: 320 }}" alt="{{ shop.name }}" style="width: {{ bm_size }}px; height: auto;{% if bm_color != 'white' %} filter: invert(1) contrast(1.15);{% endif %}" class="object-contain" />
+  {%- else -%}
+    <img src="{{ 'kotb-logo-masks.png' | asset_url }}" alt="{{ shop.name }}" style="width: {{ bm_size }}px; height: auto;{% if bm_color != 'white' %} filter: invert(1) contrast(1.15);{% endif %}" class="object-contain" />
+  {%- endif -%}
+
+  {%- if bm_show_wordmark -%}
+    <span class="font-display leading-none" style="color: {{ bm_fill }}; font-size: {{ bm_font_size }}px; letter-spacing: 0.16em;">
+      {{ settings.brand_wordmark | default: 'HOODLUMS' }}
+    </span>
+  {%- endif -%}
+</div>
