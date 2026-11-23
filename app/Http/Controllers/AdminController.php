@@ -14,6 +14,7 @@ use App\Models\RunClubRsvp;
 use App\Models\Story;
 use App\Models\SupportTicket;
 use App\Models\User;
+use App\Services\AiDropshippingService;
 use App\Services\ForecastingService;
 use App\Services\PodFulfillmentService;
 use Illuminate\Http\Request;
@@ -128,6 +129,99 @@ class AdminController extends Controller
             'stats',
             'filters'
         ));
+    }
+
+    public function aiStudio(AiDropshippingService $ai)
+    {
+        $recentProducts = Product::latest()->take(6)->get();
+
+        return view('pages.admin.ai-studio', [
+            'tab' => 'ai_studio',
+            'aiConfigured' => $ai->isConfigured(),
+            'aiModel' => $ai->getModel(),
+            'suppliers' => AiDropshippingService::SUPPLIERS,
+            'categories' => AiDropshippingService::CATEGORIES,
+            'recentProducts' => $recentProducts,
+        ]);
+    }
+
+    public function aiGenerateProduct(Request $request, AiDropshippingService $ai)
+    {
+        $validated = $request->validate([
+            'idea' => 'required|string|min:3|max:600',
+            'category' => 'nullable|string|max:40',
+            'supplier' => 'nullable|string|max:40',
+            'tone' => 'nullable|string|max:60',
+            'supplier_cost' => 'nullable|numeric|min:50|max:50000',
+            'shipping_cost' => 'nullable|numeric|min:0|max:10000',
+            'target_margin' => 'nullable|numeric|min:20|max:85',
+        ]);
+
+        $result = $ai->generateProductBrief($validated);
+
+        return response()->json($result);
+    }
+
+    public function aiPublishProduct(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:160',
+            'price' => 'required|numeric|min:1',
+            'unit_cost' => 'required|numeric|min:0.5',
+            'lead_time_days' => 'nullable|integer|min:1|max:60',
+            'category' => 'required|string|max:40',
+            'silhouette' => 'required|string|max:30',
+            'base_color' => 'required|string|max:20',
+            'accent_color' => 'required|string|max:20',
+            'ink_color' => 'required|string|max:20',
+            'motif' => 'required|string|max:40',
+            'sub_motif' => 'required|string|max:40',
+            'printful_variant_id' => 'nullable|string|max:60',
+            'description' => 'required|string',
+            'specs' => 'nullable|array',
+            'specs.*' => 'string|max:200',
+            'bands' => 'nullable|array',
+            'bands.*' => 'string|in:new,restocked,heritage',
+        ]);
+
+        $sizes = collect(['S', 'M', 'L', 'XL', 'XXL'])->map(fn ($s) => [
+            'size' => $s,
+            'inStock' => true,
+            'qty' => 25,
+        ])->toArray();
+
+        $product = Product::create([
+            'slug' => Str::slug($validated['title']) . '-' . random_int(10, 99),
+            'title' => $validated['title'],
+            'price' => $validated['price'],
+            'unit_cost' => $validated['unit_cost'],
+            'stock_qty' => 125,
+            'lead_time_days' => $validated['lead_time_days'] ?? 7,
+            'category' => $validated['category'],
+            'silhouette' => $validated['silhouette'],
+            'base_color' => $validated['base_color'],
+            'accent_color' => $validated['accent_color'],
+            'ink_color' => $validated['ink_color'],
+            'motif' => $validated['motif'],
+            'sub_motif' => $validated['sub_motif'],
+            'printful_variant_id' => $validated['printful_variant_id'] ?? null,
+            'description' => $validated['description'],
+            'specs' => !empty($validated['specs']) ? array_values($validated['specs']) : ['260 GSM Combed Cotton', 'Boxy Street Fit'],
+            'bands' => !empty($validated['bands']) ? array_values($validated['bands']) : ['new'],
+            'sizes' => $sizes,
+            'sold_out' => false,
+        ]);
+
+        ActivityLog::record('AI_PRODUCT_PUBLISHED', "Published AI POD garment: {$product->title} (₱{$product->price})");
+
+        return response()->json([
+            'ok' => true,
+            'product_id' => $product->id,
+            'slug' => $product->slug,
+            'edit_url' => route('admin.products.edit', $product->id),
+            'store_url' => route('product.show', $product->slug),
+            'message' => "Published \"{$product->title}\" to your catalog!",
+        ]);
     }
 
     public function createProduct()

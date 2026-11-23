@@ -63,6 +63,9 @@ Route::middleware([AdminMiddleware::class])->group(function () {
 // Admin Dashboard
 Route::middleware([AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/ai-studio', [AdminController::class, 'aiStudio'])->name('ai.studio');
+    Route::post('/ai-studio/generate', [AdminController::class, 'aiGenerateProduct'])->name('ai.generate');
+    Route::post('/ai-studio/publish', [AdminController::class, 'aiPublishProduct'])->name('ai.publish');
     Route::get('/products/create', [AdminController::class, 'createProduct'])->name('products.create');
     Route::post('/products', [AdminController::class, 'storeProduct'])->name('products.store');
     Route::get('/products/{id}/edit', [AdminController::class, 'editProduct'])->name('products.edit');

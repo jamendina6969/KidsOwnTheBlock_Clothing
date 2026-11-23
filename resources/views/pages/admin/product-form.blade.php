@@ -6,7 +6,37 @@
 <div class="max-w-[820px]">
     <div class="flex items-center justify-between mb-6">
         <h1 class="font-display text-2xl">{{ $product ? 'EDIT GARMENT' : 'ADD NEW GARMENT' }}</h1>
-        <a href="{{ route('admin.dashboard', ['tab' => 'inventory']) }}" class="font-mono-meta text-xs underline">← BACK TO INVENTORY</a>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.ai.studio') }}" class="font-mono-meta text-xs bg-[#d9ff00] text-black border border-black px-3 py-1.5">✦ FULL AI STUDIO</a>
+            <a href="{{ route('admin.dashboard', ['tab' => 'inventory']) }}" class="font-mono-meta text-xs underline">← BACK TO INVENTORY</a>
+        </div>
+    </div>
+
+    {{-- Inline Gemini AI Auto-Fill Bar --}}
+    <div class="bg-black text-white border border-black p-4 mb-5 flex flex-col gap-3">
+        <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="font-mono-meta text-[10px] px-2 py-0.5 bg-[#d9ff00] text-black font-bold">GEMINI AI</span>
+                <span class="font-display text-xs tracking-wider">AUTO-FILL POD LISTING & PRICING</span>
+            </div>
+            <span id="inline-ai-status" class="font-mono-meta text-[10px] text-white/60"></span>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2">
+            <input
+                id="inline-ai-prompt"
+                type="text"
+                value="{{ $product ? $product->title . ' — ' . $product->category : '' }}"
+                placeholder="Describe your Tapstitch/Printful garment idea (e.g., 280GSM boxy washed Manila skate tee)..."
+                class="flex-1 h-10 rounded-[8px] bg-white text-black px-3.5 text-xs font-mono-meta"
+            />
+            <button
+                id="inline-ai-btn"
+                type="button"
+                class="font-display bg-[#d9ff00] text-black rounded-[8px] px-4 h-10 text-xs tracking-wider cursor-pointer whitespace-nowrap hover:opacity-90"
+            >
+                ✦ AUTO-FILL FORM
+            </button>
+        </div>
     </div>
 
     <form
@@ -167,3 +197,80 @@
         </form>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('inline-ai-btn');
+    const promptEl = document.getElementById('inline-ai-prompt');
+    const statusEl = document.getElementById('inline-ai-status');
+    const csrf = document.querySelector('meta[name="csrf-token"]')?.content || '';
+
+    btn?.addEventListener('click', async () => {
+        const idea = (promptEl.value || '').trim();
+        if (idea.length < 3) {
+            statusEl.textContent = 'Enter a short garment idea first.';
+            return;
+        }
+
+        const orig = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'GENERATING...';
+        statusEl.textContent = 'Calling Gemini POD Engine...';
+
+        try {
+            const catEl = document.querySelector('select[name="category"]');
+            const costEl = document.querySelector('input[name="unit_cost"]');
+
+            const res = await fetch('{{ route('admin.ai.generate') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrf,
+                },
+                body: JSON.stringify({
+                    idea,
+                    category: catEl?.value || 'TEES',
+                    supplier_cost: Math.max(50, parseFloat(costEl?.value) || 520),
+                }),
+            });
+
+            const data = await res.json();
+            if (!res.ok || !data.ok) {
+                throw new Error(data.message || 'AI generation failed.');
+            }
+
+            const p = data.product;
+            const setVal = (selector, val) => {
+                const el = document.querySelector(selector);
+                if (el && val !== undefined && val !== null) el.value = val;
+            };
+
+            setVal('input[name="title"]', p.title);
+            setVal('input[name="price"]', p.price);
+            setVal('input[name="unit_cost"]', p.unit_cost);
+            setVal('input[name="lead_time_days"]', p.lead_time_days);
+            setVal('select[name="category"]', p.category);
+            setVal('select[name="silhouette"]', p.silhouette);
+            setVal('input[name="base_color"]', p.base_color);
+            setVal('input[name="accent_color"]', p.accent_color);
+            setVal('input[name="ink_color"]', p.ink_color);
+            setVal('input[name="motif"]', p.motif);
+            setVal('input[name="sub_motif"]', p.sub_motif);
+            setVal('textarea[name="description"]', p.description);
+            setVal('textarea[name="specs_text"]', (p.specs || []).join('\n'));
+
+            statusEl.textContent = data.mode === 'gemini_live'
+                ? '✓ Filled live with Gemini!'
+                : '✓ Filled via Demo Fallback (add GEMINI_API_KEY in .env for live AI)';
+        } catch (err) {
+            statusEl.textContent = '✕ ' + (err.message || 'Error generating');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = orig;
+        }
+    });
+});
+</script>
+@endpush

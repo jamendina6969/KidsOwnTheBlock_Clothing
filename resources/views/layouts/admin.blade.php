@@ -53,6 +53,13 @@
                     </a>
                 @endforeach
                 <a
+                    href="{{ route('admin.ai.studio') }}"
+                    class="flex items-center justify-between px-3 py-2.5 text-[11px] font-display tracking-wider transition-colors {{ $activeTab === 'ai_studio' ? 'bg-white text-black' : 'text-white/75 hover:text-white hover:bg-white/10' }}"
+                >
+                    <span>AI PRODUCT STUDIO</span>
+                    <span class="font-mono-meta text-[9px] px-1.5 py-0.5 {{ $activeTab === 'ai_studio' ? 'bg-black text-[#d9ff00]' : 'bg-[#d9ff00] text-black font-bold' }}">AI</span>
+                </a>
+                <a
                     href="{{ route('logo.studio') }}"
                     class="flex items-center justify-between px-3 py-2.5 text-[11px] font-display tracking-wider text-white/75 hover:text-white hover:bg-white/10 transition-colors"
                 >
@@ -100,6 +107,9 @@
                             @endif
                         </a>
                     @endforeach
+                    <a href="{{ route('admin.ai.studio') }}" class="flex items-center justify-between px-3 py-2.5 text-[11px] font-display tracking-wider {{ $activeTab === 'ai_studio' ? 'bg-white text-black' : 'text-white/80 hover:bg-white/10' }}">
+                        <span>AI PRODUCT STUDIO</span><span class="font-mono-meta text-[9px] px-1.5 py-0.5 bg-[#d9ff00] text-black font-bold">AI</span>
+                    </a>
                     <a href="{{ route('logo.studio') }}" class="flex items-center justify-between px-3 py-2.5 text-[11px] font-display tracking-wider text-white/80 hover:bg-white/10">
                         <span>LOGO STUDIO (100)</span><span>↗</span>
                     </a>
@@ -132,6 +142,9 @@
             </div>
 
             <div class="flex items-center gap-2.5 shrink-0">
+                <a href="{{ route('admin.ai.studio') }}" class="hidden sm:inline-flex items-center gap-1.5 font-display bg-[#d9ff00] text-black border border-black rounded-[30px] px-3.5 py-2 text-[10px] sm:text-[11px] whitespace-nowrap hover:opacity-90">
+                    ✦ AI STUDIO
+                </a>
                 <a href="{{ route('admin.products.create') }}" class="font-display bg-black text-white rounded-[30px] px-3.5 sm:px-4 py-2 text-[10px] sm:text-[11px] whitespace-nowrap">
                     + ADD GARMENT
                 </a>
