@@ -15,6 +15,7 @@
         <div
           id="lb-stage-wrap"
           class="aspect-[3/4] w-full max-w-[560px] overflow-hidden bg-black relative border border-black/15 transition-transform duration-300"
+          style="aspect-ratio: 3/4; background-color: #0a0a0a;"
           data-animation-style="{{ anim_style }}"
           data-lookbook-slides='[
             {"look":1,"title":"{{ section.settings.look1_title | default: 'HOODLUMS NO EVIL // STAIRWELL DUO' | escape }}","garments":"{{ section.settings.look1_garments | default: '400 GSM Boxy Oversized Tee & Snow-Washed Tee' | escape }}","img":"{{ look1_img }}"},
@@ -31,14 +32,7 @@
           />
           <div id="lb-shutter-curtain" class="pointer-events-none absolute inset-0 bg-black opacity-0 transition-opacity duration-150 z-20"></div>
           <div id="lb-flash-curtain" class="pointer-events-none absolute inset-0 bg-white opacity-0 transition-opacity duration-200 z-20"></div>
-          <div id="lb-pin-anchor" class="hood-pin" style="top: 54%; left: 45%;" aria-label="Quick Shop Pin">
-            <span>+</span>
-            <div class="hood-pin-popover">
-              <div id="lb-pin-title" class="font-display text-[11px] tracking-wide">HOODLUMS NO EVIL</div>
-              <div id="lb-pin-sub" class="font-mono-meta text-[10px] text-[#d9ff00] mt-0.5">SHOP THIS LOOK ↗</div>
-            </div>
-          </div>
-          <span id="lb-look-tag" class="font-mono-meta absolute bottom-3 left-3 bg-black/85 text-white px-2.5 py-1 text-[10px] tracking-[0.14em] z-30">LOOK 01</span>
+          <span id="lb-look-tag" class="font-mono-meta absolute bottom-3 left-3 text-white px-2.5 py-1 text-[10px] tracking-[0.14em] z-30" style="background-color: rgba(0, 0, 0, 0.85);">LOOK 01</span>
         </div>
         <h1 id="lb-col-title" class="font-display text-[22px] mt-5 mb-1.5 tracking-[0.04em]">{{ section.settings.col_title | default: 'NO EVIL CAPSULE // 2026' }}</h1>
         <div id="lb-look-label" class="text-[13px] font-semibold">Look 1</div>
