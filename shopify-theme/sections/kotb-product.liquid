@@ -62,6 +62,25 @@
           </div>
         </div>
 
+        <div class="hood-scarcity-meter my-4">
+          <div class="flex items-center justify-between font-mono-meta text-[11px]">
+            <span class="flex items-center gap-1.5 font-semibold text-black">
+              <span class="w-2 h-2 rounded-full bg-[#d9ff00] border border-black inline-block"></span>
+              BATCH 01 // DROP ALLOCATION
+            </span>
+            <span class="text-[#666]">84% CLAIMED</span>
+          </div>
+          <div class="hood-scarcity-bar">
+            <div class="hood-scarcity-fill" style="width: 84%;"></div>
+          </div>
+        </div>
+
+        <div class="bg-[#f6f6f6] border border-black/15 p-3 font-mono-meta text-[11px] text-[#444] mb-1">
+          <div class="font-bold text-black mb-1">ON-BODY FIT REFERENCE:</div>
+          <div>· Male: 5'11" (180cm) / 70kg wearing <strong>Size L</strong> (Boxy Fit)</div>
+          <div>· Female: 5'5" (165cm) / 48kg wearing <strong>Size M</strong> (Relaxed Street Fit)</div>
+        </div>
+
         {% form 'product', product, id: 'pdp-add-to-cart-form', class: 'flex flex-col gap-5' %}
           <input type="hidden" name="id" id="pdp-variant-id" value="{{ current_variant.id }}" />
 
@@ -111,6 +130,34 @@
             {{ product.description }}
           </div>
         {%- endif -%}
+
+        <div class="border-t border-black/10 pt-5">
+          <div class="font-mono-meta text-[11px] tracking-[0.14em] text-[#666] mb-3">TECHNICAL GARMENT SPEC SHEET</div>
+          <table class="hood-spec-table text-xs">
+            <tbody>
+              <tr>
+                <td class="text-[#666]">FABRIC WEIGHT</td>
+                <td class="font-bold">400 GSM Combed Ring-Spun Cotton</td>
+              </tr>
+              <tr>
+                <td class="text-[#666]">SILHOUETTE</td>
+                <td class="font-bold">Boxy H-Line // Dropped Shoulders</td>
+              </tr>
+              <tr>
+                <td class="text-[#666]">PRINT TECHNIQUE</td>
+                <td class="font-bold">Direct-To-Film Distressed Wash</td>
+              </tr>
+              <tr>
+                <td class="text-[#666]">COLLAR</td>
+                <td class="font-bold">1.25" Heavyweight Ribbed Crewneck</td>
+              </tr>
+              <tr>
+                <td class="text-[#666]">ORIGIN</td>
+                <td class="font-bold">Crafted in Manila // Worldwide Dispatch</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="border-t border-black/10 pt-5 font-mono-meta text-[11px] text-[#666] space-y-1.5">
           <div>{{ section.settings.spec_1 | default: '· 400 GSM ULTRA-HEAVYWEIGHT COTTON' }}</div>

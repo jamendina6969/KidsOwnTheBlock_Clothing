@@ -35,25 +35,83 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 2. Scroll-triggered reveal observer
+  // 2. Scroll-triggered reveal observer with instant viewport detection
   const revealEls = document.querySelectorAll('.reveal-on-scroll');
+  const markVisible = (el, delay = 0) => {
+    el.style.transitionDelay = `${delay}ms`;
+    el.classList.add('is-visible');
+  };
+
+  // Immediate pass for above-the-fold elements to prevent blank lag
+  revealEls.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 60) {
+      markVisible(el, 0);
+    }
+  });
+
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const delay = entry.target.getAttribute('data-delay') || '0';
-            entry.target.style.transitionDelay = `${delay}ms`;
-            entry.target.classList.add('is-visible');
+            markVisible(entry.target, delay);
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.08, rootMargin: '0px 0px -24px 0px' }
+      { threshold: 0.02, rootMargin: '60px 0px 60px 0px' }
     );
-    revealEls.forEach((el) => observer.observe(el));
+    revealEls.forEach((el) => {
+      if (!el.classList.contains('is-visible')) {
+        observer.observe(el);
+      }
+    });
   } else {
-    revealEls.forEach((el) => el.classList.add('is-visible'));
+    revealEls.forEach((el) => markVisible(el, 0));
+  }
+
+  // 2B. Streetwear Crosshair Custom Cursor
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.body.classList.add('hood-custom-cursor');
+    const dot = document.createElement('div');
+    dot.id = 'hood-cursor-dot';
+    const ring = document.createElement('div');
+    ring.id = 'hood-cursor-ring';
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+
+    let mouseX = -100, mouseY = -100;
+    let ringX = -100, ringY = -100;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = `${mouseX}px`;
+      dot.style.top = `${mouseY}px`;
+    });
+
+    const loop = () => {
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      ring.style.left = `${ringX}px`;
+      ring.style.top = `${ringY}px`;
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+
+    const interactiveSelectors = 'a, button, input, [role="button"], .hood-pin, .product-card';
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(interactiveSelectors)) {
+        ring.classList.add('is-hovering');
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest(interactiveSelectors)) {
+        ring.classList.remove('is-hovering');
+      }
+    });
   }
 
   // 3. Sticky Header shrink on scroll
@@ -171,6 +229,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('close-search-btn')?.addEventListener('click', () => searchOverlay?.classList.add('hidden'));
   document.getElementById('search-backdrop')?.addEventListener('click', () => searchOverlay?.classList.add('hidden'));
+
+  // 5B. Drop Vault VIP Password Controller
+  const vaultModal = document.getElementById('hood-vault-modal');
+  const openVaultBtn = document.getElementById('open-vault-btn');
+  const closeVaultBtn = document.getElementById('close-vault-btn');
+  const vaultBackdrop = document.getElementById('hood-vault-backdrop');
+  const vaultForm = document.getElementById('vault-form');
+  const vaultInput = document.getElementById('vault-passcode-input');
+  const vaultLockedState = document.getElementById('vault-locked-state');
+  const vaultUnlockedState = document.getElementById('vault-unlocked-state');
+  const vaultError = document.getElementById('vault-error-msg');
+
+  const toggleVault = (open) => {
+    if (!vaultModal) return;
+    vaultModal.classList.toggle('hidden', !open);
+    vaultModal.classList.toggle('flex', open);
+    if (open) {
+      toggleMenu(false);
+      vaultInput?.focus();
+    }
+  };
+
+  openVaultBtn?.addEventListener('click', () => toggleVault(true));
+  closeVaultBtn?.addEventListener('click', () => toggleVault(false));
+  vaultBackdrop?.addEventListener('click', () => toggleVault(false));
+
+  vaultForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const val = (vaultInput?.value || '').trim().toUpperCase();
+    if (val === 'HOOD2026' || val === 'HOODLUMS' || val === 'NOEVIL' || val === 'VAULT' || val === 'DROP05') {
+      vaultLockedState?.classList.add('hidden');
+      vaultUnlockedState?.classList.remove('hidden');
+      vaultError?.classList.add('hidden');
+    } else {
+      vaultError?.classList.remove('hidden');
+      vaultInput?.classList.add('border-red-500');
+      setTimeout(() => vaultInput?.classList.remove('border-red-500'), 1500);
+    }
+  });
 
   let searchTimer;
   searchInput?.addEventListener('input', (e) => {
@@ -554,6 +651,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lbl) lbl.textContent = `Look ${slide.look}`;
       const cap = document.getElementById('lb-look-caption');
       if (cap) cap.textContent = `${slide.title} — ${slide.garments}`;
+      const pinTitle = document.getElementById('lb-pin-title');
+      if (pinTitle) pinTitle.textContent = slide.title;
       const cnt = document.getElementById('lb-counter');
       if (cnt) cnt.textContent = `${slideIdx + 1} of ${slides.length}`;
       renderThumbs();

@@ -2117,13 +2117,11 @@ html, body {
 @keyframes kotbFlashReveal {
   0% {
     opacity: 0;
-    filter: brightness(1.6) contrast(1.2);
-    transform: translateY(14px) scale(1.02);
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
-    filter: brightness(1) contrast(1);
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
@@ -2253,4 +2251,154 @@ html, body {
 #lb-stage-wrap img {
   will-change: transform;
 }
+
+/* ========================================================
+   HOODLUMS 2.0: CUSTOM CURSOR, SHOP THE LOOK PINS & SCARCITY
+   ======================================================== */
+
+@media (pointer: fine) {
+  body.hood-custom-cursor,
+  body.hood-custom-cursor a,
+  body.hood-custom-cursor button,
+  body.hood-custom-cursor input {
+    cursor: none !important;
+  }
+  #hood-cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background: #d9ff00;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease;
+  }
+  #hood-cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(217, 255, 0, 0.65);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease;
+  }
+  #hood-cursor-ring.is-hovering {
+    width: 46px;
+    height: 46px;
+    border-color: #d9ff00;
+    background: rgba(217, 255, 0, 0.08);
+  }
+}
+
+/* Interactive Shop The Look Hotspot Pins */
+.hood-pin {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #000000;
+  color: #d9ff00;
+  border: 1.5px solid #d9ff00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 35;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  animation: hoodPinPulse 2.2s infinite;
+}
+.hood-pin:hover {
+  transform: translate(-50%, -50%) scale(1.18);
+  background: #d9ff00;
+  color: #000000;
+}
+@keyframes hoodPinPulse {
+  0% { box-shadow: 0 0 0 0 rgba(217, 255, 0, 0.8); }
+  70% { box-shadow: 0 0 0 10px rgba(217, 255, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(217, 255, 0, 0); }
+}
+
+.hood-pin-popover {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: #000000;
+  border: 1px solid #333333;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 2px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 40;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+}
+.hood-pin-popover::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #000000 transparent transparent transparent;
+}
+.hood-pin:hover .hood-pin-popover,
+.hood-pin:focus .hood-pin-popover {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Scarcity meters & Technical Spec Cards */
+.hood-scarcity-badge {
+  background: rgba(217, 255, 0, 0.12);
+  border: 1px solid #d9ff00;
+  color: #d9ff00;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.hood-scarcity-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d9ff00;
+  animation: kotbDropPulse 1.4s infinite;
+}
+
+.hood-spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+.hood-spec-table tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.hood-spec-table td {
+  padding: 7px 0;
+}
+.hood-spec-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+}
+
 

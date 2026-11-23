@@ -105,6 +105,61 @@
   </aside>
 </div>
 
+{%- comment -%} Drop Vault VIP Password Modal {%- endcomment -%}
+<div id="hood-vault-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+  <div id="hood-vault-backdrop" class="absolute inset-0 bg-black/85 backdrop-blur-sm"></div>
+  <div class="relative w-full max-w-md bg-[#0d0d0d] border border-white/20 p-6 md:p-8 text-white z-10 shadow-2xl">
+    <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 bg-[#d9ff00] rounded-full inline-block animate-pulse"></span>
+        <span class="font-mono-meta text-[11px] tracking-[0.2em] text-[#d9ff00]">DROP VAULT // VIP ACCESS</span>
+      </div>
+      <button id="close-vault-btn" type="button" aria-label="Close vault modal" class="text-white hover:text-[#d9ff00] cursor-pointer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="vault-locked-state">
+      <h3 class="font-display text-xl mb-2 tracking-wide">ENTER PASSCODE</h3>
+      <p class="font-mono-meta text-xs text-[#888] leading-relaxed mb-6">
+        Private early-access capsule for Drop 05. Enter the one-time secret passkey from our Instagram / Discord to unlock.
+      </p>
+
+      <form id="vault-form" class="space-y-4">
+        <div class="relative">
+          <input
+            id="vault-passcode-input"
+            type="text"
+            autocomplete="off"
+            placeholder="PASSCODE (TRY: HOOD2026)"
+            class="w-full h-12 bg-[#181818] border border-white/20 px-4 text-xs font-mono-meta tracking-[0.16em] uppercase text-white placeholder:text-[#555] focus:border-[#d9ff00] outline-none transition-colors"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn-sheen w-full h-12 bg-[#d9ff00] text-black font-display text-xs tracking-[0.14em] font-bold cursor-pointer hover:bg-white transition-colors"
+        >
+          AUTHENTICATE &amp; UNLOCK →
+        </button>
+      </form>
+      <div id="vault-error-msg" class="hidden mt-3 font-mono-meta text-[11px] text-red-500 text-center tracking-wider">
+        ⚠ INVALID PASSKEY · CHECK OUR IG STORY @HOODLUMS
+      </div>
+    </div>
+
+    <div id="vault-unlocked-state" class="hidden text-center py-4">
+      <div class="w-12 h-12 rounded-full border border-[#d9ff00] text-[#d9ff00] flex items-center justify-center mx-auto mb-4 text-xl">✓</div>
+      <h3 class="font-display text-xl mb-2 text-[#d9ff00]">VAULT UNLOCKED</h3>
+      <p class="font-mono-meta text-xs text-[#aaa] leading-relaxed mb-6">
+        Access granted to HOODLUMS Drop 05 Private Archive. Use promo code <strong class="text-white bg-white/10 px-2 py-0.5 border border-white/20">HOODVIP15</strong> at checkout for 15% off.
+      </p>
+      <a href="/collections/no-evil" data-nav class="btn-sheen inline-block w-full py-3.5 bg-white text-black font-display text-xs tracking-wider font-bold">
+        ENTER PRIVATE CAPSULE ↗
+      </a>
+    </div>
+  </div>
+</div>
+
 {%- comment -%} Floating KOTB Concierge Chat Pill {%- endcomment -%}
 {%- unless template.name == 'index' -%}
 <div class="fixed right-5 bottom-5 z-40">
