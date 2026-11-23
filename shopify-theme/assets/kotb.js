@@ -525,6 +525,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // 6E. Product Card 3D Tilt Perspective (Combo 4 — Desktop Fine Pointer)
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.hood-card-outer').forEach((outer) => {
+      const box = outer.querySelector('.hood-card-media-box');
+      if (!box) return;
+      outer.addEventListener('mousemove', (e) => {
+        const rect = box.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        box.style.transform = `rotateX(${(y * -9).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateY(-3px) scale(1.015)`;
+      });
+      outer.addEventListener('mouseleave', () => {
+        box.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+      });
+    });
+  }
+
   // 7. Horizontal Slider Arrows & Collection Sort
   document.querySelectorAll('[data-slider-btn]').forEach((btn) => {
     btn.addEventListener('click', () => {

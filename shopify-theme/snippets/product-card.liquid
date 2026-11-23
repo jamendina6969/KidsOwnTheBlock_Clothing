@@ -24,6 +24,8 @@
       </div>
     {%- endif -%}
 
+    <div class="hood-card-sheen" aria-hidden="true"></div>
+
     <a
       href="{{ product.url }}"
       data-nav
@@ -75,17 +77,22 @@
               + ADD TO CART
             </button>
           {%- else -%}
-            {%- for variant in product.variants limit: 6 -%}
+            {%- assign seen_sizes = ',' -%}
+            {%- for variant in product.variants -%}
               {%- assign short_lbl = variant.title | split: '/' | last | strip -%}
-              <button
-                type="button"
-                data-quick-add-id="{{ variant.id }}"
-                {% unless variant.available %}disabled{% endunless %}
-                class="hood-quick-size-btn"
-                title="Add {{ product.title | escape }} — {{ variant.title | escape }}"
-              >
-                {{ short_lbl }}
-              </button>
+              {%- assign size_token = ',' | append: short_lbl | append: ',' -%}
+              {%- unless seen_sizes contains size_token -%}
+                {%- assign seen_sizes = seen_sizes | append: short_lbl | append: ',' -%}
+                <button
+                  type="button"
+                  data-quick-add-id="{{ variant.id }}"
+                  {% unless variant.available %}disabled{% endunless %}
+                  class="hood-quick-size-btn"
+                  title="Add {{ product.title | escape }} — {{ variant.title | escape }}"
+                >
+                  {{ short_lbl }}
+                </button>
+              {%- endunless -%}
             {%- endfor -%}
           {%- endif -%}
         </div>
@@ -93,11 +100,34 @@
     {%- endif -%}
   </div>
 
+  {%- assign card_title_down = product.title | downcase -%}
+  {%- assign card_gsm = '' -%}
+  {%- for tag in product.tags -%}
+    {%- assign tag_down = tag | downcase -%}
+    {%- if tag_down contains 'gsm' -%}
+      {%- assign card_gsm = tag | upcase -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if card_gsm == '' -%}
+    {%- if card_title_down contains 'waffle' -%}
+      {%- assign card_gsm = '350 GSM' -%}
+    {%- elsif card_title_down contains 'hoodie' -%}
+      {%- assign card_gsm = '340 GSM' -%}
+    {%- elsif card_title_down contains 'tank' -%}
+      {%- assign card_gsm = '280 GSM' -%}
+    {%- elsif card_title_down contains 'tee' -%}
+      {%- assign card_gsm = '260 GSM' -%}
+    {%- endif -%}
+  {%- endif -%}
+
   <a href="{{ product.url }}" data-nav class="hood-card-meta group">
     <div class="hood-card-title group-hover:underline">{{ product.title }}</div>
     <div class="hood-card-meta-row">
       <span class="hood-card-price">{{ product.price | money }}</span>
-      <span class="hood-card-gsm">{% if product.title contains 'Tank' or product.title contains 'TANK' %}340 GSM{% elsif product.title contains 'Waffle' or product.title contains 'WAFFLE' %}350 GSM{% else %}400 GSM{% endif %}</span>
+      {%- if card_gsm != '' -%}
+        <span class="hood-card-gsm">{{ card_gsm }}</span>
+      {%- endif -%}
     </div>
   </a>
 </div>
