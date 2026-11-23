@@ -11,7 +11,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
       {%- comment -%} Left: Product Media Gallery {%- endcomment -%}
       <div class="lg:col-span-7 flex flex-col gap-3">
-        <div id="pdp-main-stage" class="pdp-zoom-container bg-[#ededed] aspect-[4/5] w-full flex items-center justify-center overflow-hidden">
+        <div id="pdp-main-stage" class="pdp-zoom-container bg-white border border-black/10 aspect-square w-full flex items-center justify-center overflow-hidden">
           {%- if product.featured_image != blank -%}
             <img
               id="pdp-main-img"
@@ -30,7 +30,7 @@
               <button
                 type="button"
                 data-pdp-thumb="{{ image | image_url: width: 1200 }}"
-                class="aspect-[4/5] bg-[#ededed] border {% if forloop.first %}border-black{% else %}border-transparent hover:border-black/40{% endif %} overflow-hidden cursor-pointer transition-colors"
+                class="aspect-square bg-white border {% if forloop.first %}border-black{% else %}border-black/10 hover:border-black/40{% endif %} overflow-hidden cursor-pointer transition-colors"
               >
                 <img
                   src="{{ image | image_url: width: 300 }}"
@@ -122,23 +122,23 @@
             </button>
           </div>
 
-          {%- comment -%} Philippine Streetwear Trust & Payment Badges {%- endcomment -%}
+          {%- comment -%} Global Streetwear Fulfillment & Trust Badges {%- endcomment -%}
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-3 bg-[#f9f9f9] border border-black/10">
             <div class="flex items-center gap-1.5 font-mono-meta text-[10px] text-[#222]">
               <span class="text-black font-bold">✓</span>
-              <span>CASH ON DELIVERY (COD)</span>
+              <span>WORLDWIDE TRACKED SHIPPING</span>
             </div>
             <div class="flex items-center gap-1.5 font-mono-meta text-[10px] text-[#222]">
               <span class="text-black font-bold">✓</span>
-              <span>GCASH &amp; MAYA ACCEPTED</span>
+              <span>HEAVYWEIGHT STREETWEAR CUT</span>
             </div>
             <div class="flex items-center gap-1.5 font-mono-meta text-[10px] text-[#222]">
               <span class="text-black font-bold">✓</span>
-              <span>METRO MANILA NEXT-DAY</span>
+              <span>MADE TO ORDER · ZERO WASTE</span>
             </div>
             <div class="flex items-center gap-1.5 font-mono-meta text-[10px] text-[#222]">
               <span class="text-black font-bold">✓</span>
-              <span>7-DAY FREE SIZE EXCHANGE</span>
+              <span>SECURE ENCRYPTED CHECKOUT</span>
             </div>
           </div>
 
@@ -151,38 +151,55 @@
           </div>
         {%- endif -%}
 
+        {%- assign pdp_title_down = product.title | downcase -%}
+        {%- assign spec_weight = 'Heavyweight Cotton Blend' -%}
+        {%- assign spec_collar = 'Heavyweight Ribbed Crewneck' -%}
+        {%- if pdp_title_down contains 'waffle' -%}
+          {%- assign spec_weight = '350 GSM (10.3 oz) Cotton-Blend Waffle Knit' -%}
+          {%- assign spec_collar = 'Structured Double-Layer Hood' -%}
+        {%- elsif pdp_title_down contains 'hoodie' -%}
+          {%- assign spec_weight = '340 GSM (10.0 oz) Thick Fleece-Lined Knit' -%}
+          {%- assign spec_collar = 'Structured Double-Layer Hood' -%}
+        {%- elsif pdp_title_down contains 'tank' -%}
+          {%- assign spec_weight = 'Heavyweight Combed Cotton Knit' -%}
+          {%- assign spec_collar = 'Reinforced Ribbed Crewneck & Armholes' -%}
+        {%- elsif pdp_title_down contains 'tee' -%}
+          {%- assign spec_weight = 'Heavyweight Combed Ring-Spun Cotton' -%}
+          {%- assign spec_collar = '1.25" Heavyweight Ribbed Crewneck' -%}
+        {%- endif -%}
+
         <div class="border-t border-black/10 pt-5">
           <div class="font-mono-meta text-[11px] tracking-[0.14em] text-[#666] mb-3">TECHNICAL GARMENT SPEC SHEET</div>
           <table class="hood-spec-table text-xs">
             <tbody>
               <tr>
                 <td class="text-[#666]">FABRIC WEIGHT</td>
-                <td class="font-bold">400 GSM Combed Ring-Spun Cotton</td>
+                <td class="font-bold">{{ spec_weight }}</td>
               </tr>
               <tr>
                 <td class="text-[#666]">SILHOUETTE</td>
-                <td class="font-bold">Boxy H-Line // Dropped Shoulders</td>
+                <td class="font-bold">Boxy Oversized // Dropped Shoulders</td>
               </tr>
               <tr>
                 <td class="text-[#666]">PRINT TECHNIQUE</td>
-                <td class="font-bold">Direct-To-Film Distressed Wash</td>
+                <td class="font-bold">High-Density Direct Garment Print</td>
               </tr>
               <tr>
-                <td class="text-[#666]">COLLAR</td>
-                <td class="font-bold">1.25" Heavyweight Ribbed Crewneck</td>
+                <td class="text-[#666]">NECKLINE</td>
+                <td class="font-bold">{{ spec_collar }}</td>
               </tr>
               <tr>
-                <td class="text-[#666]">ORIGIN</td>
-                <td class="font-bold">Crafted in Manila // Worldwide Dispatch</td>
+                <td class="text-[#666]">FULFILLMENT</td>
+                <td class="font-bold">Made to Order // Worldwide Tracked Dispatch</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="border-t border-black/10 pt-5 font-mono-meta text-[11px] text-[#666] space-y-1.5">
-          <div>{{ section.settings.spec_1 | default: '· 400 GSM ULTRA-HEAVYWEIGHT COTTON' }}</div>
-          <div>{{ section.settings.spec_2 | default: '· FREE EXPRESS SHIPPING ON ORDERS OVER $100' }}</div>
-          <div>{{ section.settings.spec_3 | default: '· WORLDWIDE DISPATCH · 7-DAY SIZE EXCHANGE' }}</div>
+          <div>{{ section.settings.spec_1 | default: '· HEAVYWEIGHT CUT & SEW STREETWEAR' }}</div>
+          <div>{{ section.settings.spec_2 | default: '· WORLDWIDE TRACKED DISPATCH' }}</div>
+          <div>{{ section.settings.spec_3 | default: '· CHECK SIZE CHART BEFORE ORDERING' }}</div>
         </div>
       </div>
     </div>
@@ -193,9 +210,9 @@
 {
   "name": "HOOD Product Detail",
   "settings": [
-    { "type": "text", "id": "spec_1", "label": "Spec Line 1", "default": "· 400 GSM ULTRA-HEAVYWEIGHT COTTON" },
-    { "type": "text", "id": "spec_2", "label": "Spec Line 2", "default": "· FREE EXPRESS SHIPPING ON ORDERS OVER $100" },
-    { "type": "text", "id": "spec_3", "label": "Spec Line 3", "default": "· WORLDWIDE DISPATCH · 7-DAY SIZE EXCHANGE" }
+    { "type": "text", "id": "spec_1", "label": "Spec Line 1", "default": "· HEAVYWEIGHT CUT & SEW STREETWEAR" },
+    { "type": "text", "id": "spec_2", "label": "Spec Line 2", "default": "· WORLDWIDE TRACKED DISPATCH" },
+    { "type": "text", "id": "spec_3", "label": "Spec Line 3", "default": "· CHECK SIZE CHART BEFORE ORDERING" }
   ]
 }
 {% endschema %}
